@@ -21,3 +21,15 @@ repo.git.add(all=True)
 repo.index.commit('my commit description')
 origin = repo.remote('origin')
 origin.push()
+
+from git import Repo
+repo = Repo('/odoo/odoo-server/live_custom_addons')  # if repo is CWD just do '.'
+
+# repo.index.add([])
+#repo.git.add(u=True)
+repo.git.add(all=True)
+description = raw_input("Enter the Commit status ") 
+
+repo.index.commit(description)
+origin = repo.remote('origin')
+origin.push()

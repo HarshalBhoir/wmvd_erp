@@ -3,3 +3,9 @@ git add .
 git commit -m "adding files"
 git remote add origin https://github.com/HarshalBhoir/wmvd_erp.git
 git push -u origin master
+
+Make Changes & update to Repo :
+
+git add .
+git commit -m "Add existing file"
+git push -u origin master

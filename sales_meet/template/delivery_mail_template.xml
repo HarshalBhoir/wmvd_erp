@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+
+<template id="sales_meet.email_logistic_trail_line" name="Email Sales Delivery Response">
+	<t t-call="web.layout">
+		<link rel="stylesheet" href="/website/static/src/less/import_bootstrap.less.css"/>
+		<style type="text/css">
+			body{
+				width: 100%;
+				background-color: #CECECE;
+				color: #000;
+				margin:0;
+				padding:0;
+			}
+			body .portal_page {
+				background-color: #FFFFFF;
+				margin-top: 50px;
+				margin-left: 16.666666666666664%;
+				margin-bottom: 100px;
+				width: 66%;
+				text-align: center;
+				vertical-align: middle;
+				height: auto;
+			}
+			body .row {
+				vertical-align: middle;
+				height: auto;
+			}
+			body .row_seperator {
+				border-top: 2px solid #F26D35;
+			}
+		</style>
+		<div class="portal_page text-center col-md-offset-2 col-xs-8">
+			
+			<t t-if="invalid">
+				<div class="row row_seperator">
+					<t t-if="title"><h1><t t-esc="title"/></h1></t>
+					<t t-if="not title"><h1>Invalid Delivery Order</h1></t>
+				</div>
+			</t>
+			
+			<t t-if="not invalid">
+				<t t-if="approve_delivery_sales_order">
+					<div class="row row_seperator">
+						<h1>Material Received !!!! </h1>
+					</div>
+				</t>
+
+			</t>
+			
+			<div class="row" style="height: 20px;"/>
+		</div>
+		<script>
+		function refuse_expenses() {
+			var reason = document.getElementById("reason").value;
+			var url = window.location.href
+			if (reason.length) {
+				url += '&amp;reason='+reason;
+				window.location.href = url;
+			}
+		}
+
+		</script>
+
+	</t>
+</template>
+
+</data>
+</odoo>

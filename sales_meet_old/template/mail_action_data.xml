@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        
+        <record id="confirm_invoice_action" model="mail.template">
+            <field name="name">Due Invoices For Confirmation !!!</field>
+            <field name="email_from">${object.invoice_id.company_id.name}&lt;${object.invoice_id.company_id.email}&gt;</field>
+            <field name="email_to">${object.owner_email}</field>
+            <field name="subject">Today Due Invoices -${object.invoice_id.date or 'n/a' }</field>
+            <field name="model_id" ref="sales_meet.model_bank_invoice_lines" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                <div class="page">
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                        <p>Hello ${object.owner},</p>
+                        <p> This Email Is To Remind  You That You Have Task As  Below Listed Which Are Due On Today. </p>
+                    </div>
+                    <div>
+                       <table class="table table-condensed">
+                             <thead>
+                                <tr>
+                                    <th style="background-color:#9b9da0 !important;">Doc No</th>
+                                    <th style="background-color:#9b9da0 !important;">Remarks</th>
+                                    <th style="background-color:#9b9da0 !important;">Date</th>
+                                    <th style="background-color:#9b9da0 !important;">PT Days</th>
+                                    <th style="background-color:#9b9da0 !important;">Vendor</th>
+                                    <th style="background-color:#9b9da0 !important;">Amount</th>
+                                </tr>
+                             </thead>
+                             <tbody>
+                                    <tr>
+                                        <td><span>${object.documentno}</span></td>
+                                        <td><span>${object.description}</span></td>
+                                        <td><span>${object.value_date}</span></td>
+                                        <td><span>${object.payment_term}</span></td>
+                                        <td><span>${object.beneficiary_name}</span></td>
+                                        <td><span>${object.transaction_amount}</span></td>
+                                    </tr>
+                             </tbody>
+                       </table>
+                    </div>
+
+                    <br/>
+
+                    <b>Click here  :</b> <a href="web#id=${object.invoice_id.id}&view_type=form&model=bank.payment"
+                        style="background-color: #337ab7; margin-top: 10px; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">
+                        View Due Invoices<t t-esc="object._description.lower()"/>
+                    </a>
+
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+
+
+                </div>
+                ]]>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_logistic_trail_tree" model="ir.ui.view">
+	<field name="name">logistic.trail.tree</field>
+	<field name="model">logistic.trail</field>
+	<field name="arch" type="xml">
+		<tree colors="green:state=='done';">
+			<field name="name" string='Name'/>
+			<field name="partner_id" invisible='0'/>
+			<field name="partner_name"/>
+			<field name="company_id"/>
+			<field name="date_start"/>
+			<field name="state" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_logistic_trail_form" model="ir.ui.view">
+	<field name="name">logistic.trail.form</field>
+	<field name="model">logistic.trail</field>
+	<field name="arch" type="xml">
+		<form>
+			<header>
+				<field name="state" widget="statusbar" statusbar_visible="draft"/>
+			</header>
+
+			<sheet >
+				<!-- <h1><center>Logistic Trail</center></h1><br/> -->
+				<div class="oe_title">
+					<h1><field name="name" states="done" readonly="1"/></h1>
+				</div>
+				<group>
+					<group >
+						<label for="date_start" string="Validity" />
+						<div><field name="date_start" class="oe_inline" required="1"  attrs="{'readonly':[('state','!=','draft')]}"/> to <field name="date_end" class="oe_inline" attrs="{'readonly':[('state','!=','draft')]}" required="1"  /></div>
+						<!-- <field name="date_start" required="1"  attrs="{'readonly':[('state','!=','draft')]}"/>  -->
+						<field name="value" attrs="{'readonly':[('state','!=','draft')]}" required="1"  /> 
+						<field name="partner_id" invisible="0" attrs="{'readonly':[('state','!=','draft')]}" options="{'no_create' : True, 'no_open': True}"  />
+                    </group>
+					<group >
+						<field name="company_id" options="{'no_create' : True, 'no_open': True}" required="1" 
+							attrs="{'readonly':[('state','!=','draft')]}" />
+						<field name="message_text" invisible="0" attrs="{'readonly':[('state','=','done')],'invisible':[('message_text','=',False)]}" />
+					</group>
+					
+				</group>
+
+
+				<group col="4" colspan="2" >
+					<div class="col-xs-12" style="margin-top:2%;">
+						<center>
+							<!-- <div class="col-xs-1"/> -->
+							<button name="search_invoices" type="object" string="Search"  class="btn-primary" style="font-size: 16px;" 
+							  states='draft'/>
+							<div class="col-xs-1"/>
+							<button name="send_message" type="object" string="Send MSG"  class="btn-primary"  style="font-size: 16px;"
+							  states='inprogress'/>
+						</center>
+					</div>
+				</group>
+
+				<group col="4" colspan="4"   attrs="{'invisible':[('state','=','draft')]}">
+					<field name="lt_line_one2many" string="LT Line" nolabel="1" mode="tree" attrs="{'readonly':[('state','=','done')]}"
+					 style="font-size: 20px;" >
+					 <tree editable="bottom" create="false" delete="false" colors="green:state=='approved';">
+							<field name="name"  invisible="1"/>
+							<button name="approve_invoice" icon="fa fa-check" string="Approve" aria-hidden="true" type="object" style="color:green !important;" />
+							<field name="delivery_date"  attrs="{'required':[('state','=','approved')]}"/> 
+							<field name="c_bpartner_id"  /> 
+							<field name="documentno" readonly="1" />
+							<field name="poreference" />
+							<field name="mobile"  attrs="{'required':[('state','=','approved')]}"/>
+							<field name="deliveryadd"  attrs="{'required':[('state','=','approved')]}" />
+							<field name="length_address" readonly="1" />
+							<field name="vhcl_no"  attrs="{'required':[('state','=','approved')]}" />
+							<field name="trpt_name" />
+							<field name="state"  invisible="1"/>
+					</tree>
+				</field>
+				</group>
+
+			</sheet>
+			 <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+              </div>
+		</form>
+	</field>
+</record>
+
+<!-- <record id="view_lt_line_tree" model="ir.ui.view">
+	<field name="name">logistic.trail.line.tree</field>
+	<field name="model">logistic.trail.line</field>
+	<field name="arch" type="xml">
+		<tree editable="bottom" create="false" delete="false" colors="green:state=='approved';">
+				<field name="name"  invisible="1"/>
+				<button name="approve_invoice" icon="fa fa-check" string="Approve" aria-hidden="true" type="object" style="color:green !important;" />
+				<field name="delivery_date"  attrs="{'required':[('state','=','approved')]}"/> 
+				<field name="c_bpartner_id"  /> 
+				<field name="documentno" readonly="1" />
+				<field name="poreference" />
+				<field name="mobile" />
+				<field name="deliveryadd" required="0" />
+				<field name="length_address" readonly="1" />
+				<field name="vhcl_no" />
+				<field name="trpt_name" />
+				<field name="state"  invisible="1"/>
+		</tree>
+	</field>
+</record> -->
+
+
+
+<record id="action_logistic_trail" model="ir.actions.act_window">
+	<field name="name">Logistic Trail</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">logistic.trail</field>
+	<field name="view_type">form</field>
+	<field name="domain">[('condition','=','logistic')]</field>
+        <field name="context">{
+                'default_condition':'logistic',
+            }
+        </field>
+	<field name="view_mode">tree,form</field>
+</record>
+
+
+    <record model="ir.actions.act_window.view" id="action_logistic_trail_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_logistic_trail_tree"/>
+        <field name="act_window_id" ref="action_logistic_trail"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_logistic_trail_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_logistic_trail_form"/>
+        <field name="act_window_id" ref="action_logistic_trail"/>
+    </record>
+
+
+
+
+
+
+<record id="view_daily_invoice_schedular_form" model="ir.ui.view">
+	<field name="name">logistic.trail.form</field>
+	<field name="model">logistic.trail</field>
+	<field name="arch" type="xml">
+		<form>
+			<header>
+				<field name="state" widget="statusbar" statusbar_visible="draft"/>
+			</header>
+
+			<sheet >
+				<!-- <h1><center>Logistic Trail</center></h1><br/> -->
+				<div class="oe_title">
+					<h1><field name="name" states="done" readonly="1"/></h1>
+				</div>
+				<group>
+					<group >
+						<field name="date_schedular" class="oe_inline" required="1"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+					<group >
+						<field name="company_id" options="{'no_create' : True, 'no_open': True}" required="1" 
+							attrs="{'readonly':[('state','!=','draft')]}" />
+						<field name="message_text" invisible="0" attrs="{'readonly':[('state','=','done')],'invisible':[('message_text','=',False)]}" />
+					</group>
+					
+				</group>
+
+
+				<group col="4" colspan="2" >
+					<div class="col-xs-12" style="margin-top:2%;">
+						<center>
+							<button name="search_daily_invoice_schedular" type="object" string="Search"  class="btn-primary" style="font-size: 16px;" 
+							  states='draft'/>
+
+						</center>
+					</div>
+				</group>
+
+				<group col="4" colspan="4"   attrs="{'invisible':[('state','=','draft')]}">
+					<field name="lt_line_one2many" string="LT Line" nolabel="1" mode="tree" attrs="{'readonly':[('state','=','done')]}"
+					 style="font-size: 20px;" >
+					 <tree editable="bottom" create="false" colors="green:state=='approved';red:email==False;blue:state=='reverted';">
+							<field name="name"  invisible="1"/>
+							<button name="approve_invoice" icon="fa fa-check" string="Approve" aria-hidden="true" 
+								type="object" style="color:green !important;" />
+							<field name="delivery_date"  invisible="1"/> 
+							<field name="c_bpartner_id"  /> 
+							<field name="documentno" readonly="1" />
+							<field name="poreference" invisible="1"/>
+							<field name="mobile" required="0"/>
+							<field name="email" required="0"/>
+							<field name="deliveryadd" required="0" />
+							<field name="length_address" readonly="1" invisible="1" />
+							<field name="vhcl_no" invisible="1"/>
+							<field name="trpt_name" invisible="1" />
+							<field name="state"  invisible="1"/>
+
+							<field name="sales_exec"  /> 
+							<field name="sales_email"  /> 
+							<field name="date_reverted"  /> 
+					</tree>
+				</field>
+				 
+				</group>
+
+			</sheet>
+			 <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+              </div>
+		</form>
+	</field>
+</record>
+
+
+
+
+<record id="view_logistic_trail_line_form" model="ir.ui.view">
+	<field name="name">logistic.trail.line.form</field>
+	<field name="model">logistic.trail.line</field>
+	<field name="arch" type="xml">
+		<form string="Invoice Lines">
+			<sheet>
+				<button name="approve_invoice" class="fa fa-check btn-primary" string="Approve" aria-hidden="true"
+				 type="object" style="color:green !important;" />
+				 <field name="html_view"/>
+
+
+
+
+				<group>
+					
+					<group>
+						
+						<field name="name"  invisible="1"/>
+						
+						<field name="delivery_date"  invisible="1"/> 
+						<field name="c_bpartner_id"  /> 
+						<field name="documentno" readonly="1" />
+						<field name="poreference" invisible="1"/>
+						<field name="mobile" required="0"/>
+						<field name="email" required="0"/>
+						<field name="delayed_date"  /> 
+						<field name="delay"  /> 
+						<field name="lr_no" />
+						<field name="lr_date" />
+						<field name="podate" />
+						<field name="time_rml" />
+						<field name="ponum" />
+						
+						
+					</group>
+					<group>
+						<field name="deliveryadd" required="0" />
+						<field name="length_address" readonly="1" />
+						<field name="vhcl_no" required="0" />
+						<field name="trpt_name" />
+						
+						<field name="condition" />
+						
+						<field name="state"  invisible="0"/>
+						<field name="sales_email"  invisible="0"/>
+						<field name="sales_exec"  invisible="0"/>
+						<field name="date_reverted"  invisible="0"/>
+					</group>
+
+				</group>
+				<group col="4" colspan="4"   >
+					<field name="lineproduct_one2many" string="Product Line" nolabel="1" mode="tree" attrs="{'readonly':[('state','=','done')]}"
+					 style="font-size: 20px;" >
+						 <tree >
+								<field name="name"  invisible="1"/>
+								<field name="c_invoiceline_id"  /> 
+								<field name="c_invoice_id"  /> 
+								<field name="product"  /> 
+								<field name="qtyentered"  /> 
+								<field name="pricelist"  /> 
+								<field name="totalpricelist"  /> 
+								<field name="uom"  /> 
+
+						</tree>
+					</field>
+				</group>
+			</sheet>
+			
+		</form>
+	</field>
+</record>
+
+<record id="action_daily_invoice_schedular" model="ir.actions.act_window">
+	<field name="name">Daily Invoice Schedular</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">logistic.trail</field>
+	<field name="view_type">form</field>
+	<field name="domain">[('condition','=','schedular')]</field>
+        <field name="context">{
+                'default_condition':'schedular',
+            }
+        </field>
+	<field name="view_mode">tree,form</field>
+</record>
+
+    <record model="ir.actions.act_window.view" id="action_daily_invoice_schedular_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_logistic_trail_tree"/>
+        <field name="act_window_id" ref="action_daily_invoice_schedular"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_daily_invoice_schedular_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_daily_invoice_schedular_form"/>
+        <field name="act_window_id" ref="action_daily_invoice_schedular"/>
+    </record>
+
+</odoo>

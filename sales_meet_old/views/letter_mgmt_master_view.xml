@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+  <data>
+
+    <!-- Views -->
+
+    <record model="ir.ui.view" id="letter_channel_tree_view">
+      <field name="name">letter.channel.tree</field>
+      <field name="model">letter.channel</field>
+      <field name="arch" type="xml">
+        <tree string="Letter Channel">
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="letter_channel_form_view">
+      <field name="name">letter.channel.form</field>
+      <field name="model">letter.channel</field>
+      <field name="arch" type="xml">
+        <form string="Letter Channel">
+            <group>
+                <field name="name"/>
+            </group>
+        </form>
+      </field>
+    </record>
+
+    <!-- Actions -->
+
+    <record model="ir.actions.act_window" id="action_letter_channel_tree_view">
+      <field name="name">Letter Channel</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">letter.channel</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="letter_channel_tree_view"/>
+    </record>
+
+
+        <!-- Views -->
+
+    <record model="ir.ui.view" id="letter_class_tree_view">
+      <field name="name">letter.class.tree</field>
+      <field name="model">letter.class</field>
+      <field name="arch" type="xml">
+        <tree string="Letter Class">
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="letter_class_form_view">
+      <field name="name">letter.class.form</field>
+      <field name="model">letter.class</field>
+      <field name="arch" type="xml">
+        <form string="Letter Class">
+            <group>
+                <field name="name"/>
+            </group>
+        </form>
+      </field>
+    </record>
+
+    <!-- Actions -->
+
+    <record model="ir.actions.act_window" id="action_letter_class_tree_view">
+      <field name="name">Letter Class</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">letter.class</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="letter_class_tree_view"/>
+    </record>
+
+    <!-- Menus -->
+
+
+   <!-- Views -->
+
+    <record model="ir.ui.view" id="letter_folder_tree_view">
+      <field name="name">Letter Folder Tree</field>
+      <field name="model">letter.folder</field>
+      <field name="arch" type="xml">
+        <tree string="Letter Folder">
+          <field name="code"/>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="letter_folder_form_view">
+      <field name="name">Letter Folder Form</field>
+      <field name="model">letter.folder</field>
+      <field name="arch" type="xml">
+        <form string="Letter Folder">
+            <group>
+                <field name="code"/>
+                <field name="name"/>
+            </group>
+        </form>
+      </field>
+    </record>
+
+    <!-- Actions -->
+
+    <record model="ir.actions.act_window" id="action_letter_folder_tree_view">
+      <field name="name">Letter Folders</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">letter.folder</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="letter_folder_tree_view"/>
+    </record>
+
+
+<!-- Views -->
+
+    <record model="ir.ui.view" id="letter_reassignment_tree_view">
+      <field name="name">Letter Reassignment Tree</field>
+      <field name="model">letter.reassignment</field>
+      <field name="arch" type="xml">
+        <tree string="Reassignment">
+          <field name="name"/>
+          <field name="department_id"/>
+          <field name="comment"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="letter_reassignment_form_view">
+      <field name="name">Letter Reassignment Form</field>
+      <field name="model">letter.reassignment</field>
+      <field name="arch" type="xml">
+        <form string="Reassignment">
+            <group>
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="comment"/>
+            </group>
+        </form>
+      </field>
+    </record>
+
+    <!-- Actions -->
+
+    <record model="ir.actions.act_window" id="action_letter_reassignment_tree_view">
+      <field name="name">Letter Reassignment</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">letter.reassignment</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="letter_reassignment_tree_view"/>
+    </record>
+
+    <!-- Menus -->
+
+    <!-- Views -->
+
+    <record model="ir.ui.view" id="letter_type_tree_view">
+      <field name="name">Letter Type Tree</field>
+      <field name="model">letter.type</field>
+      <field name="arch" type="xml">
+        <tree string="Letter Type">
+          <field name="name"/>
+          <field name="code"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="letter_type_form_view">
+      <field name="name">Letter Type Form</field>
+      <field name="model">letter.type</field>
+      <field name="arch" type="xml">
+        <form string="Letter Type">
+            <group>
+                <field name="name"/>
+                <field name="code"/>
+            </group>
+        </form>
+      </field>
+    </record>
+
+    <!-- Actions -->
+
+    <record model="ir.actions.act_window" id="action_letter_type_tree_view">
+      <field name="name">Letter Type</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">letter.type</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="letter_type_tree_view"/>
+    </record>
+
+
+
+    <!-- Views -->
+
+    <record model="ir.ui.view" id="res_letter_intern_tree_view">
+      <field name="name">Internal Letter Tree</field>
+      <field name="model">res.letter</field>
+      <field name="arch" type="xml">
+        <tree string="Letters">
+          <field name="name"/>
+          <field name="number"/>
+          <field name="move"/>
+          <field name="type_id"/>
+          <field name="class_id"/>
+          <field name="date"/>
+          <field name="recipient_partner_id"/>
+          <field name="state"/>
+          <field name="channel_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="res_letter_intern_calendar_view">
+      <field name="name">Internal Letter Calendar</field>
+      <field name="model">res.letter</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <calendar string="Letters" date_start="date" color="move">
+          <field name="name"/>
+          <field name="recipient_partner_id"/>
+        </calendar>
+      </field>
+    </record>
+
+
+
+    <record model="ir.ui.view" id="res_letter_out_tree_view">
+      <field name="name">Outbound Letter Tree</field>
+      <field name="model">res.letter</field>
+      <field name="arch" type="xml">
+        <tree string="Letters">
+          <field name="name"/>
+          <field name="number"/>
+          <field name="move"/>
+          <field name="type_id"/>
+          <field name="class_id"/>
+          <field name="date"/>
+          <field name="recipient_partner_id"/>
+          <field name="state"/>
+          <field name="channel_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="res_letter_in_tree_view">
+      <field name="name">Inbound Letter Tree</field>
+      <field name="model">res.letter</field>
+      <field name="arch" type="xml">
+        <tree string="Letters">
+          <field name="name"/>
+          <field name="number"/>
+          <field name="move"/>
+          <field name="type_id"/>
+          <field name="class_id"/>
+          <field name="date"/>
+          <field name="recipient_partner_id"/>
+          <field name="state"/>
+          <field name="channel_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="res_letter_out_calendar_view">
+      <field name="name">Outbound Letter Calendar</field>
+      <field name="model">res.letter</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <calendar string="Letters" date_start="date" color="move">
+          <field name="name"/>
+          <field name="recipient_partner_id"/>
+        </calendar>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="res_letter_in_calendar_view">
+      <field name="name">Inbound Letter Calendar</field>
+      <field name="model">res.letter</field>
+      <field name="priority" eval="2"/>
+      <field name="arch" type="xml">
+        <calendar string="Letters" date_start="date" color="move">
+          <field name="name"/>
+          <field name="recipient_partner_id"/>
+        </calendar>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="res_letter_out_form_view">
+      <field name="name">Outbound Letter Form</field>
+      <field name="model">res.letter</field>
+      <field name="arch" type="xml">
+        <form string="Letter" >
+          <header name="Toolbar">
+            <button name="action_create" states="draft" string="Create" type="object" class="oe_highlight"/>
+            <button name="action_send" states="created" string="Send" type="object" class="oe_highlight"/>
+            <button name="action_cancel" states="draft,created" string="Cancel" type="object" icon="STOCK_CANCEL"/>
+            <button name="action_set_draft" string="Set To Draft" type="object" icon="STOCK_CONVERT"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,created,sent,cancel"/>
+          </header>
+          <sheet>
+            <group col="4">
+              <group string="References" col="2" colspan="2">
+                <field name="number"  attrs="{'invisible': [('state','=','draft')],'readonly': [('state','!=','draft')]}"/>
+                <field name="orig_ref" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}" required="1"/>
+                <field name="parent_id" invisible="1"/>
+                <field name="folder_id"   invisible="1"/>
+                <field name="move"   invisible="1" context="{'default_move':'move'}"/>
+                <field name="recipient_partner_id" required="True" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}" />
+                <field name="sender_partner_id" attrs="{'required': [('external_person','=',False)],'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="external_person" attrs="{'required': [('sender_partner_id','=',False)],'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+              </group>
+              <group string="Details" col="2" colspan="2" attrs="{'readonly': [('state', 'not in', ['draft'])]}">
+                <field name="date" invisible="1"/>
+                <field name="snd_rec_date" string="Send Date" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="type_id" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}" required="True"/>
+                <field name="class_id" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="channel_id" string="Inbound Source" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="track_ref" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+              </group>
+              <group string="Subject" col="2" colspan="2">
+                <field name="name" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+              </group>
+              <group string="Dimensions" col="2" colspan="2">
+                <field name="size" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="weight" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+              </group>
+
+                <field name="note" colspan="4"  placeholder="Description"/>
+            </group>
+
+            <notebook name="Extra" invisible="1">
+              <page string="Thread">
+                <field name="child_line" colspan="4" nolabel="1" readonly="True"/>
+              </page>
+              <page string="Copies to External">
+                <group name="extern_grp" col="1">
+                  <group col="1">
+                    <field name="extern_partner_ids" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                  </group>
+                </group>
+              </page>
+              <page string="Copies to Departments">
+                <group col="2">
+                  <label for="cc_employee_ids"/>
+                  <label for="cc_department_ids"/>
+                  <field name="cc_employee_ids" nolabel="1">
+                    <tree  editable="1">
+                      <field name="name"/>
+                      <field name="department_id"/>
+                    </tree>
+                  </field>
+                  <field name="cc_department_ids" nolabel="1">
+                    <tree  editable="1">
+                      <field name="name"/>
+                      <!-- <field name="code"/> -->
+                    </tree>
+                  </field>
+                </group>
+              </page>
+            </notebook>
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="res_letter_in_form_view">
+      <field name="name">Inbound Letter Form</field>
+      <field name="model">res.letter</field>
+      <field name="arch" type="xml">
+        <form string="Letter" >
+          <header name="Toolbar">
+            <button name="action_received" states="created" string="Received" type="object" />
+            <button name="action_rec_ret" states="created" string="Received but Returned" type="object"/>
+            <button name="action_rec_bad" states="created" string="Received Damage" type="object"/>
+            <button name="action_set_draft" string="Set To Draft" type="object" />
+            <button name="action_cancel" states="draft,created" string="Cancel" type="object" />
+            <field name="state" widget="statusbar" statusbar_visible="draft,created,rec,rec_bad,rec_ret,cancel"/>
+          </header>
+          <sheet>
+            <group col="4">
+              <group string="References" col="2" colspan="2">
+                <field name="number" attrs="{'invisible': [('state','=','draft')],'readonly': [('state','!=','draft')]}"/>
+                <field name="orig_ref" required="1" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="expeditor_ref"  invisible="1"/>
+                <field name="department_id"/>
+                <field name="parent_id" invisible="1"/>
+                <field name="folder_id" invisible="1"/>
+                <field name="move"   invisible="1" context="{'default_move':'move'}"/>
+                <field name="recipient_partner_id" required="True" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="sender_partner_id" attrs="{'required': [('external_person','=',False)],'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="external_person" attrs="{'required': [('sender_partner_id','=',False)],'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+              </group>
+              <group string="Details" col="2" colspan="2">
+                <field name="date" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="snd_rec_date" string="Arrival Date" required="True" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="type_id" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}" required="True"/>
+                <field name="class_id" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="channel_id" string="Outbound Source" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="track_ref" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+              </group>
+              <group string="Subject" col="2" colspan="2">
+                  <field name="name" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+              </group>
+              <group string="Dimensions" col="2" colspan="2">
+                <field name="size" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+                <field name="weight" attrs="{'readonly': [('state', 'not in', ['draft', 'created'])]}"/>
+              </group>
+                <field name="note" placeholder="Description"/>
+            </group>
+
+            <notebook name="Extra" invisible="1">
+              <page string="Thread">
+                <field name="child_line" colspan="4" nolabel="1" readonly="True"/>
+              </page>
+              <page string="Reassignment">
+                <field name="reassignment_ids" nolabel="1"/>
+              </page>
+              <page string="Copies to Departments">
+                <group col="2">
+                  <label for="cc_employee_ids"/>
+                  <label for="cc_department_ids"/>
+                  <field name="cc_employee_ids" nolabel="1">
+                    <tree  editable="1">
+                      <field name="name"/>
+                      <field name="department_id"/>
+                    </tree>
+                  </field>
+                  <field name="cc_department_ids" nolabel="1">
+                    <tree  editable="1">
+                      <field name="name"/>
+                      <!-- <field name="code"/> -->
+                    </tree>
+                  </field>
+                </group>
+              </page>
+            </notebook>
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+
+
+    <record model="ir.ui.view" id="res_letter_intern_form_view">
+      <field name="name">Internal Letter Form</field>
+      <field name="model">res.letter</field>
+      <field name="arch" type="xml">
+        <form string="Letter" >
+          <header name="Toolbar">
+            <button name="action_create" states="draft" string="Create" type="object" class="oe_highlight"/>
+            <button name="action_validate" states="created" string="Validate" type="object" class="oe_highlight"/>
+            <button name="action_received" states="validated" string="Received" type="object" icon="STOCK_OK"/>
+            <button name="action_rec_ret" states="validated" string="Received but Returned" type="object" icon="STOCK_UNDO"/>
+            <button name="action_rec_bad" states="validated" string="Received Damage" type="object" icon="STOCK_DIALOG_WARNING"/>
+            <button name="action_set_draft" string="Set To Draft" type="object" icon="STOCK_CONVERT"/>
+            <button name="action_cancel" states="draft,created,validated" string="Cancel" type="object" icon="STOCK_CANCEL"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,created,validated,rec,rec_bad,rec_ret,cancel"/>
+          </header>
+          <sheet>
+            <group col="4">
+              <group string="References" col="2" colspan="2">
+                <field name="folder_id"/>
+                <field name="number"/>
+                <field name="orig_ref"/>
+                <field name="department_id"/>
+              </group>
+              <group string="Details" col="2" colspan="2">
+                <field name="date"/>
+                <field name="snd_rec_date" string="Send Date"/>
+                <field name="type_id"/>
+                <field name="class_id"/>
+                <field name="channel_id" string="Source"/>
+                <field name="track_ref"/>
+              </group>
+              <group string="Subject" col="2" colspan="2">
+                <field name="name"/>
+              </group>
+              <group string="Dimensions" col="2" colspan="2">
+                <field name="size"/>
+                <field name="weight"/>
+              </group>
+              <group string="Recipients" col="4" colspan="4">
+                <field name="recipient_intern_ids" nolabel="1">
+                  <tree  editable="1">
+                    <field name="name" readonly="1"/>
+                    <field name="department_id" readonly="1"/>
+                  </tree>
+                </field>
+              </group>
+            </group>
+
+            <notebook name="Extra">
+              <page string="Thread">
+                <field name="child_line" colspan="4" nolabel="1"/>
+              </page>
+              <!-- <page string="Action History">
+                <field name="history_line" colspan="4" nolabel="1"/>
+              </page> -->
+              <page string="Copies to External">
+                <group name="extern_grp" col="1">
+                  <group col="1">
+                    <field name="extern_partner_ids"/>
+                  </group>
+                </group>
+              </page>
+            </notebook>
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- Actions -->
+
+    <record model="ir.actions.act_window" id="action_res_letter_out_tree_view">
+      <field name="name">Outbound Letters</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.letter</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,calendar</field>
+      <field name="domain">[('move','=','out')]</field>
+      <field name="context">{'default_move':'out'}</field>
+      <field name="view_id" ref="res_letter_out_tree_view"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_res_letter_in_tree_view">
+      <field name="name">Inbound Letters</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.letter</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,calendar</field>
+      <field name="domain">[('move','=','in')]</field>
+      <field name="context">{'default_move':'in'}</field>
+      <field name="view_id" ref="res_letter_in_tree_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_res_letter_out_tree_mode">
+      <field name="sequence" eval="1"/>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="res_letter_out_tree_view"/>
+      <field name="act_window_id" ref="action_res_letter_out_tree_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_res_letter_in_tree_mode">
+      <field name="sequence" eval="1"/>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="res_letter_in_tree_view"/>
+      <field name="act_window_id" ref="action_res_letter_in_tree_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_res_letter_out_form_mode">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="res_letter_out_form_view"/>
+      <field name="act_window_id" ref="action_res_letter_out_tree_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_res_letter_in_form_mode">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="res_letter_in_form_view"/>
+      <field name="act_window_id" ref="action_res_letter_in_tree_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_res_letter_out_calendar_mode">
+      <field name="sequence" eval="3"/>
+      <field name="view_mode">calendar</field>
+      <field name="view_id" ref="res_letter_out_calendar_view"/>
+      <field name="act_window_id" ref="action_res_letter_out_tree_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_res_letter_in_calendar_mode">
+      <field name="sequence" eval="3"/>
+      <field name="view_mode">calendar</field>
+      <field name="view_id" ref="res_letter_in_calendar_view"/>
+      <field name="act_window_id" ref="action_res_letter_in_tree_view"/>
+    </record>
+
+
+        <!-- Actions -->
+
+    <record model="ir.actions.act_window" id="action_res_letter_intern_tree_view">
+      <field name="name">Internal Letters</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.letter</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,calendar</field>
+      <field name="domain">[('move','=','intern')]</field>
+      <field name="context">{'move':'intern'}</field>
+      <field name="view_id" ref="res_letter_intern_tree_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_res_letter_intern_tree_mode">
+      <field name="sequence" eval="1"/>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="res_letter_intern_tree_view"/>
+      <field name="act_window_id" ref="action_res_letter_intern_tree_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_res_letter_intern_form_mode">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="res_letter_intern_form_view"/>
+      <field name="act_window_id" ref="action_res_letter_intern_tree_view"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_res_letter_intern_calendar_mode">
+      <field name="sequence" eval="3"/>
+      <field name="view_mode">calendar</field>
+      <field name="view_id" ref="res_letter_intern_calendar_view"/>
+      <field name="act_window_id" ref="action_res_letter_intern_tree_view"/>
+    </record>
+
+
+
+  </data>
+</openerp>

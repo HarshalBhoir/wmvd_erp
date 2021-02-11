@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        
+<record id="view_bank_payment_form" model="ir.ui.view">
+    <field name="name">bank.payment.form</field>
+    <field name="model">bank.payment</field>
+    <field name="arch" type="xml">
+        <form>
+            <header><field name="state" widget="statusbar" 
+                statusbar_visible="draft,generated_payment,submitted_to_bank"/></header>
+            <sheet>
+                <h2><field name="name" 
+                    attrs="{'invisible':[('state','=','draft')],'readonly':[('state','!=','draft')]}"/></h2>
+
+                    <group  col="4" colspan="4" >
+                        <field name="date" attrs="{'readonly':[('state','!=','draft')]}"
+                            required="1" />
+                        <field name="server_instance" required="1"
+                               attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="erp_bank_id" options='{"no_open": True, "no_create": True}'  
+                            attrs="{'readonly':[('state','!=','draft')]}" required="1" 
+                            domain="[('hdfc_default', '=', True),('company_id','=',company_id)]"/>
+                        <field name="ad_org_id"  options='{"no_open": True, "no_create": True}'
+                            attrs="{'readonly':[('state','!=','draft')]}" required="1" />
+                        <field name="company_id" readonly="1" options="{'no_create' : True, 'no_open': True}"  />
+                    </group>
+                    
+                <group  invisible="1" col="12">
+                    <field name="delegate_user_id" invisible="1"  widget="many2many_tags"  />
+                    <field name="partner_name" states='generated_invoice' />
+                    <field name="inv_rep_bool" invisible="1" />
+                    <field name="condition" invisible="1" />
+                    <field name="user_id"   invisible="1"/>
+                </group>
+
+                <group>
+                     <group attrs="{'invisible':[('file_name','=',False)]}">
+                        <field name="hr_payment_data" colspan="4" invisible="1"/>
+                        <field name="file_name" filename="hr_payment_data" colspan="4" readonly="1" attrs="{'invisible':[('file_name','=',False)]}" />
+                    </group>
+                </group>
+          
+               <group col="4" colspan="2"  attrs="{'invisible':[('state','=','submitted_to_bank')]}" >
+                    <div class="col-xs-20" >
+                        <center>
+                            <button name="submit_manager" string="Submit to Manager" type="object"  class="btn-primary col-xs-2" style="font-size: 16px;" invisible="1" />
+
+                            <!-- <div class="col-xs-1"/> -->
+                            <button name="sync_payments" string="Sync Payments" type="object" class="btn-primary col-xs-2"
+                             style="font-size: 16px;" attrs="{'invisible':[('state','in',('generated_payment','submitted_to_bank'))]}"/>
+
+                             <div class="col-xs-1"/>
+                             <button name="payment_report" string="Payment Report" type="object" class="btn-primary col-xs-2"
+                             style="font-size: 16px;" attrs="{'invisible':['|',('state','not in',('generated_payment','submitted_to_bank')),('pmt_output_file','!=',False)]}"/>
+
+                            <div class="col-xs-1"/>
+                            <button name="update_to_bank" string="Update To Bank" type="object" class="btn-primary col-xs-2"
+                              style="font-size: 16px;" attrs="{'invisible':[('state','not in',('generated_payment','submitted_to_bank'))]}"/>
+                        </center>
+                    </div>
+                </group>
+
+                <group invisible="0" attrs="{'invisible':[('pmt_output_file','=',False)]}">
+                    <field name="pmt_export_file" invisible="1"/>
+                    <field name="pmt_output_file" filename="pmt_export_file" readonly="1" attrs="{'invisible':[('pmt_output_file','=',False)]}"/>
+                </group>
+
+                 <notebook>
+                    <page string="Payment Details" name="components" 
+                        attrs="{'invisible':[('state','not in',('generated_payment','submitted_to_bank'))]}">
+                       <group col="4" colspan="4" >
+                            <field name="payment_lines_one2many"  attrs="{'readonly':[('state','=','submitted_to_bank')]}"
+                                   string="Payments" nolabel="1"  >
+                                <tree create="false" editable='bottom'>
+                                    <field name="beneficiary_name" />
+                                    <field name="documentno"/>
+                                    <field name="beneficiary_account_number" />
+                                    <field name="ifsc_code"/>
+                                    <field name="bank_name"/>
+                                    <field name="transaction_amount" sum="Total Amount"/>
+                                    <field name="beneficiary_email_id"/>
+                                    <field name="description"/>
+                                    <field name="transaction_type" />
+                                    
+                                    <field name="value_date" invisible="1"/>
+                                    <field name="name"  invisible="1"/>
+                                    <field name="check_invoice" invisible="1"/>
+                                    <field name="payment_id" invisible="1"/>
+                                    <field name="beneficiary_code"  invisible="1"/>
+                                    <field name="customer_reference_number" invisible="1"/>
+                                    <field name="owner" invisible="1"/>
+                                    <field name="owner_email"  invisible="1" />
+                                    <field name="payment_term"  invisible="1"/>
+                                    <field name="user_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook> 
+
+                <field name="note" placeholder="Note .." />
+
+             </sheet>
+
+             <div class="oe_chatter">
+                <field name="message_ids" widget="mail_thread"/>
+              </div>
+        </form>
+    </field>
+</record>
+
+
+
+
+    <record id="view_bank_payment_lines" model="ir.ui.view">
+        <field name="name">bank.payment.lines.tree</field>
+        <field name="model">bank.payment.lines</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit='false' limit='10' >
+                <field name="check_invoice" invisible="1"/>
+                <field name="name"  invisible="1"/>
+                <field name="payment_id" invisible="1"/>
+                <field name="documentno"/>
+                <field name="beneficiary_name"/>
+                <field name="transaction_amount" sum="Total Amount"/>
+                <field name="description"/>
+                <field name="payment_term"  invisible="1"/>
+                <field name="transaction_type" invisible="0"/>
+                <field name="beneficiary_code"  invisible="1"/>
+                <field name="beneficiary_account_number"  invisible="1"/>                                    
+                <field name="customer_reference_number"  invisible="1"/>
+                <field name="value_date"/>
+                <field name="owner"  invisible="1"/>
+                <field name="ifsc_code"  invisible="1"/>
+                <field name="beneficiary_email_id"  invisible="1"/>
+                <field name="owner_email" invisible="1"/>
+                <field name="user_id"/>
+                <field name="create_uid"  invisible="1"/>
+                <!-- <field name="state"  invisible="1"/>
+                <field name="delegate_user_id" invisible="0"  widget="many2many_tags" />
+                <field name="delay_date"/> -->
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_bank_payment_lines" model="ir.actions.act_window">
+        <field name="name">Payment lines</field>
+        <field name="res_model">bank.payment.lines</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+
+
+    <record id="view_bank_payment_tree" model="ir.ui.view">
+        <field name="name">bank.payment.tree</field>
+        <field name="model">bank.payment</field>
+        <field name="arch" type="xml">
+            <tree colors="green:state=='erp_posted';">
+                <field name="name" />
+                <!-- <field name="requester" /> -->
+                <field name="employee_id" invisible="1"/>
+                <field name="date"/>
+                <field name="user_id"/>
+                <field name="company_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_payment_bank" model="ir.actions.act_window">
+        <field name="name">Payment-Bank Process</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bank.payment</field>
+        <field name="view_type">form</field>
+        <field name="domain">[('condition','=','payment')]</field>
+        <field name="context">{
+                'default_condition':'payment',
+            }
+        </field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.actions.act_window.view" id="action_payment_bank_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_bank_payment_tree"/>
+        <field name="act_window_id" ref="action_payment_bank"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_payment_bank_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_bank_payment_form"/>
+        <field name="act_window_id" ref="action_payment_bank"/>
+    </record>
+
+
+    <record id="view_erp_bank_master_form" model="ir.ui.view">
+        <field name="name">erp.bank.master.form</field>
+        <field name="model">erp.bank.master</field>
+        <field name="arch" type="xml">
+            <form >
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="value"/>
+                            <field name="c_bankaccount_id"/>
+                            <field name="ad_client_id"/>
+                            <field name="ad_org_id"/>
+                            <field name="active"/>
+                            <field name="c_bank_id"/>
+                            <field name="bankaccounttype"/>
+                        </group>
+                        <group>
+                            <field name="accountno"/>
+                            <field name="currentbalance"/>
+                            <field name="creditlimit"/>
+                            <field name="default"/>
+                            <field name="hdfc_default"/>
+                            <field name="hsbc_default"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_erp_bank_master_tree" model="ir.ui.view">
+        <field name="name">erp.bank.master.tree</field>
+        <field name="model">erp.bank.master</field>
+        <field name="arch" type="xml">
+            <tree >
+                <field name="name"/>
+                <field name="value"/>
+                <field name="c_bankaccount_id"/>
+                <field name="ad_client_id"/>
+                <field name="ad_org_id"/>
+                <field name="active"/>
+                <field name="c_bank_id"/>
+                <field name="bankaccounttype"/>
+                <field name="accountno"/>
+                <field name="currentbalance"/>
+                <field name="creditlimit"/>
+                <field name="default"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_erp_bank_master" model="ir.actions.act_window">
+        <field name="name">ERP Banks</field>
+        <field name="res_model">erp.bank.master</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="view_erp_representative_approver_tree" model="ir.ui.view">
+        <field name="name">erp.representative.approver.tree</field>
+        <field name="model">erp.representative.approver</field>
+        <field name="arch" type="xml">
+            <tree >
+                <field name="sequence" widget="handle"/>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record id="view_erp_representative_approver_form" model="ir.ui.view">
+        <field name="name">erp.representative.approver.form</field>
+        <field name="model">erp.representative.approver</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="sequence" invisible="1" />
+                    <group col="4" colspan="4">
+                        <field name="owner_id" required="1" options="{'no_create' : True, 'no_open': True}" />
+                        <field name="salesrep_id" required="1"/>
+                        <field name="name"/>
+                        <field name="company_id" required="1" options="{'no_create' : True, 'no_open': True}" />
+                        <field name="hierarchy_bool" />
+                    </group>
+
+                    <field name="line_ids"  >
+                      <tree editable="bottom" >
+                          <field name="name" invisible="1"/>
+                          <field name="approver_id" invisible="1" />
+                          <field name="user_id" required="1" options="{'no_create' : True, 'no_open': True}"  />
+                          <field name="min_amt"  required="1"/>
+                          <field name="max_amt"  required="1" />
+                      </tree>
+                    </field>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_erp_representative_approver" model="ir.actions.act_window">
+        <field name="name">ERP Representative Master</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">erp.representative.approver</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+           
+  </data>
+</odoo>

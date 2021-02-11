@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="report_marketing_label"
+            string="Marketing Barcodes"
+            model="barcode.marketing"
+            report_type="qweb-pdf"
+            name="barcode_marketing.report_marketinglabel"
+            file="barcode_marketing.report_marketinglabel"/>
+
+
+    </data>
+</odoo>

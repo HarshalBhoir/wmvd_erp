@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	
+    	<record id="view_timesheet_analysis_form" model="ir.ui.view">
+            <field name="name">timesheet.analyis.report.form</field>
+            <field name="model">timesheet.analyis.report</field>
+            <field name="arch" type="xml">
+	            <form string="Timeheet Analysis Report" >
+	            <group> 
+	            	<field name="project_report_printed" invisible="1"/>   
+	                <group attrs="{'invisible':[('project_report_printed','=',True)]}">
+	                    <field name="from_date" required="1"/>
+	                    <field name="user_id"/>
+	                </group>
+	                <group attrs="{'invisible':[('project_report_printed','=',True)]}">
+	                	<field name="to_date" required="1"/>
+	                </group>
+	                <group attrs="{'invisible':[('project_report_printed','=',False)]}">
+                	    <field name="file_name" invisible="1"/>
+                		<field name="analysis_report" readonly="1" filename="file_name"/>
+                	</group>
+	            </group>
+                <footer>
+                    <button string='Print'  name="action_print_timesheet_analysis_report" 
+	                	type="object" class="btn-primary" attrs="{'invisible':[('project_report_printed','=',True)]}"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+	            </form>
+            </field>
+        </record>    
+       
+        <record id="action_print_timesheet_report" model="ir.actions.act_window">
+            <field name="name">Timesheet Analysis Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">timesheet.analyis.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+       <menuitem  id="menu_print_timesheet_report" action="action_print_timesheet_report"
+       	sequence="12" parent="hr_timesheet.menu_timesheets_reports" />
+        
+</data>
+</odoo>

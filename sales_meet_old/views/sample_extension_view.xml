@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sample_requisition_form" model="ir.ui.view">
+        <field name="name">sample.requisition.form</field>
+        <field name="model">sample.requisition</field>
+        <field name="arch" type="xml">
+            <form >
+            	<header>
+
+            		<button name="update_data" string="Submit" type="object"  class="btn-primary"
+                            states="draft"/>
+	                <field name="state" widget="statusbar" statusbar_visible="draft"/>
+	               
+	            </header>
+                <sheet>
+                	<h2><field name="name" attrs="{'invisible':[('state','=','draft')],'readonly':[('state','!=','draft')]}" /></h2>
+                	<h2 style="color: red;"  attrs="{'invisible':[('zero_qty','=',False)]}" >No Quantity is left with the Distributer. Kindly contact Sales Support Team.</h2>
+                    <group>
+                        <group>
+							<field name="partner_id"  required="1" attrs="{'readonly':[('state','=','approved')]}"/>
+							<field name="date_sample" style="width: 100%;"  required="1" attrs="{'readonly':[('state','=','approved')]}" />
+							<field name="product_id" required="1" options="{'no_open': True, 'no_create': True}" attrs="{'readonly':[('state','=','approved')],'invisible':[('partner_id','=',False)]}"/>
+							<field name="uom_id" class="oe_inline"  options="{'no_open': True, 'no_create': True}" readonly="1"  invisible="1"/>
+							<field name="distributer_product_quantity"  attrs="{'readonly':[('state','=','approved')]}" readonly="1" />
+							
+							<field name="zero_qty" invisible="1"/>
+							<field name="ischeck"  style="width: 100%;height: 32px;" class="oe_edit_only"  required="1" attrs="{'readonly':[('state','=','approved')]}"/>
+	                        <field name="lead_id" style="width: 100%;" 
+	                        	   options="{'no_create': True, 'no_edit': True}" 
+	                               attrs="{'invisible': [('ischeck','!=','lead')],'required': [('ischeck','in',('lead'))],'readonly':[('state','=','approved')]}"  />
+	                        
+	                        <field name="project_partner_id" style="width: 100%;" 
+	                               attrs="{'invisible': [('ischeck', '!=','customer')],'required': [('ischeck','=','customer')],'readonly':[('state','=','approved')]}"/>
+                        </group>
+                       
+
+	                    <group>
+	                    	<field name="quantity"  attrs="{'readonly':[('state','=','approved')],'required': [('distributer_product_quantity','!=',0)],'invisible':[('distributer_product_quantity','=',0)]}" />
+							<field name="excess_taken"  attrs="{'readonly':[('state','=','approved')]}"/>
+							<field name="excess_quantity" 
+								attrs="{'invisible': [('excess_taken', '=', False)],'required': [('excess_taken','=',True)],'readonly':[('state','=','approved')]}"/>
+							
+							<field name="sample_attachments" widget='many2many_binary'  attrs="{'readonly':[('state','=','approved')]}"/>
+							
+							<field name="set_priority" widget="priority"  required="1"  attrs="{'readonly':[('state','=','approved')]}"  ></field>
+	                    </group>
+
+	                </group>
+
+	                <group class="oe_subtotal_footer oe_right" colspan="2" name="bp_total">
+                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                            <label for="total_quantity" />
+                            <button string="Update" name="refresh_form" class="fa fa-refresh btn-primary" type="object"  />
+                        </div>
+                        <field name="total_quantity" nolabel="1" class="oe_subtotal_footer_separator"
+                         widget='monetary'  />
+	                </group>
+
+                    <notebook>
+						<page name="extra_detail" string="Details">
+							<group>
+								<group >
+									<field name="contact_person"  required="1"  attrs="{'readonly':[('state','=','approved')]}"  />
+									<field name="contact_no"  required="1"  attrs="{'readonly':[('state','=','approved')]}"  />
+									<field name="applicator"  required="1"  attrs="{'readonly':[('state','=','approved')]}"  />
+									<field name="applicator_no"  required="1"  attrs="{'readonly':[('state','=','approved')]}" />
+									<field name="applicator_cost"  required="1"  attrs="{'readonly':[('state','=','approved')]}"  />
+									<field name="city"  required="1"  attrs="{'readonly':[('state','=','approved')]}"  />
+									<button string="Update Address" custom="click" states='draft' class="btn-primary oe_edit_only" 
+            								attrs="{'invisible':[('latlong_bool','=',True)]}" />
+									
+								</group>
+								<group >
+									<field name="project_size"  required="0" attrs="{'readonly':[('state','=','approved')]}"   />
+									<field name="order_quantity" attrs="{'readonly':[('state','=','approved')]}"  />
+									<field name="order_amt" attrs="{'readonly':[('state','=','approved')]}"   />
+									<field name="followup_date" attrs="{'readonly':[('state','=','approved')]}"   />
+									<field name="customer_feedback" attrs="{'readonly':[('state','=','approved')]}"   />
+									<field name="user_id" readonly="1" options="{'no_open': True}"/>
+									<field name="company_id"  readonly="1" options="{'no_open': True}"/>
+								</group>
+							</group>
+						</page>
+						<page name="logging_detail" string="Logging Details" groups="base.group_no_one">
+							<group>
+								<group >
+									<field name="reverse_location"    />
+									<field name="latlong_bool" invisible="1"/>
+								</group>
+								<group >
+									<field name="checkin_lattitude" id="checkin_lattitude" class="checkin_lattitude"/>
+                            		<field name="checkin_longitude" id="checkin_longitude" class="checkin_longitude"/>
+								</group>
+							</group>
+						</page>
+					</notebook>
+               	
+                </sheet>
+                <div class="oe_chatter">
+	                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                <field name="message_ids" widget="mail_thread"/>
+	            </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_sample_requisition_master_tree" model="ir.ui.view">
+        <field name="name">sample.requisition.tree</field>
+        <field name="model">sample.requisition</field>
+        <field name="arch" type="xml">
+            <tree >
+                <field name="name"/>
+				<field name="partner_id"/>
+				<field name="user_id"/>
+				<field name="company_id" invisible="1"/>
+				<field name="state" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_sample_requisition_master" model="ir.actions.act_window">
+        <field name="name">Sample Requisition</field>
+        <field name="res_model">sample.requisition</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <record id="view_sample_issuance_form" model="ir.ui.view">
+        <field name="name">sample.issuance.form</field>
+        <field name="model">sample.issuance</field>
+        <field name="arch" type="xml">
+            <form >
+                <sheet>
+                    <group>
+                        <group>
+                        	<field name="name"/>
+							<field name="partner_id"/>
+							<field name="company_id"/>
+                        </group>
+                        <group>
+                        	<field name="user_id"/>
+							<field name="date_sample"/>
+							<field name="product_id" invisible="1"/>
+                        </group>
+                        <group>
+                        	<field name="quantity" invisible="1"/>
+                        </group>
+
+                        <group  col="4" colspan="4" >
+							<field name="sample_issuance_line_one2many" 
+							mode="tree" colspan="4" widget="one2many_list" nolabel="1" context="{'default_partner_id': partner_id , 'group_by':'product_id'}" >
+								<tree >
+					                <field name="name" invisible="1"/>
+					                <field name="dateordered"/>
+					                <field name="documentno"/>
+									<field name="product_id"/>
+									<field name="quantity"/>
+									<field name="grandtotal"/>
+									<field name="partner_id" invisible="1"/>
+									<field name="sample_issuance_id" invisible="1"/>
+					            </tree>
+					        </field>
+						</group>
+                        
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+	                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                <field name="message_ids" widget="mail_thread"/>
+	            </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_sample_issuance_master_tree" model="ir.ui.view">
+        <field name="name">sample.issuance.tree</field>
+        <field name="model">sample.issuance</field>
+        <field name="arch" type="xml">
+            <tree >
+                <field name="name"/>
+				<field name="partner_id"/>
+				<field name="company_id"/>
+				<field name="quantity"/>
+				<field name="date_sample"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_sample_issuance_master" model="ir.actions.act_window">
+        <field name="name">Sample Issuance</field>
+        <field name="res_model">sample.issuance</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <record id="view_sample_erp_update_form" model="ir.ui.view">
+        <field name="name">sample.erp.update.form</field>
+        <field name="model">sample.erp.update</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" required="1"/>
+                </group>
+                
+                <footer >
+                    <button name="update_quantity" string="Update" type="object" class="btn-primary"/>
+                    <button string="Close" class="btn-default" special="cancel" />
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+    <record model='ir.actions.act_window' id='action_sample_erp_update'>
+        <field name="name">Sample Update</field>
+        <field name="res_model">sample.erp.update</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_sample_erp_update_form"/>
+        <field name="target">new</field>
+    </record>
+
+
+
+
+<record id="view_sample_automation_tree" model="ir.ui.view">
+	<field name="name">sample.automation.tree</field>
+	<field name="model">sample.automation</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name" />
+			<field name="user_id" />
+			<field name="start_date"/>
+			<field name="end_date"/>
+			<field name="state" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_sample_automation_form" model="ir.ui.view">
+	<field name="name">sample.automation.form</field>
+	<field name="model">sample.automation</field>
+	<field name="arch" type="xml">
+		<form>
+			<header>
+				<button name="approve_all"  class="btn-primary"  string="Approve" type="object" style="font-size: 16px;" 
+								attrs="{'invisible':['|',('sample_state','!=', 'done'),('state','!=', 'done')]}" />
+				<field name="state" widget="statusbar" statusbar_visible="draft,done,post"/>
+			</header>
+			
+			<sheet>
+				<div class="oe_title">
+					<h1><field name="name" states="done" readonly="1"/></h1>
+				</div>
+
+				<group col="12">
+					<label for="start_date" string="Date"/>
+					<div style="width: 307px;">
+						<field name="start_date" class="oe_inline"/> to <field name="end_date" class="oe_inline"/>
+					</div>
+					<field name="ad_org_id"  colspan="4" options="{'no_create': True, 'no_open': True}" 
+						required="1"  attrs="{'readonly':[('state','!=','draft')]}"/>
+					<field name="sample_state" required="1" colspan="4"  attrs="{'readonly':[('state','!=','draft')]}"/>
+				</group>
+
+				<group col="12">
+					<field name="user_id" options="{'no_create': True, 'no_open': True}"  required="1" 
+							colspan="4"  attrs="{'readonly':[('state','=','posted')]}"/>
+					<field name="user1_id" options="{'no_create': True, 'no_open': True}"  required="1" 
+							colspan="4"  attrs="{'readonly':[('state','=','posted')]}"/>
+					<field name="user2_id" options="{'no_create': True, 'no_open': True}"  required="1" 
+					 		colspan="4" attrs="{'readonly':[('state','=','posted')]}"/>
+				</group>
+				<group col="12">
+					<field name="dateacct"  colspan="4" invisible="0" />
+					<field name="dateordered2"  colspan="4" invisible="0" required="1"/>
+					<field name="dateordered3"  colspan="4" invisible="0" required="1" />
+				</group>
+				<field name="filter_rep_bool"  colspan="4" invisible="1" />
+				<field name="company_id"  colspan="4" invisible="1" />
+				<field name="c_elementvalue_id" options="{'no_create': True}"  colspan="4" 
+						 attrs="{'readonly':[('state','=','posted')]}"  invisible="1"/>
+				<field name="cnfromperiod"  colspan="4" invisible="1" required="0"/>
+				<field name="cntoperiod"  colspan="4" invisible="1" required="0" />
+
+			
+				<div  attrs="{'invisible':[('file_name','=',False)]}">
+					 <group>
+						<field name="hr_sample_data" colspan="4" invisible="1"/>
+						<field name="file_name" filename="hr_sample_data" colspan="4" readonly="1" attrs="{'invisible':[('file_name','=',False)]}"/>
+					</group>
+				</div>
+
+				<group col="4"  attrs="{'invisible':[('state','=','posted')]}">
+					<div attrs="{'invisible':[('state','=','posted')]}">
+						<center>
+							<!-- <div class="col-xs-1"/> -->
+							<button string="Search"  class="btn-primary col-xs-2"  name="action_sample_report" type="object" style="font-size: 16px;" 
+								states='draft'/>
+							<div class="col-xs-1"/>
+							<button name="select_all" type="object" string="Select All"   class="btn-primary col-xs-2"  style="font-size: 16px;" 
+								attrs="{'invisible':['|',('sample_state','!=', 'done'),('state','!=', 'done')]}"/>
+							
+							<div class="col-xs-1"/>
+							<button name="sample_automation_report" type="object" string="Generate Report"  states='done,approved,posted'   class="btn-primary col-xs-2"   style="font-size: 16px;"/>
+							<div class="col-xs-1"/>
+							<button name="send_approval" type="object" string="Send for Approval"     class="btn-primary col-xs-2"   style="font-size: 16px;"
+								attrs="{'invisible':['|',('sample_state','!=', 'done'),('state','!=', 'done')]}"/>
+							<div class="col-xs-1"/>
+							<button name="sample_automation_webservice" type="object" string="Push to ERP"   class="btn-primary col-xs-2"  style="font-size: 16px;"
+							  attrs="{'invisible':['|',('sample_state','!=', 'done'),('state','!=', 'approved')]}" />
+						</center>
+					</div>
+				</group>
+		
+				<group  col="4" colspan="4" >
+					<field name="sample_automation_line_one2many"  nolabel="1" mode="tree" 
+					attrs="{'readonly':[('state','=','posted')]}" />
+				</group>
+				
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+
+
+
+<record id="view_sample_automation_line_tree" model="ir.ui.view">
+	<field name="name">sample.automation.line.tree</field>
+	<field name="model">sample.automation.line</field>
+	<field name="arch" type="xml">
+		<tree editable="bottom" create="false" colors="green:approved_bool==True;blue:selection==True;" >
+			<button name="approve_sample" icon="fa fa-check" string="Approve" aria-hidden="true" type="object" style="color:green !important;" />
+			<field name="name" readonly="1" />
+			<field name="partner_id" readonly="1"/>
+			<field name="date_sample" readonly="1" />
+			<field name="product_id" class="oe_inline"  options="{'no_open': True, 'no_create': True}" />
+			<field name="total_quantity"  />
+			<field name="sampling_partner"  />
+			<field name="contact_person" />
+			<field name="contact_no" />
+			<field name="applicator" />
+			<field name="applicator_no" />
+			<field name="applicator_cost" sum="Total"/>
+			<field name="city"/>
+			<field name="log" />
+			<field name="selection" invisible="1"/>
+			<field name="uom_id"  invisible="1"/>
+			<field name="ischeck" invisible="1" />
+			<field name="lead_id" invisible="1" />
+			<field name="project_partner_id" invisible="1"/>
+			<field name="quantity" invisible="1"/>
+			<field name="excess_taken" invisible="1"/>
+			<field name="excess_quantity" invisible="1"/>
+			<field name="set_priority" widget="priority" invisible="1"/>
+			<field name="user_id" invisible="1" />
+			<field name="company_id"  invisible="1" />
+			<field name="project_size" invisible="1" />
+			<field name="order_quantity" invisible="1"/>
+			<field name="order_amt" invisible="1" />
+			<field name="followup_date" invisible="1"/>
+			<field name="customer_feedback" invisible="1"/>
+			<field name="state" invisible="1" />
+			<field name="approved_bool" invisible="1" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_sample_automation_line_form" model="ir.ui.view">
+	<field name="name">sample.automation.line.form</field>
+	<field name="model">sample.automation.line</field>
+	<field name="arch" type="xml">
+		<form string="sample Lines">
+			<sheet>
+				<header><field name="state" widget="statusbar"/></header>
+				<group>
+                        <group>
+                        	
+                        	<field name="log" string="Docmentno" />
+                        	<field name="name"/>
+							<field name="partner_id"/>
+							<field name="date_sample" style="width: 100%;" />
+							<label for="product_id" string="Product"/>
+							<div style="width: 307px;">
+								<field name="product_id" class="oe_inline"  options="{'no_open': True, 'no_create': True}" /><field name="uom_id" class="oe_inline"  options="{'no_open': True, 'no_create': True}" readonly="1"/>
+							</div>
+							<field name="ischeck"  style="width: 100%;height: 40px;" class="oe_edit_only" />
+	                        <field name="lead_id" style="width: 100%;height: 40px;" 
+	                        	   options="{'no_create': True, 'no_edit': True}" 
+	                               attrs="{'invisible': [('ischeck','!=','lead')],'required': [('ischeck','in',('lead'))]}"  />
+	                        
+	                        <field name="project_partner_id" style="width: 100%;" 
+	                                 attrs="{'invisible': [('ischeck', '!=','customer')],'required': [('ischeck','=','customer')]}"/>
+                        </group>
+                       
+
+	                    <group>
+	                    	<field name="quantity"/>
+							<field name="excess_taken"/>
+							<field name="excess_quantity" 
+								attrs="{'invisible': [('excess_taken', '=', False)],'required': [('excess_taken','=',True)]}"/>
+														
+							<field name="set_priority" widget="priority" />
+	                    </group>
+
+	                </group>
+
+	                	<group class="oe_subtotal_footer oe_right" colspan="2" name="bp_total">
+	                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+	                            <label for="total_quantity" />
+	                            <button string="Update" name="refresh_form" class="fa fa-refresh btn-primary" type="object"  />
+	                        </div>
+	                        <field name="total_quantity" nolabel="1" class="oe_subtotal_footer_separator"
+	                         widget='monetary'  />
+	                </group>
+
+	                    <notebook>
+							<page>
+								<group>
+									<group >
+										<field name="contact_person" />
+										<field name="contact_no" />
+										<field name="applicator" />
+										<field name="applicator_no" />
+										<field name="applicator_cost" />
+										<field name="user_id" readonly="1" options="{'no_open': True}"/>
+										<field name="company_id"  readonly="1" options="{'no_open': True}"/>
+									</group>
+									<group >
+										
+										<field name="project_size" />
+										<field name="order_quantity" />
+										<field name="order_amt" />
+										<field name="followup_date" />
+										<field name="city"/>
+										<field name="customer_feedback" />
+
+
+									</group>
+								</group>
+							</page>
+						</notebook>
+
+
+						<group invisible="1">
+							<group>
+								<field name="selection" string="" />
+								<button name="approve_sample" class="fa fa-check btn-primary" string="Approve" aria-hidden="true" type="object" style="color:green !important;" />
+							</group>
+							<group>
+
+								<field name="grade_id" />
+								<field name="approved_bool" invisible="1" />
+								
+							</group>
+						</group>
+
+			</sheet>
+
+		</form>
+	</field>
+</record>
+
+
+
+<record id="action_sample_automation" model="ir.actions.act_window">
+	<field name="name">Sample Automation</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">sample.automation</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+
+
+
+
+<record id="view_sample_master_config_form" model="ir.ui.view">
+	<field name="name">sample.master.config.form</field>
+	<field name="model">sample.master.config</field>
+	<field name="arch" type="xml">
+		<form>
+			<group><field name="name" /></group>
+
+			<group string="Approver">
+				<field name="sample_approver_one2many" nolabel="1">
+					<tree editable='bottom' >
+						<field name="sequence" widget="handle"/>
+						<field name="approver"/>
+					</tree>
+				</field>
+			</group>
+
+			<group string="User">
+				<field name="sample_user_one2many"  nolabel="1">
+					<tree editable='bottom' >
+						<field name="sequence" widget="handle"/>
+						<field name="user"/>
+					</tree>
+				</field>
+			</group>
+
+		</form>
+	</field>
+</record>
+
+<record id="action_sample_master_config" model="ir.actions.act_window">
+	<field name="name">Sample Master Config</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">sample.master.config</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+
+</odoo>

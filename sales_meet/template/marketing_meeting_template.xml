@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="sales_meet.email_meeting_approval_request" name="Email Meeting Approval Response">
+	<t t-call="web.layout">
+		<link rel="stylesheet" href="/website/static/src/less/import_bootstrap.less.css"/>
+		<style type="text/css">
+			body{
+				width: 100%;
+				background-color: #CECECE;
+				color: #000;
+				margin:0;
+				padding:0;
+			}
+			body .portal_page {
+				background-color: #FFFFFF;
+				margin-top: 50px;
+				margin-left: 16.666666666666664%;
+				margin-bottom: 100px;
+				width: 66%;
+				text-align: center;
+				vertical-align: middle;
+				height: auto;
+			}
+			body .row {
+				vertical-align: middle;
+				height: auto;
+			}
+			body .row_seperator {
+				border-top: 2px solid #F26D35;
+			}
+		</style>
+		<div class="portal_page text-center col-md-offset-2 col-xs-8">
+			
+			<t t-if="invalid">
+				<div class="row row_seperator">
+					<t t-if="title"><h1><t t-esc="title"/></h1></t>
+					<t t-if="not title"><h1>Invalid Request</h1></t>
+				</div>
+			</t>
+			
+			<t t-if="not invalid">
+				<t t-if="approve_data">
+					<div class="row row_seperator">
+						<h1>Meeting Approved</h1>
+					</div>
+				</t>
+				<t t-if="refuse_data">
+					<div class="row row_seperator">
+						<h1>Meeting Rejected</h1>
+					</div>
+				</t>
+			</t>
+
+		</div>
+	</t>
+</template>
+
+</odoo>

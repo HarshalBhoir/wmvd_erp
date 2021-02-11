@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+            
+         <record id="bt_asset_maintenance_tree" model="ir.ui.view">
+            <field name="name">bt.asset.maintenance.tree</field>
+            <field name="model">bt.asset.maintenance</field>
+            <field name="arch" type="xml">
+                <tree string="asset_maintenance" colors="green:state=='done';">
+                    <field name="name"/>
+                    <field name="date" invisible="0"/>
+                    <field name="user_id" />
+                    <field name="current_loc_id" />
+                    <field name="team_user_id" invisible="0"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>  
+        
+        
+        <record id="bt_asset_maintenance_form" model="ir.ui.view">
+            <field name="name">bt.asset.maintenance.form</field>
+            <field name="model">bt.asset.maintenance</field>
+            <field name="arch" type="xml">
+                <form string="asset_maintenance">
+                	<header>
+                		<field name="state" widget="statusbar"  statusbar_visible="draft"/>
+                	</header>
+                	<sheet>
+
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+
+
+                        <group col="12">
+                            <field name="date" colspan="4"  class="oe_inline" required="1" attrs="{'readonly':[('state','=','done')]}"/>
+                            <field name="current_loc_id"  colspan="4" options="{'no_create': True, 'no_open': True}" 
+                                required="1"  attrs="{'readonly':[('state','=','done')]}"/>
+                            <field name="user_id" required="1" colspan="4"  attrs="{'readonly':[('state','=','done')]}"/>
+                        </group>
+
+                        <group col="12">
+                            <field name="next_maintenance_date" colspan="4"  class="oe_inline" required="1" />
+                            <field name="duration"  colspan="4"  required="1" />
+                            <field name="team_user_id" required="1" colspan="4"  widget="many2many_tags" />
+                        </group>
+
+                        <group col="12">
+                            <field name="remark"  colspan="8"  required="1" style="height: 60px;"/>
+                            <field name="is_created" invisible="1" colspan="4" />
+                        </group>
+
+                        <group col="4" colspan="2"  >
+                            <div class="col-xs-12" style="margin-top:1%;">
+                                <center>
+                                    <div class="col-xs-1" />
+  
+                                    <button name= "action_search" string="Search" type="object"  class="btn-primary col-xs-2"  style="font-size: 16px;"
+                                     attrs="{'invisible':[('is_created','=',True)]}"  />
+
+                                    <div class="col-xs-1" />
+                                    <button name= "action_done" string="Done" type="object" class="btn-primary col-xs-2"  style="font-size: 16px;" 
+                                    attrs="{'invisible':['|',('state','in',('done','postponed')),('is_created','=',False)]}" />
+
+                                    <div class="col-xs-1" />
+                                    <button name= "action_postponed" string="Postponed" type="object" class="btn-primary col-xs-2"  style="font-size: 16px;" 
+                                    attrs="{'invisible':['|',('state','in',('done','postponed')),('is_created','=',False)]}" />
+
+                                </center>
+                            </div>
+                        </group>
+
+                        <field name="line_ids"  attrs="{'readonly':[('state','=','done')]}" >
+                          <tree editable="bottom" colors="green:state=='done';">
+                              <field name="name" invisible="1"/>
+                              <field name="asset_id" invisible="0"/>
+                              <field name="remark" invisible="0"/>                          
+                              <button name= "action_done" class="harshal-button" string="Done" type="object" 
+                                style="background-color: #337AB7 !important;color: white !important;"  />
+                              <button name="action_postponed"  style="background-color: #337AB7;color: white;" 
+                                string="Postponed" aria-hidden="true" type="object"  />
+                            <field name="state" />
+                          </tree>
+                        </field>
+ 
+                	 </sheet>
+                	 <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>  
+                 </form>
+             </field>
+        </record>
+
+        
+        <record id="action_bt_asset_maintenance" model="ir.actions.act_window">
+                <field name="name">Maintenances</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">bt.asset.maintenance</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record id="bt_asset_surveillance_tree" model="ir.ui.view">
+            <field name="name">bt.asset.surveillance.tree</field>
+            <field name="model">bt.asset.surveillance</field>
+            <field name="arch" type="xml">
+                <tree string="asset_surveillance" colors="green:state=='done';">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="date" invisible="0"/>
+                    <field name="user_id" />
+                    <field name="current_loc_id" />
+                    <field name="state" invisible="1"/>
+
+                </tree>
+            </field>
+        </record>  
+        
+        
+        <record id="bt_asset_surveillance_form" model="ir.ui.view">
+            <field name="name">bt.asset.surveillance.form</field>
+            <field name="model">bt.asset.surveillance</field>
+            <field name="arch" type="xml">
+                <form string="asset_surveillance">
+                    <header>
+                        <field name="state" widget="statusbar"  invisible="1"/>
+                    </header>
+                    <sheet>
+                        <label for="name" class="oe_edit_only"/>
+
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="0"/></h1>
+                            <h4><field name="code" readonly="1"/></h4>
+                        </div>
+
+                        <group col="12">
+                            <field name="date" colspan="4"  class="oe_inline" required="1" attrs="{'readonly':[('state','=','done')]}"/>
+                            <field name="current_loc_id"  colspan="4" options="{'no_create': True, 'no_open': True}" 
+                                required="1"  attrs="{'readonly':[('state','=','done')]}"/>
+                            <field name="user_id" required="1" colspan="4"  attrs="{'readonly':[('state','=','done')]}"/>
+                        </group>
+
+                        <group col="12">
+                            <field name="remark"  colspan="8"  invisible="1" style="height: 60px;"/>
+                            <field name="is_created" invisible="1" colspan="4" />
+                        </group>
+
+                        <group col="4" colspan="2" invisible="1" >
+                            <div class="col-xs-12" style="margin-top:1%;">
+                                <center>
+                                    <div class="col-xs-1" />
+  
+                                    <button name= "action_search" string="Search" type="object"  class="btn-primary col-xs-2"  style="font-size: 16px;"
+                                     attrs="{'invisible':[('is_created','=',True)]}"  />
+
+                                    <div class="col-xs-1" />
+                                    <button name= "action_done" string="Done" type="object" class="btn-primary col-xs-2"  style="font-size: 16px;" 
+                                    attrs="{'invisible':['|',('state','in',('done','postponed')),('is_created','=',False)]}" />
+
+                                    <div class="col-xs-1" />
+                                    <button name= "action_postponed" string="Postponed" type="object" class="btn-primary col-xs-2"  style="font-size: 16px;" 
+                                    attrs="{'invisible':['|',('state','in',('done','postponed')),('is_created','=',False)]}" />
+
+                                </center>
+                            </div>
+                        </group>
+
+                        <field name="line_ids"  attrs="{'readonly':[('state','=','done')]}" >
+                          <tree editable="bottom" colors="green:state=='done';">
+                                <field name="name" invisible="1"/>
+                                <field name="asset_id" invisible="1"/>
+                                <field name="category_id" invisible="0"/>
+                                <field name="remark" invisible="0"/>                          
+                                <field name="asset_code" invisible="1"/>
+                                <field name="model_name" string="Model/Capacity"/>
+                                <field name="serial_no"/>
+                                <field name="warranty_end"/>
+                                <field name="state"/>
+                          </tree>
+                        </field>
+ 
+                     </sheet>
+                     <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>  
+                 </form>
+             </field>
+        </record>
+
+        
+        <record id="action_bt_asset_surveillance" model="ir.actions.act_window">
+                <field name="name">Surveillance Asset</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">bt.asset.surveillance</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+	            
+	            
+	</data>
+</odoo>	

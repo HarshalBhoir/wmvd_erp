@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+<record id="view_cir_extension_form" model="ir.ui.view">
+    <field name="name">cir.extension.form</field>
+    <field name="model">cir.extension</field>
+    <field name="arch" type="xml">
+        <form >
+        	<header>
+        		<button name="update_data" string="Submit" type="object"  class="btn-primary"
+                        attrs="{'invisible': [('state', '=', 'closed')]}"/>
+                <button name="close_cir" string="Close" type="object"  class="btn-primary" invisible="1" />
+                <field name="state" widget="statusbar" statusbar_visible="draft"/>
+            </header>
+            <sheet>
+            	<h2><field name="name" readonly="1" /></h2>
+                <group attrs="{'readonly':[('state','=','closed')]}" >
+                    <group>
+                        <field name="product_id" invisible="0"  widget="many2many_tags" required="1"/>
+                        <field name="uom_id" invisible="1" />
+                        <field name="complaint_id" options="{'no_create': True, 'no_open': True}" required="1" widget="selection"/>
+                        <field name="complaint_extent" required="1" string="Extent of Complaint (Bags)"/>
+                        <field name="complaint_received_date" required="1" />
+                        <field name="partner_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                        <field name="partner_address"  required="1" />
+                        <field name="lead_id" options="{'no_create': True, 'no_open': True}"
+                            attrs="{'required':[('distributer_complaint','=',False)]}"/>
+                        <!-- <field name="partner_address"/> -->
+                        <field name="state_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                        <field name="zone" required="1"/>
+                        <field name="partner_group_id" options="{'no_create': True, 'no_open': True}" widget="selection" required="1" />
+                        <field name="batch_no" invisible="0" required="1"/>
+                        <field name="distributer_complaint" invisible="1" />
+                                                
+                    </group>
+                    <group>
+                        <field name="investigator_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                        <field name="manager_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                        <field name="source_id" invisible="0" options="{'no_create': True, 'no_open': True}"
+                               required="1" widget="selection"/>
+                        <field name="invoice_no" required="1" />
+                        <field name="invoice_value" required="1" />
+                        <field name="quantity_supplied" required="1" />
+                        <field name="invoice_date" required="1" />
+                        <field name="material_status" string="Status of Material (Sent to LAB)" invisible="1"/>
+                        <field name="pod_details" attrs="{'invisible':[('material_status','!=','YES')],'required':[('material_status','=','YES')]}" />
+                        <!-- attrs="{'invisible':[('material_status','!=','YES')],'required':[('material_status','=','YES')]}" -->
+                        <field name="courier_details" attrs="{'invisible':[('material_status','!=','YES')],'required':[('material_status','=','YES')]}" />
+                        <field name="applicator" invisible="1"/>
+                        <field name="applicator_date" string="Application Date" required="1" />
+                        <field name="salesperson_remark" required="1"/>
+                        <field name="salesuser_cir_attachments" required="0" widget='many2many_binary'/>
+                        <field name="salesuser_id" options="{'no_create': True, 'no_open': True}" readonly="1" />
+                        
+                    </group>
+                </group>
+
+                <group  attrs="{'invisible':[('state','=','draft')]}">
+                    <group string="TSE">
+                        <field name="tse_remark" attrs="{'readonly': [('can_tse_edit', '=', False)]}"/>
+                        <field name="can_tse_edit" invisible="1"/>
+                        <field name="tse_cir_attachments" required="0" attrs="{'readonly': [('can_tse_edit', '=', False)]}" 
+                               widget='many2many_binary'/>
+                        <field name="investigation_date" attrs="{'invisible': [('investigation_date', '=', False)]}" readonly="1" />
+                    </group>
+                    <group string="Head of QA/QC">
+                        <field name="lab_remark"  attrs="{'readonly': [('can_lab_edit', '=', False)]}"/>
+                        <field name="can_lab_edit" invisible="1"/>
+                        <field name="cir_attachments" attrs="{'readonly': [('can_lab_edit', '=', False)]}" widget='many2many_binary'/>
+                        <field name="lab_date" attrs="{'invisible': [('lab_date', '=', False)]}" readonly="1"/>  
+                    </group>
+                </group>
+
+
+                <group attrs="{'invisible':[('state','=','draft')]}">
+                    <group string="ASM/RSM/ZSM">
+                        <field name="zsm_id" options="{'no_create': True, 'no_open': True}" 
+                            attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="zsm_remark" attrs="{'readonly': [('can_zsm_edit', '=', False)]}"/>
+                        <field name="can_zsm_edit" invisible="1"/>
+                        <field name="zsm_date" attrs="{'invisible': [('zsm_date', '=', False)]}" readonly="1" />
+                    </group>
+                    <group string="Product Head">
+                        <field name="product_head_id" options="{'no_create': True, 'no_open': True}"
+                            attrs="{'readonly':[('state','!=','draft')]}" />
+                        <field name="product_head_remark" attrs="{'readonly': [('can_product_head_edit', '=', False)]}"/>
+                        <field name="can_product_head_edit" invisible="1"/>
+                        <field name="product_head_date" attrs="{'invisible': [('product_head_date', '=', False)]}" readonly="1" />
+                    </group>
+                </group>
+
+                <group string="Conclusion" attrs="{'invisible':[('state','=','draft')]}">
+                    <group>
+                        <field name="conclusion"/>
+                        <field name="credit_note_amount" attrs="{'invisible':[('conclusion','!=','Credit Note')],'required':[('conclusion','=','Credit Note')]}"/>
+                        <field name="other_conclusion" attrs="{'invisible':[('conclusion','!=','Others')],'required':[('conclusion','=','Others')]}" />
+                        <field name="replacement_bags" attrs="{'invisible':[('conclusion','!=','Replacement of Bags')],'required':[('conclusion','=','Replacement of Bags')]}" />
+                    </group>
+
+                    <group>
+                        <field name="ho_remark" attrs="{'readonly': [('can_ho_edit', '=', False)]}"/>
+                        <field name="ho_date" attrs="{'readonly': [('can_ho_edit', '=', False)]}" />
+                        <field name="can_ho_edit" invisible="1"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}" readonly="1"/>
+                    </group>
+                   
+                </group>
+
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+        </form>
+    </field>
+</record>
+
+<record id="view_cir_extension_master_search" model="ir.ui.view">
+    <field name="name">cir.extension.search</field>
+    <field name="model">cir.extension</field>
+    <field name="arch" type="xml">
+      <search string="CIR">
+        <field name="name"/>
+        <field name="partner_id" />
+        <field name="investigator_id" />
+        <field name="salesuser_id" />
+        <field name="state" />
+        <separator/>
+        <group expand="0" string="Group By">
+          <filter string="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+          <filter string="TSE" domain="[]" context="{'group_by':'investigator_id'}"/>
+          <filter string="Salesperson" domain="[]" context="{'group_by':'salesuser_id'}"/>
+          <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+        </group>
+      </search>
+    </field>
+</record>
+
+
+<record id="view_cir_extension_master_tree" model="ir.ui.view">
+    <field name="name">cir.extension.tree</field>
+    <field name="model">cir.extension</field>
+    <field name="arch" type="xml">
+        <tree colors="red:state=='draft';green:state=='closed';blue:state=='tse_approved'">
+            <field name="name"/>
+			<field name="partner_id"/>
+			<field name="company_id" invisible="1"/>
+			<field name="investigation_date"/>
+            <field name="investigator_id" />
+			<field name="applicator" invisible="1"/>
+            <field name="partner_address" invisible="1"/>
+            <field name="complaint_id"/>
+			<field name="salesuser_id"/>
+			<field name="complaint_received_date"/>
+			<field name="product_id" invisible="0"/>
+			<field name="partner_group_id" invisible="1"/>
+			<field name="batch_no" invisible="0"/>
+			<field name="source_id" invisible="0"/>
+            <field name="salesperson_remark" />
+            <field name="tse_remark" invisible="1"/>
+            <field name="lab_remark" invisible="1"/>
+            <field name="zsm_remark" invisible="1"/>
+            <field name="product_head_remark" invisible="1"/>
+            <field name="conclusion" />
+			<field name="state" />
+        </tree>
+    </field>
+</record>
+
+
+<record id="action_cir_extension" model="ir.actions.act_window">
+    <field name="name">CIR</field>
+    <field name="res_model">cir.extension</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="view_cir_extension_master_search"/>
+</record>
+
+
+<record id="cir_complaint_master_tree_view" model="ir.ui.view">
+    <field name="name">cir.complaint.master.tree</field>
+    <field name="model">cir.complaint.master</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="opt_out"/>
+            <field name="distributer_complaint"/>
+        </tree>
+    </field>
+</record>
+
+<record id="cir_complaint_master_form_view" model="ir.ui.view">
+    <field name="name">cir.complaint.master.form</field>
+    <field name="model">cir.complaint.master</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <h1 >
+                    <field name="name" required="1"/>
+                </h1>
+                <group>
+                    <field name="opt_out"/>
+                    <field name="distributer_complaint"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="cir_complaint_master_action" model="ir.actions.act_window">
+    <field name="name">Complaint Master</field>
+    <field name="res_model">cir.complaint.master</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<record id="view_cir_escalation_matrix_form" model="ir.ui.view">
+    <field name="name">cir.escalation.matrix.form</field>
+    <field name="model">cir.escalation.matrix</field>
+    <field name="arch" type="xml">
+        <form>
+            <div class="oe_title">
+                <h1><field name="name" readonly="1"/></h1>
+            </div>
+            <br/>
+            <group col="12">
+                <field name="lab_mail" widget="email" colspan="4"/>
+                <field name="complaint_mail_id" widget="email" colspan="4"/>
+                <field name="salesupport_mail_id" widget="email" colspan="4"/>
+            </group>
+            <group col="12">
+                <field name="toll_free_user" widget="email" colspan="4" required="1"/>
+                <field name="confirmation_mail" widget="email" colspan="4" required="1" />
+                <field name="company_id" readonly="1" options="{'no_create': True, 'no_open': True}" colspan="4" />
+            </group>
+            <group  col="12">
+                <field name="support_user_ids" options="{'no_create': True, 'no_open': True}" colspan="4"
+                 widget="many2many_tags" />
+                <field name="it_helpdesk_mail" widget="email" colspan="4" required="1" />
+                <field name="erp_mail" widget="email" colspan="4" required="1" />
+
+            </group>
+
+            <group >
+                <field name="sample_approver_one2many"  nolabel="1">
+                    <tree editable='bottom' >
+                        <field name="sequence" widget="handle"/>
+                        <field name="config_id" invisible="1" />
+                        <field name="company_id" invisible="1"  options="{'no_create': True, 'no_open': True}" />
+                        <field name="tse_user_id" options="{'no_create': True, 'no_open': True}" />
+                        <field name="manager_id" options="{'no_create': True, 'no_open': True}" />
+                        <field name="report_user_id" options="{'no_create': True, 'no_open': True}" />
+                        <field name="zsm_user_id" options="{'no_create': True, 'no_open': True}" />
+                        <field name="support_user_ids" options="{'no_create': True, 'no_open': True}" widget="many2many_tags" />
+                        <field name="state_id" options="{'no_create': True, 'no_open': True}" />
+                        <field name="zone"/>
+                    </tree>
+                </field>
+            </group>
+
+        </form>
+    </field>
+</record>
+
+<record id="action_cir_escalation_matrix" model="ir.actions.act_window">
+    <field name="name">Escalation Matrix</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">cir.escalation.matrix</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+</odoo>

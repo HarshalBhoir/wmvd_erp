@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record id="wp_asset_payment_tree" model="ir.ui.view">
+            <field name="name">wp.asset.payment.tree</field>
+            <field name="model">wp.asset.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Payments">
+			<field name="name"/>
+			<field name="date"/>
+			<field name="partner_id"/>
+                    <field name="vendor_reference"/>
+                    <field name="amount_total"/>
+                    <field name="company_id"/>
+                    <field name="payment_category"/>
+                  	<field name="state"/>
+                </tree>
+            </field>
+        </record>  
+        
+        
+        <record id="wp_asset_payment_form" model="ir.ui.view">
+            <field name="name">wp.asset.payment.form</field>
+            <field name="model">wp.asset.payment</field>
+            <field name="arch" type="xml">
+                <form string="Payments">
+                	<header>
+                        <button name= "action_confirm" string="Confirm" type="object" class="btn-primary"  attrs="{'invisible': [('state','!=','draft')]}" />
+                        <button name= "action_cancel" string="Cancel" type="object" class="btn-primary"  attrs="{'invisible': [('state','!=','draft')]}" />
+                		<field name="state" widget="statusbar"  statusbar_visible="draft,paid"/>
+                	</header>
+                	<sheet>
+
+
+                            <div class="oe_button_box" name="button_box">
+                                <button name="attachment_tree_view_1" class="oe_stat_button"
+                                  type="object" icon="fa-files-o">
+                                  <field string="Documents" name="attach_doc_count" widget="statinfo" />
+                                </button>
+
+                            </div>
+
+                            <div class="oe_title"  >
+                            	<h1  >
+                                	<field name="name" attrs="{'readonly': [('name','!=',False)],'invisible': [('name','=',False)]}" />
+                            	</h1>
+                                
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="date" />
+                                    <field name="vendor_reference"  required="1"  />
+                                    <field name="payment_category" required="1"  />
+                                    <field name="budget_id" required="1"  />
+                                    <field name="budget_category_id"  required="1"  options="{'no_create': True, 'no_open': True}"/>
+                                </group>
+                                <group>
+                                    <field name="partner_id" required="1"
+                                           context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" 
+                                           domain="[('supplier','=',True),('it_supplier','=',True)]"/>
+                                    <field name="company_id" required="1"  />
+                                    <field name="amount" required="1" />
+                                    <field name="remarks" />
+                                </group>
+                            </group>
+                            <!-- <group>
+                                
+                            </group> -->
+
+                          <notebook>
+                        <page string="Lines" name="lines">
+                            
+                            <field name="payment_line"  >
+                                <tree editable="bottom" >
+                                    <field name="create_date" invisible="1"/>
+                                    <field name="name" invisible="1"/>
+                                    <field name="asset_id"  required="0"/>
+                                    <field name="payment_type" />
+                                    <field name="description" />
+                                    <field name="payment_id"  invisible="1"/>
+                                    <field name="amount"/>
+                                    <field name="state"  invisible="1" />
+                                </tree>
+                            </field>
+
+                            <group class="oe_subtotal_footer oe_right"  name="bp_total">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="amount_total" />
+                                    <!-- <button string="Update" name="refresh_form" class="fa fa-refresh btn-primary" type="object"  /> -->
+                                </div>
+                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary'  />
+                            </group>
+
+                          </page>
+                          </notebook> 
+
+
+                	 </sheet>
+                	 <div class="oe_chatter">
+                	 	<!-- <field name="message_follower_ids" widget="mail_followers"/> -->
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>  
+                 </form>
+             </field>
+        </record>
+
+        <record id="action_wp_asset_payment" model="ir.actions.act_window">
+                <field name="name">Payments</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">wp.asset.payment</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+
+	</data>
+</odoo>

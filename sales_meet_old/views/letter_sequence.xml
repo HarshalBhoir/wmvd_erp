@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+
+    <!-- Sequences for Internal Letter -->
+
+    <record id="seq_intern_letter" model="ir.sequence">
+      <field name="name">Internal Letter</field>
+      <field name="code">intern.letter</field>
+      <field name="prefix">INTERN/%(year)s/%(month)s/%(day)s/</field>
+      <field name="padding">5</field>
+      <field eval="1" name="number_next"/>
+      <field eval="1" name="number_increment"/>
+      <field eval="True" name="use_date_range"/>
+    </record>
+
+
+
+
+  </data>
+</openerp>

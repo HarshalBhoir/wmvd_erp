@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record forcecreate="True" id="ir_cron_scheduler_logistic_trail_action" model="ir.cron">
+            <field name="name">Fetch Customer Invoices Status Schedular</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="priority">2</field>
+            <field eval="False" name="doall"/>
+            <field eval="'logistic.trail'" name="model"/>
+            <field eval="'process_daily_invoice_products_schedular_queue'" name="function"/>
+        </record>
+
+        <record forcecreate="True" id="ir_cron_mail_logistic_trail_action" model="ir.cron">
+            <field name="name">Mail Customer Invoices Status Schedular</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="priority">2</field>
+            <field eval="False" name="doall"/>
+            <field eval="'logistic.trail.line'" name="model"/>
+            <field eval="'process_mail_daily_invoice_products_schedular_queue'" name="function"/>
+        </record>
+
+        <record forcecreate="True" id="ir_cron_scheduler_update_address_action" model="ir.cron">
+            <field name="name">Update Address from LatLong Scheduler</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'calendar.event'" name="model"/>
+            <field eval="'process_update_address_scheduler_queue'" name="function"/>
+        </record>
+
+        <record forcecreate="True" id="ir_cron_scheduler_update_distance_action" model="ir.cron">
+            <field name="name">Update Distance from LatLong Scheduler</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'calendar.event'" name="model"/>
+            <field eval="'process_update_distance_scheduler_queue'" name="function"/>
+        </record>
+
+        <record forcecreate="True" id="ir_cron_scheduler_customer_action" model="ir.cron">
+            <field name="name">Update Customers from ERP Scheduler</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'res.partner'" name="model"/>
+            <field eval="'process_update_customer_scheduler_queue'" name="function"/>
+        </record>
+
+        <record forcecreate="True" id="ir_cron_scheduler_c_period_action" model="ir.cron">
+            <field name="name">Update C_Period from ERP Scheduler</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">12</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'wp.c.period'" name="model"/>
+            <field eval="'process_update_erp_c_period_queue'" name="function"/>
+        </record>
+
+
+        <record forcecreate="True" id="ir_cron_scheduler_c_elementvalue_action" model="ir.cron">
+            <field name="name">Update C_ElementValue from ERP Scheduler</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">12</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'wp.c.elementvalue'" name="model"/>
+            <field eval="'process_update_erp_c_elementvalue_queue'" name="function"/>
+        </record>
+
+        <record forcecreate="True" id="ir_cron_scheduler_calculate_attendance_action" model="ir.cron">
+            <field name="name">Update Attendance from Meetings</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'hr.attendance'" name="model"/>
+            <field eval="'process_calculate_attendance_scheduler'" name="function"/>
+        </record>
+
+</odoo>

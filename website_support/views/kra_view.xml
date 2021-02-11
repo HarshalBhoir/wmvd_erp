@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+           
+        <record id="kr_kra_tree" model="ir.ui.view">
+            <field name="name">kr.kra.tree</field>
+            <field name="model">kr.kra</field>
+            <field name="arch" type="xml">
+                <tree string="budget">
+                	<field name="name"/>
+                	<field name="department_id"/>
+                	<field name="company_id"/>
+                    <field name="year"/>
+                  	<field name="state"/>
+                </tree>
+            </field>
+        </record>  
+        
+        <record id="kr_kra_search" model="ir.ui.view">
+            <field name="name">kr.kra.search</field>
+            <field name="model">kr.kra</field>
+            <field name="arch" type="xml">
+                <search string="budget">
+                	<field name="name"/>
+                    <field name="department_id"/>
+                    <field name="company_id"/>
+                </search>
+            </field>
+        </record>
+        
+        <record id="kr_kra_form" model="ir.ui.view">
+            <field name="name">kr.kra.form</field>
+            <field name="model">kr.kra</field>
+            <field name="arch" type="xml">
+                <form string="budget">
+                	<header>
+                        <button name= "action_approve" string="Approve" type="object" class="btn-primary"  attrs="{'invisible': [('state','!=','draft')]}" />
+                        <button name= "action_disapprove" string="Disapprove" type="object" class="btn-primary"  attrs="{'invisible': [('state','!=','draft')]}" />
+                        <button name= "action_reset" string="Reset to Draft" type="object" class="btn-link"  attrs="{'invisible': [('state','=','draft')]}" />
+                		<field name="state" widget="statusbar"  statusbar_visible="draft,approved"/>
+                	</header>
+                	<sheet>
+                        <div class="oe_title"  >
+                                <div class="oe_edit_only">
+                                    <label for="display_name" string="Name"/>
+                                </div>
+                                <h1  >
+                                    <field name="display_name" />
+                                </h1>
+                                
+                            </div>
+						    
+                            <group>
+                                <group>
+                                    <field name="is_created" invisible="1"/>
+                                    <field name="name" required="1" />
+                                    <field name="department_id" required="1" attrs="{'readonly': [('state','=','approved')]}"/>
+                                </group>
+                            	<group>
+                                    <field name="company_id" required="1"  attrs="{'readonly': [('state','=','approved')]}"/>
+                                    <field name="date_year" required="1"  attrs="{'readonly': [('state','=','approved')]}"/>
+                                    <field name="year" invisible="1"/>
+                            	</group>
+                            </group>
+                            <notebook>
+                                <page string="KRA Highlights" name="highlights">
+                                   <field name="line_ids"  attrs="{'readonly': [('state','=','approved')]}">
+                                      <tree editable="bottom" >
+                                        <field name="category_id"  required="1" string='Key Result Area (KRA)'/>
+                                          <field name="name" invisible="0"  string='Key Performance Indicator (KPI)'/>
+                                          <field name="weightage" invisible="0" sum="Total"/>
+                                      </tree>
+                                  </field>
+                                </page>
+                                
+	                        </notebook>
+                            <style>
+                                .table_kra {
+                                  border-collapse: collapse;
+
+                                }
+                                .table_kra td {
+                                  border: 1px solid black;
+                                }
+                            </style>
+                            <table class='table_kra'>
+                              <tr>
+                                <td></td>
+                                <td><b style="font-size: 15px;padding-left: 10px; color: black;">Key Result Area (KRA)</b></td>
+                                <td><b style="font-size: 15px;padding-left: 10px; color: black;">Key Performance Indicator (KPI)</b></td>
+                                <td><b style="font-size: 15px;padding-left: 10px; color: black;">Weightage</b></td>
+                              </tr>
+                              
+                              <tr>
+                                <td><b style="font-size: 15px;padding-right: 10px;padding-left: 10px; color: black;">Details</b></td>
+                                <td>These are the 4 to 5 key goals. While we all may have a list of work responsibilities, please identify the top 4-5 goals. </td>
+                                <td>This is the measurable which defines each KRA. Each KRA can have multiple KPI's which explain the scope of the KRA </td>
+                                <td>For each of the 4-5 goals identified, a weightage is allotted to each KRA in the order of importance. 
+                                    The total of weightages will be 100% only. So each KRA depending on the individual impact will carry 
+                                    a weightage but the total sum weightage will be 100%</td>
+                              </tr>
+                            </table>	 
+                	 </sheet>
+                	 <div class="oe_chatter">
+                	 	<!-- <field name="message_follower_ids" widget="mail_followers"/> -->
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>  
+                 </form>
+             </field>
+        </record>
+
+
+        <record id="kr_kra_category_tree" model="ir.ui.view">
+            <field name="name">kr.kra.category.tree</field>
+            <field name="model">kr.kra.category</field>
+            <field name="arch" type="xml">
+                <tree string="KRA Category">
+                	<field name="name"/>
+                    <field name="categ_no"/>
+                </tree>
+            </field>
+        </record> 
+        
+       
+        <record id="kr_kra_category_form" model="ir.ui.view">
+            <field name="name">kr.kra.category.form</field>
+            <field name="model">kr.kra.category</field>
+            <field name="arch" type="xml">
+                <form string="KRA Category">
+                	<sheet>
+                		<div class="oe_title">
+                        	<div class="oe_edit_only">
+                            	<label for="name" string="Category Name"/>
+                            </div>
+                            <h1>
+                            	<field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                        	<field name="categ_no"/>
+                        </group>
+                	</sheet>
+                </form>
+            </field>
+         </record>       	
+        
+
+        <record id="action_kr_kra" model="ir.actions.act_window">
+                <field name="name">KRA</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">kr.kra</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">
+                        Create KRA for the Employee
+                    </p>
+                </field>
+        </record>
+	            
+	    <record id="action_kr_kra_category" model="ir.actions.act_window">
+            <field name="name">KRA Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">kr.kra.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create KRA Category for the Employee
+                </p>
+            </field>
+        </record>
+
+      <menuitem
+            id= "kr_kra_main_submenu"
+            parent= "hr.menu_hr_root"
+            sequence= "17"
+            name= "KRA"
+            action="action_kr_kra"
+            /> 
+                       
+        <menuitem
+            id= "kr_kra_main_submenu3"
+            parent= "hr.menu_human_resources_configuration"
+            sequence= "4"
+            name= "KRA Category"
+            action="action_kr_kra_category"
+            /> 
+           
+	            
+	</data>
+</odoo>

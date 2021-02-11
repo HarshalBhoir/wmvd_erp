@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_hr_applicant_form_inherite" model="ir.ui.view">
+			<field name="name">view.hr.applicant.form.id</field>
+			<field name="model">hr.applicant</field>
+			<field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='name']" position="after">
+					<group>
+						<div>
+							<h2 class="o_row">
+						<div>
+                            <field name="new_employee" />
+                            <label for="new_employee"/>
+                        </div>
+                        <div>
+							<field name="existing_employee"/>
+							<label for="existing_employee"/>
+						</div>
+						</h2>
+						</div>
+                        </group>
+					</xpath>
+
+				<xpath expr="//field[@name='partner_name']" position="attributes">
+					 <attribute name="attrs">{'invisible':[('existing_employee','=', True)]}</attribute>
+				</xpath>
+				<xpath expr="//label[@for='partner_name']" position="attributes">
+					 <attribute name="attrs">{'invisible':[('existing_employee','=', True)]}</attribute>
+				</xpath>
+				<xpath expr="//field[@name='partner_name']" position="after">
+					 <field name="employees_id" attrs="{'invisible':[('new_employee','=', True)]}"/>
+				</xpath>
+				<xpath expr="//label[@for='partner_name']" position="after">
+					 <label for="employees_id" attrs="{'invisible':[('new_employee','=', True)]}"/>
+				</xpath>	
+					
+			</field>
+		</record>
+</odoo>

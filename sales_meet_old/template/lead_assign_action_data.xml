@@ -1,0 +1,123 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        
+        <record id="lead_assign_action" model="mail.template">
+            <field name="name">New Lead Created !!!</field>
+            <field name="email_from">${object.company_id.name}&lt;${object.company_id.email}&gt;</field>
+            <field name="email_to">${object.user_id.email}</field>
+            <field name="subject">Sales Enquiry -${object.display_name or '' } ( ${object.state_id.name or 'n/a' })</field>
+            <field name="model_id" ref="sales_meet.model_crm_lead" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                <div class="page">
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                        <h3>Hello ${object.sales_user_id.name},</h3>
+                        <h4> This email is to remind  you that you have been assigned with a lead as  below listed. </h4>
+                    </div>
+                    <div>
+
+                    <h4>Following are the details: </h4>
+
+                        <ul>
+                            <li>Lead &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>${object.name  or ''}</span></li>
+                            <li>Group &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  : <span>${object.partner_group_id.name  or ''}</span></li>
+                            <li>Product  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>${object.categ_id.name  or ''}</span></li>
+                            <li>Contact Person : <span>${object.contact_name  or ''}</span></li>
+                            <li>Phone &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  : <span>${object.phone  or ''}</span></li>
+                            <li>Mobile &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  : <span>${object.mobile  or ''}</span></li>
+                            <li>Location &nbsp;&nbsp;&nbsp;&nbsp; : <span>
+                                ${object.street or ''} 
+                                %if object.street2:
+                                    ${object.street} ,
+                                %endif
+                                %if object.street2:
+                                     ${object.street2},
+                                %endif
+                                %if object.city:
+                                     ${object.city} ,
+                                %endif
+                                %if object.state_id: 
+                                     ${object.state_id.name} 
+                                %endif
+                                %if object.country_id: 
+                                    , ${object.country_id.name} 
+                                %endif 
+                                %if object.zip:
+                                    , ${object.zip} 
+                                %endif 
+                            </span></li>
+                            <li>Source &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>${object.source_id.name  or ''}</span></li>
+                            <li>Zone &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span>${object.zone  or ''}</span></li>
+
+                        </ul>
+
+                        <br/><br/>
+
+
+
+                        <b>Click here  :</b> <a href="web#id=${object.id}&view_type=form&model=crm.lead"
+                        style="background-color: #337ab7; margin-top: 10px; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">
+                        View lead<t t-esc="object._description.lower()"/>
+                        </a> 
+
+                        <br/><br/><br/><br/>
+
+
+
+
+                    </div>
+                </div>
+                ]]>
+            </field>
+        </record>
+
+
+        <record id="expense_assign_action" model="mail.template">
+            <field name="name">Expense generated</field>
+            <field name="email_from">${object.employee_id.work_email}</field>
+            <field name="email_to">${object.employee_id.parent_id.work_email}</field>
+            <field name="subject">[Approval] -${object.employee_id.name } 's Reimbursment for ( ${object.name } )</field>
+            <field name="model_id" ref="sales_meet.model_hr_expense_sheet" />
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                <div class="page">
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                        <h3>Hello ${object.employee_id.parent_id.name},</h3>
+
+                    </div>
+                    
+                    
+                    <h3>This Email Is To Remind  You That You Have Approval Pending for Reimbursment As Below Listed Which Are Due On Today. </h3>
+
+                    <ul>
+                      <li>Description &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${object.name}</li>
+                      <li>Employee &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  : ${object.employee_id.name}</li>
+                      <li>Meeting  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  : ${object.expense_line_ids.meeting_id.name}</li>
+                      <li>Amount Allocated : ${object.expense_line_ids.grade_amount}</li>
+                      <li>Amount Claimed &nbsp;&nbsp;: <b>${object.expense_line_ids.claimed_amount}</b></li>
+                      <li>Bill Reference &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${object.expense_line_ids.reference or ''}</li>
+                    </ul> 
+                    <br/>
+
+                    <b>Click here  :</b> <a href="web#id=${object.id}&view_type=form&model=hr.expense.sheet"
+                        style="background-color: #337ab7; margin-top: 10px; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;">
+                        View Expense<t t-esc="object._description.lower()"/>
+                    </a>
+
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+
+
+                    
+                </div>
+                ]]>
+            </field>
+        </record>
+
+
+
+    </data>
+</openerp>

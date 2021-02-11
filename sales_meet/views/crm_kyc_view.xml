@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+        <record id="view_wp_res_partner_form" model="ir.ui.view">
+            <field name="name">wp.res.partner.form</field>
+            <field name="model">wp.res.partner</field>
+            <field name="arch" type="xml">
+                <form >
+
+                    <header>
+                        <button name="action_submit" type="object" string="Submit" 
+                            states="Draft" class="btn-primary" style="font-size: 13px;margin:5px;"/>
+
+                        <button name="action_approve" type="object" string="Approve" 
+                            states="Submit" class="btn-primary" style="font-size: 13px;margin:5px;"
+                            groups="sales_meet.group_customer_manager,sales_meet.group_external_db_connect_manager" />
+
+                        <button name="action_post" type="object" string="Post" 
+                            states="Approved" groups="sales_meet.group_external_db_connect_manager"
+                            class="btn-primary" style="font-size: 13px;margin:5px;"/>
+
+                        <button name="action_set_to_approved" type="object" string="Revert" 
+                            groups="sales_meet.group_it_user,sales_meet.group_external_db_connect_manager"
+                            class="btn-primary" style="font-size: 13px;margin:5px;"/>
+                            
+                        <field name="state" widget="statusbar" statusbar_visible="Draft"/>
+                    </header>
+
+                    <sheet>
+
+                        <div class="oe_right oe_button_box" name="button_box">
+                            <button name="action_get_created_partner"  class="oe_stat_button"
+                                icon="fa-user"  type="object"
+                                groups="sales_meet.group_it_user,sales_meet.group_external_db_connect_manager"
+                                attrs="{'invisible': [('partner_id', '=', False)]}">
+                                <field name="partner_name" widget="statinfo" string="Distributor"/>
+                            </button>
+                        </div>
+
+                        <h1><field name="name" placeholder="Name" required="1" /></h1>
+                        <group>
+                            <group>
+                                <label for="street" string="Address"/>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                    <field name="city" placeholder="City" class="o_address_city" required="1"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <field name="district_id" placeholder="District" class="o_address_district"
+                                     options='{"no_open": True}' required="1" />
+                                    <field name="state_id" class="o_address_state" placeholder="State" required="1"
+                                        style="width: 100%;" options='{"no_open": True}' widget="selection"/>
+                                    <field name="country_id" placeholder="Country" class="o_address_country" 
+                                        options='{"no_open": True, "no_create": True}'/>
+                                </div>
+                                <field name="partner_group_id" widget="selection" required="1"/>
+                                <field name="contact_name" required="1"/>
+                                <field name="mobile_no" required="1"/>
+                                <field name="phone_no" />
+                            </group>
+
+                            <group>
+                                <field name="bp_code" states="Approved,Posted" 
+                                    attrs="{'required': [('state', '=', 'Approved')]}"/>
+                                <field name="aadhar_no"  />
+                                <field name="gst_no" />
+                                <field name="pan_no" required="1"/>
+                                <field name="email" />
+                                <field name="pricelist" />
+                                <field name="user_id" options='{"no_open": True, "no_create": True}'  
+                                       readonly="1" />
+                                <field name="company_id" options='{"no_open": True, "no_create": True}' readonly="1" />
+                                <field name="partner_id" states="Posted" options='{"no_open": True, "no_create": True}' readonly="1"/> 
+                            </group>
+
+                        </group>
+
+                        <group name="cheque_details_group" string="Cheque Details">
+                            <group>
+                                <field name="cheque1"/>
+                                <field name="cheque2"/>
+                                <field name="cheque3"/>
+                                <field name="bank_name" />
+                            </group>
+
+                            <group>
+                                <field name="sd_cheque_no"/>
+                                <field name="security_deposit_amount"/>
+                                <field name="credit_limit"/>
+                                <field name="credit_days"/>
+                            </group>
+
+                            <group invisible="1">
+                                <field name="amount1"/>
+                                <field name="amount2"/>
+                                <field name="amount3"/>
+                                <field name="customer"/>
+                                <field name="supplier"/>
+                                <field name="employee"/>
+                            </group>
+                                
+                        </group>
+                                            
+                        <notebook >
+                            <page string="Personal Details">
+                                <group>
+
+                                    <group>
+                                        <field name="owner_name"/>
+                                        <field name="owner_dob"/>
+                                        <field name="owner_spouse_name"/>
+                                        <field name="owner_spouse_dob"/>
+                                        <field name="owner_mrg_anvrsry_date"/>
+                                    </group>
+
+                                    <group>
+                                        <field name="owner_child1_name"/>
+                                        <field name="owner_child1_dob"/>
+                                        <field name="owner_child2_name"/>
+                                        <field name="owner_child2_dob"/>
+                                        <field name="owner_child3_name"/>
+                                        <field name="owner_child3_dob"/>
+                                    </group>
+
+                                </group>
+
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_wp_res_partner_tree" model="ir.ui.view">
+            <field name="name">wp.res.partner.tree</field>
+            <field name="model">wp.res.partner</field>
+            <field name="arch" type="xml">
+                <tree >
+                    <field name="name" />
+                    <field name="city" />
+                    <field name="contact_name" />
+                    <field name="mobile_no" />
+                    <field name="gst_no" />
+                    <field name="pan_no" />
+                    <field name="aadhar_no" />
+                    <field name="partner_group_id" />                    
+<!--                     <field name="security_cheque_details" />
+                    <field name="security_deposit" /> -->
+                    <field name="state_id" />                    
+                    <field name="user_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_wp_res_partner" model="ir.actions.act_window">
+            <field name="name">New Customer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wp.res.partner</field>
+            <field name="view_type">form</field>
+            <field name="context">{'default_customer':1, 'search_default_customer':1}</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+</odoo>

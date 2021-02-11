@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="sales_meet.MeetingDashboardMain">
+        <div class="o_dashboards">
+            <div class="container-fluid o_meetings_dashboard"></div>
+        </div>
+    </t>
+
+
+    <t t-name="MeetingsManagerDashboard">
+
+            <style type="text/css" t-if="! widget.isFirefox">
+
+                .o_web_client > .o_main .o_main_content .o_control_panel {
+                    display: none;
+                }
+
+               
+            </style>
+
+
+            <div class="col-md-12">
+                <div >
+                    <div class="row">
+
+                        <div class="col-md-3 go_to">
+                            <div class="dash-box card  dash-box-color-2" style="margin-top: 29px;">
+                                <div class="card-body">
+                                    <div class="stat-widget-one">
+                                        <h2><div style="color: #fff;" class="stat-icon-wp dib"><i class="fa fa-fw fa-calendar-plus-o"/></div></h2>
+
+                                        <div class="stat-content dib">
+                                            <h3><span style="color: #fff;" class="dash-box-title">Create Meeting</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-md-3 meeting_count">
+                            <div class="dash-box card dash-box-color-3" style="margin: 30px 0 50px;">
+                              <a href="javascript:;" class="dashboard-block ">
+                                <div class="rotate">
+                                  <i class="fa fa-calendar"></i>
+                                </div>
+                                <div class="details">
+                                  <!-- <span class="title">Payslips</span> -->
+                                  <h3><p style="color: #fff;" class="dash-box-title">Todays Meetings</p></h3>
+                                  <h2><p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.meetings_count"/></p></h2>
+                                  
+                                </div><!--/details-->
+                                <i class="fa fa-chevron-right fa-2x more"></i>
+                              </a><!--/dashboard-block2-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 meeting_count_month">
+                            <div class="dash-box card dash-box-color-6" style="margin: 30px 0 50px;">
+                              <a href="javascript:;" class="dashboard-block ">
+                                <div class="rotate">
+                                  <i class="fa fa-calendar-check-o"></i>
+                                </div>
+                                <div class="details">
+                                  <!-- <span class="title">Payslips</span> -->
+                                  <h3><p style="color: #fff;" class="dash-box-title">This Month</p></h3>
+                                  <h2><p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.meetings_count_month"/></p></h2>
+                                  
+
+                                </div><!--/details-->
+                                <i class="fa fa-chevron-right fa-2x more"></i>
+                              </a><!--/dashboard-block2-->
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3 draft_meeting_count_month">
+
+                            <div class="dash-box card dash-box-color-1" style="margin: 30px 0 50px;">
+                              <a href="javascript:;" class="dashboard-block ">
+                                <div class="rotate">
+                                  <i class="fa fa-calendar-times-o"></i>
+                                </div>
+                                <div class="details">
+                                  <!-- <span class="title">Payslips</span> -->
+                                  <h3><p style="color: #fff;" class="dash-box-title">Draft Meetings</p></h3>
+                                  <h2><p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.draft_meetings_count_month"/></p></h2>
+                                  
+                                </div><!--/details-->
+                                <i class="fa fa-chevron-right fa-2x more"></i>
+                              </a><!--/dashboard-block2-->
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+                        <!-- <div class="col-md-3 meeting_count" style="clear:both;" >
+
+                                <div class="dashboard_item item-content" style="background-color:rgba(217,83,79,0.99);color : rgba(255,255,255,0.99); margin: 30px 0 50px;">
+                                  <div class="dashboard_icon" style="background-color:rgba(192,58,54,0.99);">                    
+                                          <span style="color:rgba(255,255,255,0.99);" class="fa fa-bar-chart"></span>                    
+                                  </div>
+
+                                  <div class="dashboard_item_main_body">
+                                      <div class="dashboard_item_domain_count">
+                                          <p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.meetings_count"/></p>
+                                      </div>
+                                      <div class="dashboard_item_name">
+                                          <h3><p style="color: #fff;" class="dash-box-title">Todays Meetings</p></h3>
+                                      </div>
+                                  </div>
+                                </div>
+                        </div> -->
+
+
+
+                        <!-- <div class="col-md-3 meeting_count">
+                            <div class="card" style="background-color:rgba(217,83,79,0.99);color : rgba(255,255,255,0.99);min-height:90px;">
+                                <div class="card-body">
+                                    <div class="item-content">
+                                        <div class="dashboard_icon" style="background-color:rgba(192,58,54,0.99);">                    
+                                          <span style="color:rgba(255,255,255,0.99);" class="fa fa-bar-chart"></span>                    
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div> -->
+
+
+
+
+<!--                         <div style="margin: 0; position: absolute; top: 0; left: 10px; right: 10px;bottom: 0;">
+                                        <div class="dashboard_icon" style="background-color:rgba(192,58,54,0.99);">                    
+                                              <span style="color:rgba(255,255,255,0.99);" class="fa fa-bar-chart"></span>                    
+                                        </div>
+                                       </div>
+
+
+                                      <div class="dashboard_item_main_body">
+                                          <div class="dashboard_item_domain_count">
+                                              <p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.meetings_count"/></p>
+                                          </div>
+                                          <div class="dashboard_item_name">
+                                              <h3><p style="color: #fff;" class="dash-box-title">Todays Meetings</p></h3>
+                                          </div>
+                                      </div> -->
+
+
+
+
+
+                        <!-- <div class="col-md-3 meeting_count">
+                            <div class="dash-box card  dash-box-color-3">
+                                <div class="card-body">
+                                    <div class="stat-widget-one">
+                                        <h2><p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.meetings_count"/></p></h2>
+
+                                        <div class="stat-content dib">
+                                            <h3><span style="color: #fff;" class="dash-box-title">Todays Meetings</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div> -->
+
+
+
+                        <!-- <div class="col-md-3 meeting_count_month">
+                            <div class="dash-box dash-box-color-5">
+                                <div style="padding: 30px 20px;" class="dash-box-body">
+                                  <h3 class="mb-0">
+                                    <p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.meetings_count"/></p>
+                                  </h3>
+                                  <h4>
+                                    <span style="color: #fff;" class="dash-box-title">Todays Meetings</span>
+                                  </h4>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3 meeting_count_month">
+                            <div class="dash-box dash-box-color-3">
+                                <div style="padding: 30px 20px;" class="dash-box-body">
+                                  <h3 class="mb-0">
+                                    <p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.meetings_count_month"/></p>
+                                  </h3>
+                                  <h4>
+                                    <span style="color: #fff;" class="dash-box-title">Meetings : This Month</span>
+                                  </h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 draft_meeting_count_month">
+                            <div   class="dash-box dash-box-color-1">
+                                <div style="padding: 30px 20px;" class="dash-box-body">
+                                  <h3 class="mb-0">
+                                    <p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.draft_meetings_count_month"/></p>
+                                  </h3>
+                                  <h4>
+                                    <span style="color: #fff;" class="dash-box-title">Draft Meetings</span>
+                                  </h4>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+
+
+                    </div>
+
+                </div>
+               
+            </div> 
+
+
+   </t>
+
+</templates>

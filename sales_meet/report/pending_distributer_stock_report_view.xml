@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_pending_distributer_stock_report_form" model="ir.ui.view">
+            <field name="name">pending.distributer.stock.report.form</field>
+            <field name="model">pending.distributer.stock.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field invisible="1" name="state"/>
+                    <div states="choose">
+                        <group col="4" colspan="4" invisible="0">
+                            <field name="date_from"  required="1"/>
+                            <field name="date_to"  required="1" />
+                        </group>
+                        <group>
+                            <field name="partner_ids" widget="many2many_tags" invisible="0"  />
+                        </group>
+                    </div>
+                    <div states="get">
+                        <group>
+                            <field name="name" invisible="1"/>
+                            <field name="report" filename="name" colspan="4"/>
+                        </group>
+                     </div>
+                    
+                    <footer states="choose">
+                        <button name="print_report" string="Print Report" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-default" special="cancel" />
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='action_pending_distributer_stock_report'>
+            <field name="name">Export Pending Distributer Stock Report in Excel</field>
+            <field name="res_model">pending.distributer.stock.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_pending_distributer_stock_report_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

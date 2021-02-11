@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <data noupdate="1">
+        <record id="email_template_bt_asset_allocation" model="mail.template">
+            <field name="name">ICT Asset Allocation Acceptance</field>
+            <field name="email_to">harshal.bhoir@walplast.com</field>
+            <field name="email_from">${object.employee.work_email}</field>
+            <field name="email_cc">${object.employee.manager_id.work_email} or ''</field>
+            <field name="subject">ICT Asset Allocation Acceptance - ${object.employee.name} (${object.name})</field>
+            <field name="model_id" ref="website_support.model_bt_asset_allocation"/>
+            <field name="body_html" type="html">
+                <div><p>Hi Team,</p>
+                    <p>I undertake the safe custody of the above items allocated to me and declare that the same will be returned in working condition incase of transfer, relocation, completion of term with the company</p>
+                    <p>I further declare that the assigned asset(s) will be used for official purpose only and full confidentiality would be maintained by the undersigned. </p>
+                    <p>The asset(s) may be withdrawn by ICT Department at any time if it found to be misused by the undersigned.</p>
+                    <p>Thank you,</p></div>
+            </field>
+        </record>
+    </data>
+</odoo>

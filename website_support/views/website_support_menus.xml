@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+
+    <menuitem name="IT Assets" id="asset_management_main_menu" sequence="31"
+              groups="website_support.group_asset_management_user"
+              web_icon="website_support,static/description/asset_icon.png"/>
+
+
+    <menuitem action="action_bt_asset" name="Asset" sequence="1"
+              id="menu_action_bt_asset" parent="asset_management_main_menu" />
+
+
+    <menuitem action="action_bt_asset_surveillance" name="Surveillance" sequence="2"
+              id="menu_action_bt_asset_surveillance" parent="asset_management_main_menu" />
+
+
+    <menuitem action="action_bt_asset_allocation" name="Allocation" sequence="3"
+              id="menu_bt_asset_allocation" parent="asset_management_main_menu" />
+                
+
+    <menuitem action="action_bt_asset_move" name="Asset Move" sequence="3"
+              id="menu_action_bt_asset_move" parent="asset_management_main_menu" />
+
+
+    <menuitem id= "asset_maintenance_managment_menu" parent= "asset_management_main_menu"
+              sequence= "4" name= "Maintenance" action="action_bt_asset_maintenance" /> 
+
+    <menuitem id= "budget_managment_main_submenu" parent= "asset_management_main_menu"
+              sequence= "5" name= "Budget" action="action_bt_budget"
+              groups="website_support.group_budget_management_user" /> 
+
+    <menuitem id= "wp_asset_payment_main_submenu" parent= "asset_management_main_menu"
+              sequence= "6" name= "Payments" action="action_wp_asset_payment" />
+
+    <menuitem action="website_support.action_partner_supplier_form_extension" name="IT Vendors"
+              id="menu_action_bt_vendor" parent="asset_management_main_menu" sequence="7"/>
+
+
+    <menuitem  name="Reports" sequence="8"
+              id="menu_website_support_report" parent="asset_management_main_menu" />  
+
+    <menuitem action="action_asset_simple_report" name="Asset Simple" sequence="-1"
+              id="menu_action_bt_asset_simple_report" parent="menu_website_support_report" /> 
+
+    <menuitem action="action_asset_details_report" name="Asset Detail" sequence="1"
+              id="menu_action_bt_asset_report" parent="menu_website_support_report" /> 
+
+    <menuitem action="action_payment_asset_details_report" name="Payment Detail" sequence="2"
+              id="menu_action_payment_asset_report" parent="menu_website_support_report" /> 
+
+    <menuitem name="Config" sequence="9"
+              id="menu_action_bt_asset_config" parent="asset_management_main_menu" />
+
+    <menuitem action="action_bt_asset_location" name="Location" sequence="2"
+              id="menu_action_bt_asset_location" parent="menu_action_bt_asset_config" /> 
+       
+    <menuitem action="action_bt_asset_category" name="Category" sequence="1"
+              id="menu_action_bt_asset_category" parent="menu_action_bt_asset_config" />
+
+    <menuitem action="action_bt_component_item" name="Component Item" sequence="3"
+              id="menu_action_bt_component_item" parent="menu_action_bt_asset_config" />
+      
+    <menuitem id= "budget_managment_main_submenu3" parent= "menu_action_bt_asset_config"
+              sequence= "4" name= "Budget Category" action="action_bt_budget_category"
+              groups="website_support.group_budget_management_user" /> 
+
+    <menuitem action="website_support.action_partner_supplier_form_extension" name="IT Vendors"
+              id="menu_action_bt_vendor" parent="menu_action_bt_asset_config" sequence="6"/>
+
+    <menuitem action="action_wp_partner_type" name="Vendor Type" sequence="7"
+              id="menu_wp_partner_type" parent="menu_action_bt_asset_config" />
+
+
+<!-- Tech Support Menus -->
+
+    <menuitem id="website_support_parent_menu" name="Tech Support" 
+              web_icon="website_support,static/description/icon.png" sequence="1" />
+              <!-- groups='website_support.group_website_support_user,website_support.group_website_support_manager'/> -->
+
+    <menuitem id="website_support_ticket_all_menu" name="All Tickets" parent="website_support_parent_menu" 
+              action="website_support_ticket_all_action" sequence="1"
+              groups="website_support.group_website_support_manager" />
+
+    <menuitem id="website_support_ticket_menu" name="My Tickets" parent="website_support_parent_menu" 
+              action="website_support_ticket_action" sequence="2"/>
+
+    <menuitem id="website_support_ticket_menu2" name="To Resolve" parent="website_support_parent_menu" 
+              action="website_support_ticket_action2" sequence="3"
+              groups='website_support.group_website_support_user,website_support.group_website_support_manager'/>
+
+    <menuitem id="website_support_ticket_report_menu" name="Ticket Report" parent="website_support_parent_menu" 
+              action="action_ticket_report" sequence="4"
+	      groups='website_support.group_website_support_user,website_support.group_website_support_manager'/> 
+
+    <menuitem id="website_support_config_parent_menu" name="Config" parent="website_support_parent_menu" 
+              sequence="80" 
+              groups='website_support.group_website_support_user,website_support.group_website_support_manager'/>
+
+    <menuitem id="website_support_ticket_categories_menu" name="Categories" 
+              parent="website_support_config_parent_menu" 
+              action="website_support_ticket_categories_action" sequence="20"/>
+
+    <menuitem id="website_support_ticket_subcategory_menu" name="Sub Categories"
+              parent="website_support_config_parent_menu" action="website_support_ticket_subcategory_action"
+              sequence="30" groups="base.group_no_one" />
+
+    <menuitem id="website_support_department_menu" name="Departments" parent="website_support_config_parent_menu" 
+              action="website_support_department_action" sequence="60"/>
+
+    <menuitem id="website_support_ticket_states_menu" name="States" parent="website_support_config_parent_menu" 
+              action="website_support_ticket_states_action" sequence="40" groups="base.group_no_one" />
+
+    <menuitem id="website_support_ticket_priority_menu" name="Priorities" parent="website_support_config_parent_menu" 
+              action="website_support_ticket_priority_action" sequence="40"/>
+
+    <menuitem id="website_support_help_groups_menu" name="Help Groups" parent="website_support_config_parent_menu" 
+              action="website_support_help_groups_action" sequence="50"
+              groups="base.group_no_one" />
+
+    <menuitem id="website_support_help_page_menu" name="Help Pages" parent="website_support_config_parent_menu" 
+              action="website_support_help_page_action" sequence="60" groups="base.group_no_one" />
+
+    <menuitem id="website_support_settings_menu" name="Settings" parent="website_support_config_parent_menu"
+              action="website_support_settings_action" sequence="50"
+              groups="website_support.group_website_support_manager"/>
+
+    <menuitem id="website_support_analytics" name="Timesheet Reports" sequence="30"
+      groups='website_support.group_website_support_user,website_support.group_website_support_manager'
+              parent="website_support_config_parent_menu" action="website_support_analytics_action" />
+
+</odoo>

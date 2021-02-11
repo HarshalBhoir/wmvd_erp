@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_payment_asset_details_report_form" model="ir.ui.view">
+            <field name="name">asset.payment.details.report.form</field>
+            <field name="model">asset.payment.details.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field invisible="1" name="state"/>
+                    <div states="choose">
+                        <group col="4" colspan="4">
+                            <field name="date_from" />
+                            <field name="date_to" />
+                        </group>
+
+                        <group >
+                              <field name="company_id"  />
+                        </group>
+
+                    </div>
+                    <div states="get">
+                        <group>
+                            <field name="repname" invisible="1"/>
+                            <field name="report" filename="repname" colspan="4"/>
+                        </group>
+                     </div>
+                    <footer states="choose">
+                        <button name="print_report" string="Print Report" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-default" special="cancel" />
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='action_payment_asset_details_report'>
+            <field name="name">Export Payment Details in Excel</field>
+            <field name="res_model">asset.payment.details.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_payment_asset_details_report_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

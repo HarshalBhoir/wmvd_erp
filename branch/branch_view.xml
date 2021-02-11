@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <record id="view_res_branch_form" model="ir.ui.view">
+            <field name="name">res.branch.form</field>
+            <field name="model">res.branch</field>
+            <field name="arch" type="xml">
+            	<form string="Branch Information" version="7.0">
+            		<sheet>
+            			<group cols="4">
+            				<group>
+            					<field name="name"/>
+            					<field name="company_id"/>
+            					<field name="telephone_no"/>
+        					</group>
+        					<group>
+            					<field name="address"/>
+        					</group>
+            			</group>
+        			</sheet>
+    			</form>
+			</field>
+	</record>
+
+   <record id="view_warehouse_tree_extended" model="ir.ui.view">
+        <field name="name">view.warehouse.tree.extended</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="branch_id" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_warehouse_form_extended" model="ir.ui.view">
+        <field name="name">view.warehouse.form.extended</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="branch_id" options="{'no_create': True}" />
+            </field>
+        </field>
+    </record>
+
+   <record id="view_location_form_form_extended" model="ir.ui.view">
+        <field name="name">view.location.form.form.extended</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <field name="usage" position="after">
+                <field name="branch_id" options="{'no_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+
+
+
+	<record id="view_res_branch_tree" model="ir.ui.view">
+		<field name="name">res.branch.tree</field>
+		<field name="model">res.branch</field>
+		<field name="arch" type="xml">
+			<tree string="Branch Information">
+				<field name="name"/>
+				<field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_res_branch_form" model="ir.actions.act_window">
+		<field name="name">Branch</field>
+		<field name="res_model">res.branch</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem action="action_res_branch_form"
+            id="menu_action_res_branch"
+            parent="base.menu_users"
+            />
+
+    <record id="view_sale_order_branch_added_form1" model="ir.ui.view">
+        <field name="name">sale.order.branch.form.extend</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <field name="client_order_ref" position="before">
+                <field name="branch_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_form_extended" model="ir.ui.view">
+        <field name="name">purchase.order.form.extended</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="branch_id"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--     <record id="view_picking_form_inherit_bi" model="ir.ui.view">
+        <field name="name">view.picking.form.inherit.bi</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+			<field name="origin" position="after">
+				<field name="branch_id"/>
+			</field>
+				<xpath expr="//field[@name='move_lines']/tree/field[@name='product_id']" position="after">
+                        <field name="branch_id" />
+				</xpath>
+        </field>
+    </record> -->
+
+
+    <record id="view_user_form_extended" model="ir.ui.view">
+        <field name="name">res.user.form.extended</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+                    <group name="preferences" position="before">
+                    <group>
+	        	            <group colspan="4" string='Allowed Branches'>
+	                        	<field name="branch_ids" nolabel="1" widget="many2many_tags"/>
+	                        	<field name="branch_id"/>
+	                        </group>
+	                        </group>
+                    </group>
+
+
+        </field>
+    </record>
+
+<!--  -->
+<!-- 
+    <record id="view_account_invoice_branch_form1" model="ir.ui.view">
+        <field name="name">account.invoice.branch.extened</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="date_invoice" position="after">
+                <field name="branch_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_invoice_supplier_branch_form1" model="ir.ui.view">
+        <field name="name">account.invoice.supplier.branch.extened</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <field name="date_invoice" position="after">
+                <field name="branch_id"/>
+            </field>
+        </field>
+    </record>
+
+    
+
+
+    <record id="view_account_voucher_branch_wizard_form1" model="ir.ui.view">
+        <field name="name">account.voucher.branch.wizard.extened</field>
+        <field name="model">account.voucher</field>
+        <field name="inherit_id" ref="account_voucher.view_sale_receipt_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="branch_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_voucher_branch_form1" model="ir.ui.view">
+        <field name="name">account.voucher.branch.extened</field>
+        <field name="model">account.voucher</field>
+        <field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="branch_id"/>
+            </field>
+        </field>
+    </record>
+
+ -->
+
+    <record id="view_product_product_inherit_form1" model="ir.ui.view">
+        <field name="name">product.product.extened</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="before">
+                <field name="id"/>
+            </xpath>
+        </field>
+    </record>
+
+
+	
+
+<!-- 
+<record id="view_account_move_line_form" model="ir.ui.view">
+        <field name="name">account.move.line.extened</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='partner_id']" position="after">
+                <field name="branch_id"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
+	<record id="view_banck_statement_branch_view" model="ir.ui.view">
+        <field name="name">account.bank.statement.branch</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="branch_id"/>
+            </field>
+        </field>
+    </record>
+
+
+
+
+	<record id="account_payment_form_with_branch" model="ir.ui.view">
+            <field name="name">account.payment.branch.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <field name="journal_id" position="after">
+                    <field name="branch_id"
+                           options="{'no_create': True}"/>
+                </field>
+            </field>
+      </record>
+
+
+    <record id="branch_move_extended" model="ir.ui.view">
+            <field name="name">Branch Move</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+
+                <field name="ref" position="after">
+						<field name="branch_id"/>
+                </field>
+            </field>
+        </record>
+ -->
+    </data>
+</openerp>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        
+    <record id="view_approval_management_form" model="ir.ui.view">
+        <field name="name">approval.management.form</field>
+        <field name="model">approval.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="update_invoice" string="Update Invoice" type="object"  class="btn-primary col-xs-2"
+                            style="font-size: 16px;"  groups='sales_meet.group_sales_meet_hidden' />
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft"/>
+                </header>
+                <sheet>
+                    <h2><field name="name" 
+                        attrs="{'invisible':[('state','=','draft')],'readonly':[('state','!=','draft')]}" /></h2>
+
+                    <group col="12">
+                        <field name="approval_config_id" required="1" attrs="{'readonly':[('state','!=','draft')]}" widget="selection" colspan="4" />
+                        <field name="documentno"  required="1" attrs="{'readonly':[('state','!=','draft')]}" colspan="4" />
+                        <field name="company_id"  required="1" readonly="1" options="{'no_open': True}" colspan="4" />
+                         <!-- attrs="{'readonly':[('state','!=','draft')]}" -->
+                    </group>
+
+                    <group col="12">
+                        <field name="approver_config_id"  required="1" attrs="{'readonly':[('state','!=','draft')]}" 
+                               options="{'no_open': True}" colspan="4"/>
+                        <field name="date"  required="1"  readonly="1"  colspan="4"/>
+                        <field name="user_id"  required="1"  readonly="1" options="{'no_open': True}" colspan="4" />
+                    </group>
+
+                    <group col="12">
+                        <field name="approver_id" options="{'no_open': True}" colspan="4" 
+                        attrs="{'readonly':[('state','!=','draft')],'invisible':[('approver_id','=',False)]}"  />
+                        <field name="customername" attrs="{'invisible':[('customername','=',False)],'readonly':[('state','!=','draft')]}" colspan="4" />
+                        <field name="c_bpartner_id"  attrs="{'invisible':[('customername','=',False)],'readonly':[('state','!=','draft')]}" colspan="4" />
+                    </group>
+
+                    <group col="12">
+                        <field name="customercode"   attrs="{'invisible':[('customername','=',False)],'readonly':[('state','!=','draft')]}" colspan="4"/>
+                        <field name="remarks"   attrs="{'invisible':[('state','=','draft')],'readonly':[('state','=','select2')]}" colspan="4"/>
+                        <field name="changed_date"  attrs="{'invisible':[('approver_id','=',False)],'readonly':[('state','!=','draft')]}" colspan="4" />
+                    </group>
+
+                    
+                    <group col="4" colspan="2" >
+                        <div class="col-xs-12" style="padding-left: 121px;">
+                            <center>
+                                <button name="get_partner_id" string="Sync" type="object" class="btn-primary col-xs-2" 
+                                    states='draft' style="font-size: 16px;" />
+
+                                <div class="col-xs-1"/>
+                                <button name="select_all" type="object" string="Select All"   
+                                    class="btn-primary col-xs-2"  style="font-size: 16px;" states='select,update' />
+
+                                <div class="col-xs-1"/>
+                                <button name="send_approval_mail" string="Get Approval" type="object"  
+                                    class="btn-primary col-xs-2" style="font-size: 16px;"  states='select,update' />
+
+                                <div class="col-xs-1"/>
+                                <button name="%(sales_meet.approval_remarks_wizard_action)d" string="Approve" 
+                                    type="action" class="btn-primary col-xs-2" groups='sales_meet.group_approval_management_manager'
+                                    states='update' style="font-size: 16px;" invisible="0"/>
+
+                            </center>
+                        </div>
+                    </group>
+
+                    <group string="Line Details" col="4" colspan="4"  >
+                        <field name="connect_lines_one2many" string="Lines" nolabel="1"  >
+                            <tree create="false" edit="false" delete="false" colors="green:selection==True;">
+                                <button name="approve_line" icon="fa fa-check" string="Approve" aria-hidden="true"
+                                 type="object" style="color:green !important;" />
+                                <field name="dateacct" />
+                                <field name="entryno" />
+                                <field name="invno" />
+                                <field name="org" />
+                                <field name="customerpaymentterm" />
+                                <field name="grandtotal"  />
+                                <field name="amount"  />
+                                <field name="overunderamt"  />
+                                <field name="duedate"  />
+                                <field name="remarks"  />
+                                <field name="inrrate" invisible="1"/>
+                                <field name="customerpaymenttermmin" invisible="1" />
+                                <field name="custgroup"  invisible="1" />
+                                <field name="customerid"  invisible="1" />
+                                <field name="customername"  invisible="1" />
+                                <field name="customercode"  invisible="1" />
+                                <field name="customercreditlimit" invisible="1" />
+                                <field name="selection" string="" invisible="1"/>
+                                <field name="company_id"  invisible="1" />
+                                <field name="documentno" invisible="1"/>
+                                <field name="processowner" invisible="1" />
+                            </tree>
+                        </field>
+                    </group>
+                 </sheet>
+
+                 <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                  </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_approval_management_tree" model="ir.ui.view">
+        <field name="name">approval.management.tree</field>
+        <field name="model">approval.management</field>
+        <field name="arch" type="xml">
+            <tree colors="green:state=='select2';blue:state=='update';red:state=='draft'">
+                <field name="name" />
+                <field name="date"/>
+                <field name="documentno" />
+                <field name="customername"  />
+                <field name="company_id"  />
+                <field name="approver_config_id" />
+                <field name="remarks" />
+                <field name="user_id" />
+                <field name="approver_id" />
+                <field name="changed_date" />
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="approval_management_view_pivot" model="ir.ui.view">
+        <field name="name">approval.management.pivot</field>
+        <field name="model">approval.management</field>
+        <field name="arch" type="xml">
+            <pivot string="Approvals Analysis">
+                <field name="user_id" type="row"/>
+                <field name="create_date" interval="month" type="col"/>
+                <field name="customername" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_approval_management_graph">
+       <field name="name">approval.management.graph</field>
+       <field name="model">approval.management</field>
+       <field name="type">graph</field>
+       <field name="arch" type="xml">
+             <graph string="Approvals Graph" >
+                  <field name="user_id" group="True"/>
+                  <field name="date" operator="*"/>
+                  <field name="customername" operator="+"/>
+                  <field name="approver_id" operator="+"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_approval_management" model="ir.actions.act_window">
+        <field name="name">Approvals</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">approval.management</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+    </record>
+
+
+    <record id="view_approval_management_config_form" model="ir.ui.view">
+        <field name="name">approval.management.configuration.form</field>
+        <field name="model">approval.management.configuration</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h1><field name="name" placeholder="Name"/></h1>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_approval_management_config_tree" model="ir.ui.view">
+        <field name="name">approval.management.configuration.tree</field>
+        <field name="model">approval.management.configuration</field>
+        <field name="arch" type="xml">
+            <tree >
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_approval_management_config" model="ir.actions.act_window">
+        <field name="name">Document Config</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">approval.management.configuration</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_approval_management_config_tree" model="ir.ui.view">
+        <field name="name">approval.mgmt.config.tree</field>
+        <field name="model">approval.mgmt.config</field>
+        <field name="arch" type="xml">
+            <tree >
+                <field name="name" />
+                <field name="owner" />
+                <field name="group_id" />
+                <field name="org_id"  />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record id="view_approval_mgmt_config_form" model="ir.ui.view">
+        <field name="name">approval.mgmt.config.form</field>
+        <field name="model">approval.mgmt.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Basic Details">
+                            <field name="name" attrs="{'invisible':[('name','=',False)]}" />
+                            <!-- 'readonly':[('name','!=',False)], -->
+                            <field name="company_id" required="1" />
+                            <field name="org_id" required="1" domain="[('company_id','=',company_id)]"/>
+                            <field name="group_id" />
+                            <field name="owner" required="1"/>
+                            <field name="active"/>
+                        </group>
+
+                        <group string="Approver">
+                            <field name="am_approver_one2many" nolabel="1">
+                                <tree editable='bottom' >
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="approver"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_approver_mgmt_config" model="ir.actions.act_window">
+        <field name="name">Approval Config</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">approval.mgmt.config</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

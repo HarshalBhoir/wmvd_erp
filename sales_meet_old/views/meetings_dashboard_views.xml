@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="meeting_action_dashboard" model="ir.actions.client">
+            <field name="name">Meetings Dashboard</field>
+            <field name="tag">meetings_dashboard</field>
+        </record>
+
+        <menuitem id="menu_wp_meetings_dashboard"
+                  name="Meetings Dashboard"
+                  action="meeting_action_dashboard"
+                  parent="sales_meet_main_menu"
+                  sequence="-1"/>
+    </data>
+
+
+    <template id="assets_backend" name="Meetings Dashboard assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/sales_meet/static/src/js/meetings_dashboard.js"/>
+            
+
+          <!-- <link rel="stylesheet" href="/sales_meet/static/src/css/meetings_dashboard.css"/> -->
+
+
+
+        </xpath>
+    </template>
+
+    
+</odoo>

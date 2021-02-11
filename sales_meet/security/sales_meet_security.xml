@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    
+<record id="group_sales_meet_hidden" model="res.groups">
+    <field name="name">SALES MEET / Hidden</field>
+    <field name="category_id" ref="base.module_category_hidden"/>
+    <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    <field name="comment">User group to hide all unused menus in the SALES MEET application.</field>
+</record>
+    
+   
+<record model="ir.module.category" id="module_category_sales_meet">
+    <field name="name">Meeting Process Management</field>
+    <field name="description">Helps you manage your Meeting-related processes.</field>
+    <field name="sequence">0</field>
+</record>
+
+
+    <!--SALES MEET / Retailer Group-->
+
+<record id="sales_meet.group_sales_meet_retailer" model="res.groups">
+    <field name="name">Retailer</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+    <field name="implied_ids" eval="[]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+
+    <!--SALES MEET / Distributer Group-->
+
+<record id="sales_meet.group_sales_meet_distributer" model="res.groups">
+    <field name="name">Distributer</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+    <field name="implied_ids"  eval="[(4, ref('sales_meet.group_sales_meet_retailer'))]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+    <!--SALES MEET / Executive Group-->
+
+<record id="sales_meet.group_sales_meet_executive" model="res.groups">
+    <field name="name">Executive</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+    <field name="implied_ids" eval="[]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+    <!--SALES MEET / Sr. Executive Group-->
+
+<record id="sales_meet.group_sales_meet_srexecutive" model="res.groups">
+    <field name="name">Sr Executive</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_sales_meet_executive'))]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+    <!--SALES MEET / Asst. Manager Group-->
+
+<record id="sales_meet.group_sales_meet_asstmanager" model="res.groups">
+    <field name="name">Asst. Manager</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_sales_meet_srexecutive'))]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+    <!--SALES MEET / Manager Group-->
+
+<record id="sales_meet.group_sales_meet_manager" model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_sales_meet_asstmanager'))]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+    <!--SALES MEET / Sr. Manager Group-->
+
+<record id="sales_meet.group_sales_meet_srmanager" model="res.groups">
+    <field name="name">Sr Manager</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_sales_meet_manager'))]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+
+    <!--SALES MEET / ZSM Group-->
+
+<record id="sales_meet.group_sales_meet_zsm" model="res.groups">
+    <field name="name">ZSM</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_sales_meet_srmanager'))]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+   <!--SALES MEET / Sales Head Pan India Group-->
+
+<record id="sales_meet.group_sales_meet_saleshead" model="res.groups">
+    <field name="name">Sales Head</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_sales_meet_zsm'))]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+<!-- Record Rules for Users to see Own Meetings -->
+<record id="sales_meet_technician_rule" model="ir.rule">
+    <field name="name">See All Meetings</field>
+    <field ref="model_calendar_event" name="model_id"/>
+    <field name="domain_force">[(1,'=',1),'|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_sales_meet_zsm'))]"/>
+</record>
+
+<record id="sales_meet_hr_officer_rule" model="ir.rule">
+    <field name="name">See All Meetings</field>
+    <field ref="model_calendar_event" name="model_id"/>
+    <field name="domain_force">[(1,'=',1),'|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
+    <field name="groups" eval="[(4, ref('hr_holidays.group_hr_holidays_user'))]"/>
+</record>
+
+<!-- <record id="sales_meet_all_executive_rule" model="ir.rule">
+    <field name="name">Own Calendar</field>
+    <field ref="model_calendar_event" name="model_id"/>
+    <field name="domain_force">['|',('employee_id.user_id','=',user.id),('manager_id.user_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_sales_meet_executive'))]"/>
+</record> -->
+
+<record id="sales_meet_user_rule" model="ir.rule">
+    <field name="name">See Own Meetings</field>
+    <field name="global" eval="True"/>
+    <field ref="model_calendar_event" name="model_id"/>
+     <!-- <field name="domain_force">['|',('user_id','=',False),('user_id','=',user.id)]</field> -->
+    <field name="domain_force">[('user_id','=',user.id),'|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_sales_meet_executive'))]"/>
+</record>
+
+
+
+
+<record id="sales_meet_user_lead_rule" model="ir.rule">
+    <field name="name">See Company Leads</field>
+    <field name="global" eval="True"/>
+    <field ref="model_crm_lead" name="model_id"/>
+    <field name="domain_force">[('user_id','=',user.id),'|',('company_id','=',user.company_id.id),('company_id','=',False)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_sales_meet_executive'))]"/>
+</record>
+
+
+<record id="sales_meet_manager_lead_rule" model="ir.rule">
+    <field name="name">See Company Leads</field>
+    <field name="global" eval="True"/>
+    <field ref="model_crm_lead" name="model_id"/>
+    <field name="domain_force">[(1,'=',1),'|',('company_id','=',user.company_id.id),('company_id','=',False)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_sales_meet_srmanager'))]"/>
+</record>
+
+
+<record id="crm.crm_rule_all_lead" model="ir.rule">
+    <field name="domain_force">[(1,'=',1),'|',('company_id','=',user.company_id.id),('company_id','=',False)]</field>
+</record>
+
+
+
+    <!--Employee validation Start-->
+
+<record model="ir.module.category" id="module_category_sales_meet_employee">
+    <field name="name">Employees Validation</field>
+    <field name="description">Helps you manage your Employee-related processes.</field>
+    <field name="sequence">2</field>
+</record>
+
+<record id="sales_meet.group_employee_user" model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet_employee"/>
+    <field name="implied_ids" eval="[]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+<record id="sales_meet.group_employee_officer" model="res.groups">
+    <field name="name">Officer</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet_employee"/>
+    <field name="implied_ids" eval="[]"/>
+    <field name="comment">the User will have access to his own data / CHILD DATA in the application.</field>
+</record>
+
+<record id="sales_meet.group_employee_manager" model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet_employee"/>
+    <field name="implied_ids" eval="[]"/>
+    <field name="comment">the User will have access to ALL DATA in the application.</field>
+</record>
+
+<record id="joining_form_user_rule" model="ir.rule">
+    <field name="name">See Own Forms</field>
+    <field name="global" eval="True"/>
+    <field name="model_id" ref="sales_meet.model_wp_employee_joining_details"/>
+    <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_employee_user'))]"/>
+</record>
+
+
+<record id="payslip_user_rule" model="ir.rule">
+    <field name="name">See Own Payslips</field>
+    <field name="global" eval="True"/>
+    <field ref="model_hr_payslip" name="model_id"/>
+    <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_employee_user'))]"/>
+</record>
+
+<record id="partner_user_rule" model="ir.rule">
+    <field name="name">See Own Customer</field>
+    <field name="global" eval="True"/>
+    <field name="model_id" ref="sale.model_res_partner"/>
+    <field name="domain_force">[('id','=',user.partner_id.id)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_sales_meet_retailer'))]"/>
+</record>
+
+
+    <!--Employee validation END-->
+
+<record id="sales_meet.group_sales_meet_srexecutive" model="res.groups">
+    <field name="name">Sr Executive</field>
+    <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_sales_meet_executive'))]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+<record id="sales_meet_retailer_rule" model="ir.rule">
+    <field name="name">See Own Quotations</field>
+    <field name="global" eval="True"/>
+    <field ref="model_sale_order" name="model_id"/>
+     <!-- <field name="domain_force">['|',('user_id','=',False),('user_id','=',user.id)]</field> -->
+    <field name="domain_force">[('user_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_sales_meet_retailer'))]"/>
+</record>
+<!-- <record id="group_hr_base_user" model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id" ref="base.module_category_human_resources"/>
+    <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
+    <field name="comment">the user will be able to approve document created by employees.</field>
+</record> -->
+
+
+<!-- <record id="calendar_event_rule_employee_extension" model="ir.rule">
+    <field ref="model_calendar_event" name="model_id"/>
+    <field name="inherit_id" ref="calendar.calendar_event_rule_employee" />
+    <field name="active" eval="False"/>
+</record> -->
+
+<record id="calendar.calendar_event_rule_employee" model="ir.rule">
+    <field ref="model_calendar_event" name="model_id"/>
+    <field name="name">All Calendar Event for employees</field>
+    <field eval="[(4,ref('base.group_user'))]" name="groups"/>
+    <field name="active" eval="False"/>
+</record>
+
+<record id="group_expense_manager_user" model="res.groups">
+    <field name="name">Expense Validator</field>
+    <!-- <field name="comment">the user will have access to his own data in the Budget management.</field> -->
+</record>
+
+<record id="group_it_user" model="res.groups">
+    <field name="name">IT User</field>
+</record>
+
+<record id="group_sales_support_user" model="res.groups">
+    <field name="name">Sales Support User</field>
+</record>
+
+<record id="group_cn_user" model="res.groups">
+    <field name="name">Credit Note User</field>
+</record>
+
+<record id="group_wp_logistics" model="res.groups">
+    <field name="name">Logistics User</field>
+</record>
+
+<record model="ir.module.category" id="module_category_mdm">
+    <field name="name">MDM</field>
+    <field name="description">Helps you manage your Customer, Vendor and Product Approvals.</field>
+    <field name="sequence">90</field>
+</record>
+
+<record id="group_customer_manager" model="res.groups">
+    <field name="category_id" ref="sales_meet.module_category_mdm"/>
+    <field name="name">Customer Manager</field>
+</record>
+
+<record id="group_supplier_manager" model="res.groups">
+    <field name="category_id" ref="sales_meet.module_category_mdm"/>
+    <field name="name">Vendor Manager</field>
+</record>
+
+<record id="group_product_manager" model="res.groups">
+    <field name="category_id" ref="sales_meet.module_category_mdm"/>
+    <field name="name">Product Manager</field>
+</record>
+
+
+<record model="ir.rule" id="customer_manager_user_rule">
+    <field name="name">Customer Mgmt User Rule</field>
+    <field name="model_id" ref="model_wp_res_partner"/>
+    <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    <field name="domain_force">[('user_id','=',user.id)]</field>
+</record>
+
+<record model="ir.rule" id="customer_manager_manager_rule">
+    <field name="name">Customer Mgmt Manager Rule</field>
+    <field name="model_id" ref="model_wp_res_partner"/>
+    <field name="groups" eval="[(4, ref('group_customer_manager'))]"/>
+    <field name="domain_force">[(1,'=',1)]</field>
+</record>
+
+
+
+<record id="hr.menu_hr_root" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('hr.group_hr_user')])]"/>
+</record>
+
+<record id="account.menu_finance" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('account.group_account_manager')])]"/>
+</record>
+
+<record id="sales_team.menu_base_partner" model="ir.ui.menu">
+    <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_manager')])]"/>
+</record>
+
+
+
+<record id="sales_meet_expense_automation_module_user_rule" model="ir.rule">
+    <field name="name">See Own Company's Expense</field>
+    <field name="global" eval="True"/>
+    <field ref="model_expense_automation" name="model_id"/>
+    <field name="domain_force">['|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
+</record>
+
+<!--  External DB Connect  -->
+
+
+<record model="ir.module.category" id="module_category_external_db_connect">
+    <field name="name">ERP Connect</field>
+    <field name="description">Helps you manage your Reactivation.</field>
+    <field name="sequence">52</field>
+</record>
+    
+<record id="sales_meet.group_external_db_connect_user" model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id" ref="sales_meet.module_category_external_db_connect"/>
+    <field name="implied_ids" eval="[]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+<record id="sales_meet.group_external_db_connect_manager" model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id" ref="sales_meet.module_category_external_db_connect"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_external_db_connect_user'))]"/>
+    <field name="comment">the User will have access to all data in the application.</field>
+</record>
+
+
+<!--  Bank PAyment  -->
+
+
+<record model="ir.module.category" id="module_category_bank_payment">
+    <field name="name">Bank Payment</field>
+    <field name="description">Helps you manage your bank Payments.</field>
+    <field name="sequence">99</field>
+</record>
+    
+<record id="sales_meet.group_bank_payment_user" model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id" ref="sales_meet.module_category_bank_payment"/>
+    <field name="implied_ids" eval="[]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+<record id="sales_meet.group_bank_payment_officer" model="res.groups">
+    <field name="name">Officer</field>
+    <field name="category_id" ref="sales_meet.module_category_bank_payment"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_bank_payment_user'))]"/>
+    <field name="comment">the User will have access to all data of user as we as his in the application.</field>
+</record>
+
+<record id="sales_meet.group_bank_payment_manager" model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id" ref="sales_meet.module_category_bank_payment"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_bank_payment_officer'))]"/>
+    <field name="comment">the User will have access to all data in the application.</field>
+</record>
+
+
+
+<!-- <record id="external_db_connect_bank_payment_user_rule" model="ir.rule">
+    <field name="name">See Own Bank Invoices</field>
+    <field name="global" eval="True"/>
+    <field ref="model_bank_invoice_lines" name="model_id"/>
+    <field name="domain_force">['|',('user_id.id','=',user.id),('create_uid.id','=',user.id)]</field>
+</record> -->
+
+<record id="external_db_connect_bank_payment_user_rule" model="ir.rule">
+    <field name="name">See Own Bank Invoices</field>
+    <field name="global" eval="True"/>
+    <field ref="model_bank_invoice_lines" name="model_id"/>
+    <field name="domain_force">['|','|',('create_uid','=',user.id),('user_id.id','=',user.id),('delegate_user_id','in',user.id)]</field>
+    <!-- ('delegate_user_id','in',user.id),'|', -->
+</record>
+
+
+<record model="ir.module.category" id="module_category_sampling_module">
+    <field name="name">Sampling</field>
+    <field name="description">Helps you manage your Samplings.</field>
+    <field name="sequence">99</field>
+</record>
+    
+<record id="sales_meet.group_sampling_module_user" model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id" ref="sales_meet.module_category_sampling_module"/>
+    <field name="implied_ids" eval="[]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+<record id="sales_meet.group_sampling_module_manager" model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id" ref="sales_meet.module_category_sampling_module"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_sampling_module_user'))]"/>
+    <field name="comment">the User will have access to all data in the application.</field>
+</record>
+
+
+<record id="sales_meet_sampling_module_manager_rule" model="ir.rule">
+    <field name="name">See All Samplings</field>
+    <field ref="model_sample_requisition" name="model_id"/>
+    <field name="domain_force">[(1,'=',1)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_sampling_module_manager'))]"/>
+</record>
+
+
+<record id="sales_meet_sampling_module_user_rule" model="ir.rule">
+    <field name="name">See Own Samplings</field>
+    <field name="global" eval="True"/>
+    <field ref="model_sample_requisition" name="model_id"/>
+     <!-- <field name="domain_force">['|',('user_id','=',False),('user_id','=',user.id)]</field> -->
+    <field name="domain_force">[('user_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_sampling_module_user'))]"/>
+</record>
+
+
+
+<!--  Approvals  -->
+
+
+<record model="ir.module.category" id="module_category_approval_management">
+    <field name="name">Approvals</field>
+    <field name="description">Helps you manage your Approvals.</field>
+    <field name="sequence">52</field>
+</record>
+    
+<record id="sales_meet.group_approval_management_user" model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id" ref="sales_meet.module_category_approval_management"/>
+    <field name="implied_ids" eval="[]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+<record id="sales_meet.group_approval_management_manager" model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id" ref="sales_meet.module_category_approval_management"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_approval_management_user'))]"/>
+    <field name="comment">the User will have access to all data in the application.</field>
+</record>
+
+
+<record id="sales_meet_approval_management_module_manager_rule" model="ir.rule">
+    <field name="name">See All Approvals</field>
+    <field ref="model_approval_management" name="model_id"/>
+    <!-- <field name="domain_force">[(1,'=',1)]</field> -->
+    <field name="domain_force">[(1,'=',1),'|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_approval_management_manager'))]"/>
+</record>
+
+
+<record id="sales_meet_approval_management_module_user_rule" model="ir.rule">
+    <field name="name">See Own Company's Approvals</field>
+    <field name="global" eval="True"/>
+    <field ref="model_approval_management" name="model_id"/>
+    <field name="domain_force">['|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
+    <field name="groups" eval="[(4, ref('sales_meet.group_approval_management_user'))]"/>
+</record>
+
+
+<record model="ir.module.category" id="module_category_cir_module1">
+    <field name="name">CIR</field>
+    <field name="description">Helps you manage your Complaint Investigation Report.</field>
+    <field name="sequence">2</field>
+</record>
+    
+<record id="sales_meet.group_cir_module_user" model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id" ref="sales_meet.module_category_cir_module1"/>
+</record>
+
+<record id="sales_meet.group_cir_module_tse" model="res.groups">
+    <field name="name">TSE</field>
+    <field name="category_id" ref="sales_meet.module_category_cir_module1"/>
+</record>
+
+<record id="sales_meet.group_cir_module_lab" model="res.groups">
+    <field name="name">Lab</field>
+    <field name="category_id" ref="sales_meet.module_category_cir_module1"/>
+</record>
+
+<record id="sales_meet.group_cir_module_product_head" model="res.groups">
+    <field name="name">Product Head</field>
+    <field name="category_id" ref="sales_meet.module_category_cir_module1"/>
+</record>
+
+<record id="sales_meet.group_cir_module_zsm" model="res.groups">
+    <field name="name">ZSM</field>
+    <field name="category_id" ref="sales_meet.module_category_cir_module1"/>
+    <field name="implied_ids" eval="[(4, ref('sales_meet.group_sales_meet_zsm'))]"/>
+</record>
+
+
+<record model="ir.rule" id="cir_extension_user_rule">
+    <field name="name">CIR User Rule</field>
+    <field name="model_id" ref="model_cir_extension"/>
+    <field name="groups" eval="[(4, ref('group_cir_module_user'))]"/>
+    <field name="domain_force">[('salesuser_id','=',user.id)]</field>
+</record>
+
+<record model="ir.rule" id="cir_extension_tse_rule">
+    <field name="name">CIR TSE Rule</field>
+    <field name="model_id" ref="model_cir_extension"/>
+    <field name="groups" eval="[(4, ref('group_cir_module_tse'))]"/>
+    <field name="domain_force">[('investigator_id','=',user.id)]</field>
+</record>
+
+
+<record model="ir.rule" id="cir_extension_lab_rule">
+    <field name="name">CIR LAB Rule</field>
+    <field name="model_id" ref="model_cir_extension"/>
+    <field name="groups" eval="[(4, ref('group_cir_module_lab'))]"/>
+    <field name="domain_force">[(1,'=',1)]</field>
+</record>
+
+<record model="ir.rule" id="cir_extension_zsm_rule">
+    <field name="name">CIR ZSM Rule</field>
+    <field name="model_id" ref="model_cir_extension"/>
+    <field name="groups" eval="[(4, ref('group_cir_module_zsm'))]"/>
+    <field name="domain_force">[('zsm_id','=',user.id)]</field>
+</record>
+
+<record model="ir.rule" id="cir_extension_product_head_rule">
+    <field name="name">CIR Product Head Rule</field>
+    <field name="model_id" ref="model_cir_extension"/>
+    <field name="groups" eval="[(4, ref('group_cir_module_product_head'))]"/>
+    <field name="domain_force">[('product_head_id','=',user.id)]</field>
+</record>
+
+
+<record model="ir.rule" id="cir_extension_sales_support_rule">
+    <field name="name">CIR Sales Support Rule</field>
+    <field name="model_id" ref="model_cir_extension"/>
+    <field name="groups" eval="[(4, ref('group_sales_support_user'))]"/>
+    <field name="domain_force">[(1,'=',1)]</field>
+</record>
+
+
+<record model="ir.module.category" id="module_category_retailer_module1">
+    <field name="name">Retailer</field>
+    <field name="description">Helps you manage your Retailer Management.</field>
+    <field name="sequence">4</field>
+</record>
+    
+<record id="sales_meet.group_retailer_module_user" model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id" ref="sales_meet.module_category_retailer_module1"/>
+    <field name="implied_ids" eval="[]"/>
+</record>
+
+<record id="sales_meet.group_retailer_module_manager" model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id" ref="sales_meet.module_category_retailer_module1"/>
+    <field name="implied_ids"  eval="[(4, ref('sales_meet.group_retailer_module_user'))]"/>
+</record>
+
+<record model="ir.rule" id="retailer_user_rule">
+    <field name="name">Retailer Mgmt User Rule</field>
+    <field name="model_id" ref="model_wp_scheme_working_line"/>
+    <field name="groups" eval="[(4, ref('group_retailer_module_user'))]"/>
+    <field name="domain_force">[('salesperson_id','=',user.id)]</field>
+</record>
+
+<record model="ir.rule" id="retailer_manager_rule">
+    <field name="name">Retailer Mgmt Manager Rule</field>
+    <field name="model_id" ref="model_wp_scheme_working_line"/>
+    <field name="groups" eval="[(4, ref('group_retailer_module_manager'))]"/>
+    <field name="domain_force">[(1,'=',1)]</field>
+</record>
+
+
+</odoo>

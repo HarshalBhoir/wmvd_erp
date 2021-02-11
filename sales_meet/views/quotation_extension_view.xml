@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        
+
+        <record id="view_order_form_extension2" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <button name="action_confirm" states="sent" position="after" >
+                    <button string="Confirm ERP Sale" name="create_idempiere_saleorder"  
+                        type="object"  class="btn-primary" groups='sales_meet.group_sales_meet_srexecutive'  />
+                </button>
+
+                <field name="partner_id" position="after"  >
+                       <field name="org_id" groups='sales_meet.group_sales_meet_srexecutive'/>
+                       <field name="warehouse_master_id" groups='sales_meet.group_sales_meet_srexecutive'/>
+                </field>
+
+                <field name="invoice_lines" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </field>
+
+                <label for="invoice_lines"  position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </label>
+
+                <field name="customer_lead" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="customer_lead" position="attributes">
+                   <attribute name="required">0</attribute>
+                </field>
+
+                <label for="customer_lead"  position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </label>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/form/field[@name='name']" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/form/label[@for='name']" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </xpath>
+
+<!--                 <xpath expr="//kanban[@class='o_kanban_mobile']/templates/t/div/div[1]" position="before">
+                   <div style="overflow: visible;">
+                        <div >
+                            <strong><span><t t-esc="record.product_id.name" />
+                        </span></strong>
+                        </div>
+                    </div>
+                </xpath> -->
+
+            </field>
+        </record>
+
+
+        <record id="view_order_form_extension" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="groups_id" eval="[(6, 0, [ref('sales_meet.group_sales_meet_retailer')])]"/>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+
+                <field name="user_id" position="after"  >
+                       <field name="portal_user"/>
+                       <!-- <field name="org_id"/> -->
+                </field>
+
+                 <field name="validity_date" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </field>
+
+                <!-- <field name="payment_term_id" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </field>
+ -->
+                 <field name="pricelist_id" position="attributes">
+                   <attribute name="options">{'no_open': True}</attribute>
+                </field>
+
+                 <field name="pricelist_id" position="attributes">
+                   <attribute name="readonly">1</attribute>
+                </field>
+
+                <xpath expr="//page[2]" position="attributes">
+                   <attribute name="groups">sales_team.group_sale_manager</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                   <attribute name="readonly">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="after">
+                   <field name="price_unit_compute"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                   <attribute name="options">{'no_open': True}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/form/group/group[1]/field[@name='product_id']" position="attributes">
+                   <attribute name="options">{'no_open': True}</attribute>
+                </xpath>
+
+                <field name="partner_id" position="attributes"  >
+                       <attribute name="options">{'no_open': True}</attribute>
+                </field>
+
+                <button name="action_confirm" states="draft" position="attributes" >
+                    <attribute name ="groups">sales_team.group_sale_manager</attribute>
+                </button>
+
+                <button name="action_confirm" states="sent" position="attributes" >
+                    <attribute name ="groups">sales_team.group_sale_manager</attribute>
+                </button>
+
+                <button name="action_quotation_send" states="draft" position="attributes" >
+                    <attribute name ="groups">sales_team.group_sale_manager</attribute>
+                </button>
+
+                <button name="action_quotation_send" states="sent,sale"  position="attributes" >
+                    <attribute name ="groups">sales_team.group_sale_manager</attribute>
+                </button>
+
+            </field>
+        </record>
+
+
+        
+
+
+
+
+        <record id="action_quotations_retailer" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="sale.view_quotation_tree"/>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="context">{'hide_sale': True}</field>
+            <field name="domain">[('user_id', '=', uid)]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Create a Quotation, the first step of a new sale.
+              </p><p>
+                Your next actions should flow efficiently: confirm the Quotation
+                to a Sale Order, then create the Invoice and collect the Payment.
+              </p><p>
+                Note that once a Quotation becomes a Sale Order, it will be moved
+                from the Quotations list to the Sales Order list.
+              </p>
+            </field>
+        </record>
+
+
+
+        
+
+
+    </data>
+</odoo>

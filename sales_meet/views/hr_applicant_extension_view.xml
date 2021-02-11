@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+  
+
+  <record id="action_emp_wp_prejoining_details_list2" model="ir.actions.act_window">
+      <field name="name">Pre Joining Details2 </field>
+      <field name="res_model">wp.employee.prejoining.details</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="sales_meet.view_hr_employee_prejoining_details_tree" />
+      <field name="context">{'search_default_employee_id': [active_id], 'default_employee_id': active_id}</field>
+  </record>
+
+  <record id="crm_case_form_view_job_specific" model="ir.ui.view">
+    <field name="name">view_project_form_specific</field>
+    <field name="model">hr.applicant</field>
+    <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+    <field name="arch" type="xml">
+
+      <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+        <button name="action_view_applicants" class="oe_stat_button" type="object" icon="fa-users"
+                attrs="{'invisible': [('same_candidate_application_count', '=', False)]}">
+          <field name='same_candidate_application_count' string="Same Applicants" widget="statinfo"/>
+        </button>
+        <button name="%(action_emp_wp_prejoining_details_list2)d" type="action" class="oe_inline oe_stat_button" 
+                icon="fa-file-text" help="Add/Edit/Review Pre Joining details of Applicant"
+                attrs="{'invisible': [('no_of_prejoining', '=', False)]}">
+          <field name="no_of_prejoining" widget="statinfo" string="Pre Joining Info" />
+        </button>
+      </xpath>
+
+      <xpath expr="//div[@name='button_box']" position="after">
+        <div>
+          <field name="new_employee_bool" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
+        </div>
+      </xpath>
+
+      <xpath expr="//field[@name='partner_name']" position="attributes">
+         <!-- <attribute name="attrs">{'invisible':[('new_employee_bool','=', 'Existing Employee')]}</attribute> -->
+         <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//label[@for='partner_name']" position="attributes">
+         <!-- <attribute name="attrs">{'invisible':[('new_employee_bool','=', 'Existing Employee')]}</attribute> -->
+         <attribute name="invisible">1</attribute>
+      </xpath>
+
+      <xpath expr="//field[@name='name']" position="attributes">
+         <attribute name="attrs">{'invisible':[('new_employee_bool','=', 'Existing Employee')]}</attribute>
+      </xpath>
+      <xpath expr="//label[@for='name']" position="attributes">
+         <attribute name="attrs">{'invisible':[('new_employee_bool','=', 'Existing Employee')]}</attribute>
+      </xpath>
+
+
+<!--       <xpath expr="//field[@name='name']" position="before">
+        <label for="employees_id" attrs="{'invisible':[('new_employee_bool','=', 'New Employee')]}"/>
+        <field name="employees_id" attrs="{'invisible':[('new_employee_bool','=', 'New Employee')]}"/>
+      </xpath> -->
+      <xpath expr="//label[@for='name']" position="before">
+         <h3><field name="requisition_code" attrs="{'invisible':[('requisition_code','=', False)]}"  readonly="1"/></h3>
+         <label for="employees_id" class="oe_edit_only" attrs="{'invisible':[('new_employee_bool','=', 'New Employee')]}"/>
+         <h1><field name="employees_id" attrs="{'invisible':[('new_employee_bool','=', 'New Employee')],'required':[('new_employee_bool','=', 'Existing Employee')]}"/></h1>
+      </xpath>  
+
+
+      <field name="stage_id"  position="replace">
+        <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field': 'fold'}"/>
+      </field>
+
+      <field name="partner_id"  position="attributes">
+          <attribute name="invisible">1</attribute>
+      </field>
+
+      <field name="categ_ids"  position="attributes">
+          <attribute name="invisible">1</attribute>
+      </field>
+
+      <xpath expr="//label[@for='categ_ids']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>  
+
+      <button name="action_makeMeeting" position="attributes">
+          <attribute name="invisible">1</attribute>
+      </button>
+
+      <field name="department_id" position="after">
+          <field name="location" />
+          <field name="domain" />
+          <field name="hiring_id" />
+          <field name="requisition_type" />
+      </field>
+
+      <field name="type_id" position="after">
+          <field name="requisition_date" required="1" />
+          <field name="allocation_date"  required="1" />
+          <field name="requisition_aeging" />
+          <field name="allocation_aeging" />
+      </field>
+
+      <field name="user_id" position="after">
+          <field name="buddy_id" />
+      </field>
+
+      <field name="user_id" position="attributes">
+          <attribute name="string">Recruiter</attribute>
+      </field>
+
+      
+      <label for="salary_expected" position="before">
+        <field name="replacement_id" />
+          <field name="replacement_job_id" />
+          <field name="ex_emp_ctc" />
+          <field name="cv_shared_date" />
+      </label>
+
+      <xpath expr="//separator" position="before">
+        <notebook>
+            <page string="Offer" name="offer" >
+               <group col="4" colspan="4" >
+                    <field name="offer_accepted_tat1_date" />
+                    <field name="resignation_received_date"/>
+                    <field name="resignation_acceptance_date"/>
+                    <field name="reminder_1tat2_date"/>
+                    <field name="reminder_2tat4_date"/>
+                    <field name="reminder_3tat7_date"/>
+                    <field name="final_reminder_tat10_date" />
+                    <field name="offer_withdrawal_intimation_date"/>
+                </group>
+            </page>
+
+            <page string="Selection" name="selection" >
+               <group col="4" colspan="4" >
+                    <field name="selection_date" />
+                    <field name="offer_date"/>
+                    <field name="offer_released_id"/>
+                    <field name="joining_date"/>
+                    <field name="ref_check1_date"/>
+                    <field name="ref_check2_date"/>
+                    <field name="ref_check_hr_date" />
+                    <field name="hr_ref_received_date"/>
+                    <field name="hr_ref_sent_repmanager_date" />
+                    <field name="hr_ref_received_repmanager_date"/>
+                </group>
+            </page>
+
+            <page string="Test" name="test" >
+               <group col="4" colspan="4" >
+                    <field name="aptitude_test" />
+                    <field name="aptitude_test_scores"/>
+                    <field name="technical_test"/>
+                    <field name="technical_test_scores"/>
+                    <field name="test_result"/>
+                </group>
+            </page>
+
+            <page string="Hiring Details" name="hiring_details" >
+               <group col="4" colspan="4" >
+                    <field name="total_cv_sent" />
+                    <field name="cv_shared_today"/>
+                    <field name="total_candidate_lined"/>
+                    <field name="total_interview_with_hiring_manager"/>
+                    <field name="time_taken_close_position"/>
+                    <field name="current_status"/>
+                    <field name="hrs24_48_cv"/>
+                    <field name="backup_cv"/>
+                </group>
+            </page>
+
+        </notebook> 
+      </xpath>
+
+    </field>
+  </record>
+
+</odoo>

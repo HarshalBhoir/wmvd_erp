@@ -1,0 +1,33 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* stock_mods
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-25 16:08+0000\n"
+"PO-Revision-Date: 2018-10-25 16:08+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_mods
+#: model:ir.model,name:stock_mods.model_stock_location
+msgid "Inventory Locations"
+msgstr "Ubicaciones de inventario"
+
+#. module: stock_mods
+#: model:ir.model.fields,field_description:stock_mods.field_res_config_settings_module_search_by_barcode
+#: model:ir.ui.view,arch_db:stock_mods.res_config_settings_view_inherit_form
+msgid "Search faster with barcodes"
+msgstr "Buscar código de barras más rápido"
+
+#. module: stock_mods
+#: model:ir.model,name:stock_mods.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"
+

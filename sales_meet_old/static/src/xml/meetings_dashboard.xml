@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="sales_meet.MeetingDashboardMain">
+      <style type="text/css" t-if="! widget.isFirefox">
+            .o_control_panel.o_breadcrumb_full, .oe_view_nocontent,  {
+                display: none;
+            }
+            .o_control_panel .breadcrumb {
+                padding: 0;
+                display: none;
+            }
+            .o_control_panel .o_cp_left {
+                display: none;
+            }
+            .o_control_panel .o_cp_right {
+                display: none;
+            }
+        </style>
+        <div class="o_dashboards">
+            <div class="container-fluid o_meetings_dashboard"></div>
+        </div>
+    </t>
+
+    <t t-name="MeetingsManagerDashboard">
+        <!-- <div class="col-xs-12 meetings_dashboard_main">
+            <div class="col-sm-6 col-lg-6 ">
+                <div class="col-sm-8 col-lg-8 meeting_count" style="padding:0 !important;">
+                    <div class="card text-color"  style="height: 219px;padding-top: 21%;">
+                        <div class="card-body pb-0">
+                            <h4 class="mb-0">
+                                <p class="stat-count"><t t-esc="widget.login_user.meetings_count"/></p>
+                            </h4>
+                            <p class="stat-title">Meetings</p>
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-sm-4 col-lg-4 meeting_count_month"  style="padding-right:0px !important" >
+                        <div class="card text-color" style="height: 102px;">
+                            <div class="card-body">
+                                <h4 class="mb-0">
+                                <p class="stat-count"><t t-esc="widget.login_user.meetings_count_month"/></p>
+                                </h4>
+                                <p class="stat-title">Meetings : This Month</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-lg-4 meeting_count_month"  style="padding-right:0px !important" >
+                        <div class="card text-color" style="height: 102px;">
+                            <div class="card-body">
+                                <h4 class="mb-0">
+                                <p class="stat-count"><t t-esc="widget.login_user.meetings_count_month"/></p>
+                                </h4>
+                                <p class="stat-title">Draft Meetings</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> -->
+
+            <!--dashboard boxes-->
+            <div class="col-md-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 meeting_count">
+                            <div class="dash-box dash-box-color-1">
+                                <div class="dash-box-icon">
+                                    <i class="fa fa-fw fa-calendar-plus-o"/>
+                                </div>
+                                
+                                <div style="padding: 30px 20px;" class="dash-box-body">
+                                  <h3 class="mb-0">
+                                    <p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.meetings_count"/></p>
+                                  </h3>
+                                  <h3>
+                                    <span style="color: #fff;" class="dash-box-title">Todays Meetings</span>
+                                  </h3>
+                                </div>
+
+                                <div style="color: #98f18d;"   class="dash-box-action meeting_count">
+                                    <button>More Info</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 meeting_count_month">
+                            <div class="dash-box dash-box-color-2">
+                                <div class="dash-box-icon">
+                                    <i class="fa fa-fw fa-calendar"/>
+                                </div>
+                                
+                                <div style="padding: 30px 20px;" class="dash-box-body">
+                                  <h3 class="mb-0">
+                                    <p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.meetings_count_month"/></p>
+                                  </h3>
+                                  <h3>
+                                    <span style="color: #fff;" class="dash-box-title">Meetings : This Month</span>
+                                  </h3>
+                                </div>
+
+                                <div class="dash-box-action meeting_count_month">
+                                    <button>More Info</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 draft_meeting_count_month">
+                            <div   class="dash-box dash-box-color-6">
+                                <div class="dash-box-icon">
+                                    <i class="fa fa-fw fa-calendar-times-o"/>
+                                </div>
+                                <div style="padding: 30px 20px;" class="dash-box-body">
+                                  <h3 class="mb-0">
+                                    <p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.draft_meetings_count_month"/></p>
+                                  </h3>
+                                  <h3>
+                                    <span style="color: #fff;" class="dash-box-title">Draft Meetings</span>
+                                  </h3>
+                                </div>
+
+                                <div class="dash-box-action draft_meeting_count_month">
+                                    <button>More Info</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+
+
+
+
+    </t>
+
+</templates>
+<!-- 
+<templates xml:space="preserve">
+    <t t-name="sales_meet.MeetingDashboardMain" >
+        <style type="text/css" t-if="! widget.isFirefox">
+            .o_control_panel.o_breadcrumb_full, .oe_view_nocontent {
+                display: none;
+            }
+        </style>
+        <div class="o_dashboards">
+            <div class="container-fluid o_meetings_dashboard">
+            </div>
+        </div>
+    </t>
+
+
+
+    <t t-name="MeetingsManagerDashboard">
+
+        <div class="openerp oe_kanban_view hr_dash col-xs-12 col-md-12 col-lg-12 col-sm-8">
+
+            <div class="col-md-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 meeting_count">
+                            <div class="dash-box dash-box-color-1">
+                                <div class="dash-box-icon">
+                                    <i class="fa fa-fw fa-calendar"/>
+                                </div>
+                                <div class="dash-box-body">
+                                    <h4 class="mb-0">
+                                <p class="stat-count"><t t-esc="widget.login_user.meetings_count_month"/></p>
+                                </h4>
+                                    <span class="dash-box-title">Todays Meetings</span>
+                                </div>
+
+                                <div class="dash-box-action meeting_count">
+                                    <button>More Info</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 meeting_count_month">
+                            <div class="dash-box dash-box-color-2">
+                                <div class="dash-box-icon">
+                                    <i class="fa fa-fw fa-calendar"/>
+                                </div>
+                                <div class="dash-box-body">
+                                    <h4 class="mb-0">
+                                <p class="stat-count"><t t-esc="widget.login_user.meetings_count_month"/></p>
+                                </h4>
+                                    <span class="dash-box-title">Meetings : This Month</span>
+                                </div>
+
+                                <div class="dash-box-action meeting_count_month">
+                                    <button>More Info</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 meeting_count_month">
+                            <div class="dash-box dash-box-color-6">
+                                <div class="dash-box-icon">
+                                    <i class="fa fa-fw fa-calendar"/>
+                                </div>
+                                <div class="dash-box-body">
+                                    <h4 class="mb-0">
+                                <p class="stat-count"><t t-esc="widget.login_user.meetings_count_month"/></p>
+                                </h4>
+                                    <span class="dash-box-title">Draft Meetings</span>
+                                </div>
+
+                                <div class="dash-box-action meeting_count_month">
+                                    <button>More Info</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </t>
+</templates>
+
+ -->

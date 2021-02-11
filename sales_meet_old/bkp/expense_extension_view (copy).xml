@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<record id="hr_expense_form_view_extension" model="ir.ui.view">
+            <field name="name">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_form_view" />
+            <field name="model">hr.expense</field>
+            <field name="arch" type="xml">
+
+              <button name="submit_expenses" position="replace"  >
+                <button name="submit_expenses" states="draft" string="Submit" type="object" class="oe_highlight o_expense_submit"/>
+              </button>
+
+      		      <field name="tax_ids" position="attributes"  >
+                      <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="account_id" position="attributes"  >
+                      <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="payment_mode" position="attributes"  >
+                      <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="quantity" position="attributes"  >
+                      <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="employee_id" position="attributes"  >
+                      <attribute name="readonly">1</attribute>
+                </field>
+
+                <field name="employee_id" position="attributes"  >
+                       <attribute name="options">{'no_create': True,'no_open': True}</attribute>
+                </field>
+
+                <field name="currency_id" position="attributes"  >
+                       <attribute name="options">{'no_create': True,'no_open': True}</attribute>
+                </field>
+
+                <field name="currency_id" position="attributes"  >
+                       <attribute name="invisible">1</attribute>
+                </field>
+
+                 <field name="product_uom_id" position="attributes"  >
+                       <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="employee_id" position="after"  >
+                      <field name="work_location" attrs="{'readonly': [('state','=','reported')]}" /> 
+                </field>
+
+
+
+                <field name="date" position="replace"  />
+
+                <field name="total_amount" position="attributes"  >
+                      <attribute name="invisible">0</attribute>
+                </field>
+
+                <field name="company_id" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                </field>
+
+                <xpath expr="//label[@for='payment_mode']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//label[@for='quantity']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <field name="name" position="replace"  />
+                <field name="product_id" position="replace"  />
+                <label for="name" position="replace" />
+
+                <xpath expr="/form/sheet/div[1]" position="after" >
+                  <div class="oe_title">
+                    <label string=="Expense Date"/>
+                    <h2>
+                        <field name="date" required="1" autofocus="1"/>
+
+                    </h2>
+                    <label string="Expenses Type"/>
+                    <h2>
+                        <field name="product_id"  options="{'no_create': True, 'no_open': True}"  autofocus="1" widget='selection'  style='width: 86%;'/>
+                    </h2>
+                    <field name="name" invisible="1"/>
+                    <group>
+                    <field name="fixed_asset"  invisible="1" attrs="{'readonly': [('product_id','!=',False)]}"/></group>
+                  </div>
+                  <!-- <div >
+                        <button name="action_get_attachment_view"
+                            class="oe_stat_button"
+                            icon="fa-book"
+                            type="object">
+                            <field name="attachment_number" widget="statinfo" string="Documents"/>
+                        </button>
+                    </div> -->
+
+                </xpath>
+
+                <!-- <field name="reference"  position="replace"/> -->
+
+                <field name="reference"  position="after">
+                  <field name="grade_id" readonly='True' options="{'no_create': True, 'no_open': True}" />
+                </field>
+
+                <field name="unit_amount"  position="replace">
+                  <field name="claimed_amount" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="unit_amount" string="Amount" groups='hr_expense.group_hr_expense_manager' />
+                  <field name="grade_amount" string="Amount (As per Grade)" attrs="{'readonly': [('product_id','!=',False)]}"/>
+
+                  <!-- attrs="{'readonly': [('unit_amount','!=',False)]}" -->
+                  
+                  <field name="meeting_id" string="Link to CRM Meetings (Visit)" required="1" attrs="{'readonly': [('state','=','reported')]}" widget='selection' />
+                  <field name="meeting_address" attrs="{'readonly': [('state','=','reported')],'invisible': [('meeting_address','=',False)]}" />
+                   <field name="week_no" invisible="1"/> 
+                  <field name="backdate_alert" invisible="1"/> 
+                </field>
+
+                <xpath expr="/form/sheet/div[1]" position="attributes" >
+                      <attribute name="invisible">1</attribute>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record id="hr_expense_form_view_extension2" model="ir.ui.view">
+            <field name="name">hr.expense</field>
+            <field name="inherit_id" ref="sales_meet.hr_expense_form_view_extension" />
+            <field name="groups_id" eval="[(6,0, [ref('hr_expense.group_hr_expense_manager')])]" />
+            <field name="model">hr.expense</field>
+            <field name="arch" type="xml">
+
+              <field name="unit_amount" position="attributes"  >
+                    <attribute name="readonly">0</attribute>
+              </field>
+
+            </field>
+        </record>
+
+        <record id="view_expenses_tree_extension" model="ir.ui.view">
+            <field name="name">hr.expense.tree</field>
+            <field name="inherit_id" ref="hr_expense.view_expenses_tree" />
+            <field name="model">hr.expense</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//tree[1]" position="attributes">
+                     <attribute name="colors">red:backdate_alert==True;</attribute>
+                </xpath>
+                <xpath expr="//tree[1]" position="attributes">
+                     <attribute name="limit">10</attribute>
+                </xpath>
+
+                <field name="state" position="after" >
+                        <field name="week_no"/>    
+                        <field name="backdate_alert"/>                      
+                </field>
+
+            </field>
+        </record>
+
+        <record id="view_hr_expense_sheet_form_extension" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.tree</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form" />
+            <field name="model">hr.expense.sheet</field>
+            <field name="arch" type="xml">
+
+                <!-- <xpath expr="//tree[1]" position="attributes">
+                     <attribute name="colors">red:backdate_alert==True;</attribute>
+                </xpath>
+                <xpath expr="//tree[1]" position="attributes">
+                     <attribute name="limit">10</attribute>
+                </xpath> -->
+
+                <!-- <field name="expense_line_ids" position="attributes"  >
+                      <attribute name="options">{'no_create': True,'no_open': True}</attribute>
+                </field>
+
+                <xpath expr="/form/sheet/field/tree" position="attributes">
+                   <attribute name="create">"false"</attribute>
+                </xpath>
+
+                <xpath expr="/form/sheet/field/tree" position="attributes">
+                   <attribute name="edit">"false"</attribute>
+                </xpath> -->
+
+
+
+
+
+                <field name="employee_id" position="attributes"  >
+                      <attribute name="readonly">1</attribute>
+                </field>
+
+                <field name="employee_id" position="attributes"  >
+                      <attribute name="options">{'no_create': True,'no_open': True}</attribute>
+                </field>
+                
+                <field name="journal_id" position="attributes"  >
+                      <attribute name="readonly">1</attribute>
+                </field>
+                 <field name="company_id" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                </field>
+
+            </field>
+        </record>
+
+	</data>
+</openerp>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+     
+            
+         <record id="bt_budget_management_budget_tree" model="ir.ui.view">
+            <field name="name">bt.budget.tree</field>
+            <field name="model">bt.budget</field>
+            <field name="arch" type="xml">
+                <tree string="budget">
+                	<field name="name"/>
+                	<field name="department_id"/>
+                	<field name="company_id"/>
+                    <field name="requester_id"/>
+                    <field name="approve_id"/>
+                    <field name="budget_amount"/>
+                    <field name="amount_alloted"/>
+                    <field name="amount_pending"/>
+                    <field name="year"/>
+                  	<field name="state"/>
+                </tree>
+            </field>
+        </record>  
+
+<!--        <record model="ir.ui.view" id="bt_budget_management_budget_kanban">
+            <field name="name">bt.budget.kanban</field>
+            <field name="model">bt.budget</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="image"/>
+                    <field name="name"/>
+                    <field name="budget_code"/>
+                    <field name="purchase_date"/>
+                    <field name="purchase_value"/>
+                    <field name="model_name"/>
+                    <field name="serial_no"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_res_partner_kanban">
+                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                   <div class="o_kanban_image">
+                                         <t t-if="record.image.raw_value">
+                                            <img t-att-src="kanban_image('bt.budget', 'image', record.id.value)"/>
+                                        </t>
+                                    </div>  
+                                    <div class="oe_kanban_details">
+                                        <strong class="oe_partner_heading">
+                                            <field name="name"/>
+                                        </strong>
+                                        <ul>
+                                            <li t-if="record.budget_code.raw_value">Code: <field name="budget_code"/></li>
+                                            <li t-if="record.model_name.raw_value">Model: <field name="model_name"/></li>
+                                            <li t-if="record.serial_no.raw_value">Serial #: <field name="serial_no"/></li>
+                                        </ul>    
+                                    </div>
+                            </div>
+                         </t>
+                     </templates>                
+                </kanban>
+             </field>   
+         </record>  --> 
+        
+<!--         <record id="bt_budget_management_budget_search" model="ir.ui.view">
+            <field name="name">bt.budget.search</field>
+            <field name="model">bt.budget</field>
+            <field name="arch" type="xml">
+                <search string="budget">
+                	<field name="name"/>
+                	<field name="budget_code"/>
+                	<field name="purchase_date"/>
+                    <field name="purchase_value"/>
+                    <field name="current_loc_id"/>
+                    <field name="model_name"/>
+                    <field name="serial_no"/>
+                    <field name="manufacturer"/>
+                    <field name="warranty_start"/>
+                    <field name="warranty_end"/>
+                    <separator/>
+                    <filter name="Scrapped" string="Scarpped" domain="[('state','=','scrapped')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Category" domain="[]" context="{'group_by':'category_id'}"/>
+                        <filter string="Purchase Date" domain="[]" context="{'group_by':'purchase_date'}"/>
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record> -->
+        
+        <record id="bt_budget_management_budget_form" model="ir.ui.view">
+            <field name="name">bt.budget.form</field>
+            <field name="model">bt.budget</field>
+            <field name="arch" type="xml">
+                <form string="budget">
+                	<header>
+                        <button name= "action_approve" string="Approve" type="object" class="btn-primary"  attrs="{'invisible': [('state','!=','draft')]}" />
+                        <button name= "action_disapprove" string="Disapprove" type="object" class="btn-primary"  attrs="{'invisible': [('state','!=','draft')]}" />
+                        <button name= "action_reset" string="Reset to Draft" type="object" class="btn-link"  attrs="{'invisible': [('state','=','draft')]}" />
+                		<field name="state" widget="statusbar"  statusbar_visible="draft,approved"/>
+                	</header>
+                	<sheet>
+						    <div class="oe_title"  attrs="{'readonly': [('is_created','!=',False)],'invisible': [('is_created','=',False)]}">
+                                <div class="oe_edit_only">
+                                    <label for="name" string="Name" attrs="{'readonly': [('is_created','=',True)]}"/>
+                                </div>
+                            	<h1  >
+                                	<field name="name" attrs="{'readonly': [('is_created','=',True)]}"/>
+                            	</h1>
+                                
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="is_created" invisible="1"/>
+                                    <field name="department_id" required="1" attrs="{'readonly': [('state','=','approved')]}"/>
+                                    <field name="requester_id"  required="1"  attrs="{'readonly': [('state','=','approved')]}"/>
+                                    <field name="budget_amount" required="1" attrs="{'readonly': [('state','=','approved')]}"/>
+                                    <field name="amount_alloted"  attrs="{'readonly': [('state','=','approved')]}"/>
+                                </group>
+                            	<group>
+                                    <field name="company_id" required="1"  attrs="{'readonly': [('state','=','approved')]}"/>
+                                    <field name="approve_id" required="1"  attrs="{'readonly': [('state','=','approved')]}"/>
+                                    <field name="date_year" required="1"  attrs="{'readonly': [('state','=','approved')]}"/>
+                                    <field name="amount_pending"/>
+                                    <field name="year" invisible="1"/>
+                            	</group>
+                            	 
+                            </group>
+                            <notebook>
+                                <page string="Components" name="components">
+                                   <field name="line_ids"  attrs="{'readonly': [('state','=','approved')]}">
+                                      <tree editable="bottom" >
+                                          <field name="create_date" invisible="1"/>
+                                          <field name="name" invisible="1"/>
+                                          <field name="category_id"  required="1"/>
+                                          <field name="vendor_name" invisible="1" />
+                                          <field name="amount" sum="Total"/>
+                                          <field name="claimed" sum="Total"/>
+                                          <field name="amount_pending" sum="Total"/>
+                                          <field name="purchase_date" invisible="1"/>
+                                      </tree>
+                                  </field>
+                                </page>
+
+                                <page string="Payments" name="payments">
+                                   <field name="payment_ids"  attrs="{'readonly': [('state','=','approved')]}" >
+                                      <tree editable="bottom" >
+                                        <field name="name"/>
+                                        <field name="date"/>
+                                        <field name="partner_id"/>
+                                        <field name="vendor_reference"/>
+                                        <field name="amount_total" sum="Total" />
+                                        <field name="company_id"/>
+                                        <field name="payment_category"/>
+                                        <field name="state"/>
+                                      </tree>
+                                  </field>
+                                </page>
+                                
+	                        </notebook>    		 
+                	 </sheet>
+                	 <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>  
+                 </form>
+             </field>
+        </record>
+
+        <record id="bt_budget_management_budget_category_tree" model="ir.ui.view">
+            <field name="name">bt.budget.category.tree</field>
+            <field name="model">bt.budget.category</field>
+            <field name="arch" type="xml">
+                <tree string="budget Category">
+                	<field name="name"/>
+                </tree>
+            </field>
+        </record> 
+        
+       
+        <record id="bt_budget_management_budget_category_form" model="ir.ui.view">
+            <field name="name">bt.budget.category.form</field>
+            <field name="model">bt.budget.category</field>
+            <field name="arch" type="xml">
+                <form string="Budget Category">
+                	<sheet>
+                		<div class="oe_title">
+                        	<div class="oe_edit_only">
+                            	<label for="name" string="Category Name"/>
+                            </div>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                        	<field name="categ_no"/>
+                        </group>
+                	</sheet>
+                </form>
+            </field>
+         </record>       	
+        
+        <record id="action_bt_budget" model="ir.actions.act_window">
+            <field name="name">Budgets</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bt.budget</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create budget for the company
+                </p>
+            </field>
+        </record>
+	            
+	   <record id="action_bt_budget_category" model="ir.actions.act_window">
+            <field name="name">Budget Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bt.budget.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="search_view_id" ref="bt_budget_management_budget_category_search"/> -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create Budget Category for the Company
+                </p>
+            </field>
+        </record>
+	</data>
+</odoo>

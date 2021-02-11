@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		
+		<record id="view_partner_form_extension_all" model="ir.ui.view">
+      <field name="name">res.partner.form</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+
+        <div name="button_box" position="attributes">
+            <attribute name="groups">sales_meet.group_sales_meet_manager,sales_meet.group_external_db_connect_user</attribute>
+        </div>
+
+        <xpath expr="/form/sheet[1]" position="before" >
+          <header>
+            <button string="Submit" name="submit_to_owner"  type="object"  class="btn-primary" states='Draft' />
+            <button string="Approve" name="approved_from_owner"  type="object"  class="btn-primary" 
+                    groups='sales_meet.group_sales_support_user' states='Submitted'  />
+            <button string="Confirm Partner" name="confirm_customer"  type="object"  class="btn-primary" 
+                    groups='sales_meet.group_it_user'  />
+            <button string="Confirm ERP Partner" name="create_idempiere_partner"  type="object"  class="btn-primary" 
+                    groups='sales_meet.group_it_user' invisible="1" />
+            <button name="download_customer_data" string="Export" type="object" class="fas fa-cog btn-primary" 
+                    groups='sales_meet.group_it_user' style="font-size: 17px;" />
+            <button string="Update Partner" name="update_customer_from_erp"  type="object"  
+                    class="btn-primary" groups='sales_meet.group_it_user'  />
+              
+            <field name="state" widget="statusbar"/>
+          </header>
+        </xpath>
+
+          <field name="user_id" position='replace' />
+
+          <field name="category_id" position="after"  >
+              <field name="partner_group_id" required="1" options='{"no_open": True}'/>
+              <field name="contact_name"/>
+              <field name="aadhar_no"/>
+              <field name="pan_no"/>
+              <field name="gst_no"/>            
+          </field>
+
+          <field name="lang" position="after"  >
+            <field name="user1_id" required="1" options='{"no_open": True}'/>
+            <field name="user2_id" required="1" options='{"no_open": True}'/>
+            <field name="pricelist"/>
+            <field name="creditstatus" required="1"/>
+            <field name="so_creditlimit" required="1"/>        
+            <field name="user_id" required="0" options='{"no_open": True}'/>
+          </field>
+
+          <field name="phone" position="before"  >
+            <field name="bp_code"/>
+          </field>
+
+          <field name="street2" position="after"  >
+            <field name="district_id" placeholder="District" class="o_address_district" options='{"no_open": True}'
+              required="1" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+
+          </field>
+
+          <xpath expr="//page[1]" position="before">
+            <page string="Personal Details" autofocus="autofocus">
+                <group>
+                    <group>
+                        <field name="owner_name"/>
+                        <field name="owner_dob"/>
+                        <field name="owner_spouse_name"/>
+                        <field name="owner_spouse_dob"/>
+                        <field name="owner_mrg_anvrsry_date"/>
+                    </group>
+                    <group>
+                        <field name="owner_child1_name"/>
+                        <field name="owner_child1_dob"/>
+                        <field name="owner_child2_name"/>
+                        <field name="owner_child2_dob"/>
+                        <field name="owner_child3_name"/>
+                        <field name="owner_child3_dob"/>
+                    </group>
+                </group>
+                <group name="idempiere_details" string="Idempiere Details" >
+                    <group>
+                        <field name="cst_no"/>
+                        <field name="tin_no"/>
+                        <field name="vat_no"/>
+                        <field name="taxid" string="Tax ID"/>
+                    </group>
+
+                    <group>
+                        <field name="c_bpartner_id" />
+                        <field name="c_location_id" groups="base.group_no_one"/>
+                        <field name="c_bpartner_location_id" groups="base.group_no_one"/>
+                        <field name="can_edit_fields" invisible="1"/>
+                        <field name="bulk_payment_bool"/>
+                        <field name="crm_kyc_id" required="0" options='{"no_open": True}'
+                                attrs="{'invisible': [('crm_kyc_id', '=', False)]}"/>  
+                    </group>
+                </group>
+            </page>
+
+             <page name="bank_detail" string="Bank Details" autofocus="autofocus">
+                <group col="4">
+                    <field name="bank_name"/>
+                    <field name="account_no"/>
+                    <field name="ifsc_code"/>
+                    <field name="branch_name"/>
+                    <field name="cheque_no"/>
+                    <field name="address"/>
+                    <field name="bank_country"/>
+                </group>
+                <group name="cheque_details_group" string="Cheque Details">
+                    <group>
+                        <field name="cheque1"/>
+                        <field name="cheque2"/>
+                        <field name="cheque3"/>
+                        <field name="sd_cheque_no"/>
+                        <field name="credit_limit"/>
+                    </group>
+
+                    <group>
+                        <field name="amount1"/>
+                        <field name="amount2"/>
+                        <field name="amount3"/>
+                        <field name="security_deposit_amount"/>
+                        <field name="credit_days"/>
+                    </group>
+                </group>
+              </page>
+          </xpath>
+
+          <page name="sales_purchases" position="attributes">
+            <attribute name="groups">sales_meet.group_external_db_connect_user</attribute>
+          </page>
+
+          <field name="country_id" position="attributes"  >
+            <attribute name="required">1</attribute>
+          </field>
+          <field name="state_id" position="attributes"  >
+            <attribute name="required">1</attribute>
+          </field>
+
+          <xpath expr="//page[3]" position="attributes">
+             <attribute name="groups">sales_team.group_sale_manager</attribute>
+          </xpath>
+
+          <field name="lang" position="attributes"  >
+            <attribute name="invisible">1</attribute>
+          </field>
+
+          <field name="fax" position="attributes"  >
+            <attribute name="invisible">1</attribute>
+          </field>
+
+          <field name="website" position="attributes"  >
+            <attribute name="invisible">1</attribute>
+          </field>
+
+          <field name="category_id" position="attributes"  >
+            <attribute name="invisible">1</attribute>
+          </field>
+
+        </field>
+    </record>
+
+    <record id="view_partner_tree_extension" model="ir.ui.view">
+      <field name="name">res.partner.tree</field>
+      <field name="inherit_id" ref="base.view_partner_tree" />
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+
+          <field name="email" position="after"  >
+             <field name="gst_no"/>
+             <field name="pan_no"/>
+             <field name="street"/>
+             <field name="street2"/>
+             <field name="city"/>
+             <field name="state_id"/>
+          </field>
+
+        </field>
+    </record>
+
+    <record id="wp_res_partner_kanban_extension_view" model="ir.ui.view">
+      <field name="name">res.partner.kanban</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+      <field name="priority" eval="60"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[3]" position="inside">
+          <div class="o_kanban_record_bottom">
+            <div class="oe_kanban_bottom_left">Code: </div>
+            <div ><b style="padding-left: 10px;"><field name="bp_code"/></b></div>
+          </div>
+        </xpath>       
+      </field>
+     </record>
+
+     <record id="view_res_partner_filter_extension" model="ir.ui.view">
+          <field name="name">view.res.partner.filter.extension</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_res_partner_filter" />
+          <field name="arch" type="xml">
+              <xpath expr="//filter[@name='supplier']" position="after">
+                  <field name="bp_code" />
+              </xpath>
+          </field>
+      </record>
+
+
+    <record id="action_partner_form_mdm2" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{"search_default_customer":1,
+                                "default_active":0,
+                                "default_selection":'company'}</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+    </record>
+
+    <record id="action_partner_form_view_mdm" model="ir.actions.act_window.view">
+        <field eval="0" name="sequence"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="base.res_partner_kanban_view"/>
+        <field name="act_window_id" ref="action_partner_form_mdm2"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_partner_form_mdm2_wp">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_partner_form_extension_all"/>
+        <field name="act_window_id" ref="action_partner_form_mdm2"/>
+    </record>
+
+    <record id="action_partner_tree_view_mdm" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="base.view_partner_tree"/>
+        <field name="act_window_id" ref="action_partner_form_mdm2"/>
+    </record>
+
+    <record id="open_view_partner_list" model="ir.actions.act_window">
+      <field name="name">Distributor</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form,tree</field>
+      <field name="view_id" eval="False"/>
+      <field name="search_view_id" ref="base.view_res_partner_filter"/>
+    </record>
+
+
+	</data>
+</odoo>
+        
+        

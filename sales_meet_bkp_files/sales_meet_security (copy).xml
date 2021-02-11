@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+
+    <!--SALES MEET / Sales Head Pan India Group-->
+    
+    <record id="group_sales_meet_saleshead" model="res.groups">
+        <field name="name">SALES MEET / Sales Head</field>
+    </record>
+
+    <!--SALES MEET / ZSM Group-->
+
+    <record id="group_sales_meet_zsm" model="res.groups">
+        <field name="name">SALES MEET / ZSM</field>
+    </record>
+    
+    <!--SALES MEET / Sr. Manager Group-->
+    
+    <record id="group_sales_meet_srmanager" model="res.groups">
+        <field name="name">SALES MEET / Sr Manager</field>
+    </record>
+
+    <!--SALES MEET / Manager Group-->
+    
+    <record id="group_sales_meet_manager" model="res.groups">
+        <field name="name">SALES MEET / Manager</field>
+    </record>
+
+
+    <!--SALES MEET / Asst. Manager Group-->
+    
+    <record id="group_sales_meet_asstmanager" model="res.groups">
+        <field name="name">SALES MEET / Asst. Manager</field>
+    </record>
+
+    
+    <!--SALES MEET / Sr. Executive Group-->
+    
+    <record id="group_sales_meet_srexecutive" model="res.groups">
+        <field name="name">SALES MEET / Sr Executive</field>
+    </record>
+    
+    
+    <!--SALES MEET / Executive Group-->
+    
+    <record id="group_sales_meet_executive" model="res.groups">
+        <field name="name">SALES MEET / Executive</field>
+    </record>
+    
+    <!--Hidden Group-->
+    
+    <record id="group_sales_meet_hidden" model="res.groups">
+        <field name="name">SALES MEET / Hidden</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="comment">User group to hide all unused menus in the SALES MEET application.</field>
+    </record>
+    
+    <record model="ir.module.category" id="module_category_sales_meet">
+        <field name="name">SALES MEET</field>
+        <field name="sequence">0</field>
+    </record>
+    
+    <!--SALES MEET Admin Group-->
+    
+     <record id="sales_meet.group_sales_meet_admin" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="sales_meet.module_category_sales_meet"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
+        <field name="comment">the Admin will have access to All data in the SALES MEET application.</field>
+    </record>
+    
+    <record model="ir.rule" id="calendar_event_executive">
+        <field name="name">Meeting Executive</field>
+        <field name="model_id" ref="model_calendar_event"/>
+        <field name="groups" eval="[(4, ref('group_sales_meet_executive'))]"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+    </record>
+
+   <!--  <record model="ir.rule" id="crm_lead_manager">
+        <field name="name">CRM lead - Manager</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="groups" eval="[(4, ref('base.group_sale_manager'))]"/>
+        <field name="domain_force">[(1 ,'=', 1)]</field>
+    </record> -->
+    
+</odoo>

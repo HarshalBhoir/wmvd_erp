@@ -1,0 +1,178 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner_group_executive,sales_meet.res_partner_group executive,model_res_partner_group,sales_meet.group_sales_meet_executive,1,1,1,0
+access_res_partner_group_srexecutive,sales_meet.res_partner_group sr_executive,model_res_partner_group,sales_meet.group_sales_meet_srexecutive,1,1,1,0
+access_res_partner_group_asstmanager,sales_meet.res_partner_group asstmanager,model_res_partner_group,sales_meet.group_sales_meet_asstmanager,1,1,1,0
+access_res_partner_group_manager,sales_meet.res_partner_group manager,model_res_partner_group,sales_meet.group_sales_meet_manager,1,1,1,0
+access_res_partner_group_srmanager,sales_meet.res_partner_group srmanager,model_res_partner_group,sales_meet.group_sales_meet_srmanager,1,1,1,0
+access_res_partner_group_zsm,sales_meet.res_partner_group zsm,model_res_partner_group,sales_meet.group_sales_meet_zsm,1,1,1,0
+access_res_partner_group_saleshead,sales_meet.res_partner_group saleshead,model_res_partner_group,sales_meet.group_sales_meet_saleshead,1,1,1,0
+access_res_partner_group_sales_executive,sales_meet.res_partner_group sales_executive,model_res_partner_group,sales_team.group_sale_salesman_all_leads,1,1,1,0
+access_res_partner_group_sales_executive2,sales_meet.res_partner_group sales_executive2,model_res_partner_group,sales_team.group_sale_salesman,1,1,1,0
+access_grade_master_srexecutive,sales_meet.grade_master sr_executive,model_grade_master,sales_meet.group_sales_meet_srexecutive,1,1,1,0
+access_grade_master_executive,sales_meet.grade_master executive,model_grade_master,sales_meet.group_sales_meet_executive,1,1,1,0
+access_grade_master_asstmanager,sales_meet.grade_master asstmanager,model_grade_master,sales_meet.group_sales_meet_asstmanager,1,1,1,0
+access_grade_master_manager,sales_meet.grade_master manager,model_grade_master,sales_meet.group_sales_meet_manager,1,1,1,0
+access_grade_master_srmanager,sales_meet.grade_master srmanager,model_grade_master,sales_meet.group_sales_meet_srmanager,1,1,1,0
+access_grade_master_zsm,sales_meet.grade_master zsm,model_grade_master,sales_meet.group_sales_meet_zsm,1,1,1,0
+access_grade_master_saleshead,sales_meet.grade_master saleshead,model_grade_master,sales_meet.group_sales_meet_saleshead,1,1,1,0
+access_calendar_event_srexecutive,sales_meet.calendar_event sr_executive,model_calendar_event,sales_meet.group_sales_meet_srexecutive,1,1,1,0
+access_calendar_event_executive,sales_meet.calendar_event executive,model_calendar_event,sales_meet.group_sales_meet_executive,1,1,1,0
+access_calendar_event_asstmanager,sales_meet.calendar_event asstmanager,model_calendar_event,sales_meet.group_sales_meet_asstmanager,1,1,1,0
+access_calendar_event_manager,sales_meet.calendar_event manager,model_calendar_event,sales_meet.group_sales_meet_manager,1,1,1,0
+access_calendar_event_srmanager,sales_meet.calendar_event srmanager,model_calendar_event,sales_meet.group_sales_meet_srmanager,1,1,1,0
+access_calendar_event_zsm,sales_meet.calendar_event zsm,model_calendar_event,sales_meet.group_sales_meet_zsm,1,1,1,0
+access_calendar_event_saleshead,sales_meet.calendar_event saleshead,model_calendar_event,sales_meet.group_sales_meet_saleshead,1,1,1,0
+access_grade_master_line_srexecutive,sales_meet.grade_master_line sr_executive,model_grade_master_line,sales_meet.group_sales_meet_srexecutive,1,1,1,0
+access_grade_master_line_executive,sales_meet.grade_master_line executive,model_grade_master_line,sales_meet.group_sales_meet_executive,1,1,1,0
+access_grade_master_line_asstmanager,sales_meet.grade_master_line asstmanager,model_grade_master_line,sales_meet.group_sales_meet_asstmanager,1,1,1,0
+access_grade_master_line_manager,sales_meet.grade_master_line manager,model_grade_master_line,sales_meet.group_sales_meet_manager,1,1,1,0
+access_grade_master_line_srmanager,sales_meet.grade_master_line srmanager,model_grade_master_line,sales_meet.group_sales_meet_srmanager,1,1,1,0
+access_grade_master_line_zsm,sales_meet.grade_master_line zsm,model_grade_master_line,sales_meet.group_sales_meet_zsm,1,1,1,0
+access_grade_master_line_saleshead,sales_meet.grade_master_line saleshead,model_grade_master_line,sales_meet.group_sales_meet_saleshead,1,1,1,0
+access_calendar_event_retailer,sales_meet.calendar_event retailer,model_calendar_event,sales_meet.group_sales_meet_retailer,1,1,1,1
+access_calendar_event_distributer,sales_meet.calendar_event distributer,model_calendar_event,sales_meet.group_sales_meet_distributer,1,1,1,0
+access_res_users_executive,sales_meet.res_users executive,model_res_users,sales_meet.group_sales_meet_executive,1,1,1,0
+access_res_users_srexecutive,sales_meet.res_users sr_executive,model_res_users,sales_meet.group_sales_meet_srexecutive,1,1,1,0
+access_res_users_asstmanager,sales_meet.res_users asstmanager,model_res_users,sales_meet.group_sales_meet_asstmanager,1,1,1,0
+access_res_users_manager,sales_meet.res_users manager,model_res_users,sales_meet.group_sales_meet_manager,1,1,1,0
+access_res_users_srmanager,sales_meet.res_users srmanager,model_res_users,sales_meet.group_sales_meet_srmanager,1,1,1,0
+access_res_users_zsm,sales_meet.res_users zsm,model_res_users,sales_meet.group_sales_meet_zsm,1,1,1,0
+access_res_users_saleshead,sales_meet.res_users saleshead,model_res_users,sales_meet.group_sales_meet_saleshead,1,1,1,0
+access_hr_employee_status_history_manager,hr.employee.status.history.manager,model_hr_employee_status_history,hr.group_hr_manager,1,1,1,1
+access_hr_employee_status_history_hr_user,hr.employee.status.history.user,model_hr_employee_status_history,hr.group_hr_user,1,1,1,0
+access_hr_employee_status_history_hr_base_user,hr.employee.status.history.base.user,model_hr_employee_status_history,base.group_user,1,1,1,0
+access_hr_insurance_policy_manager,hr.insurance.policy.manager,model_hr_insurance_policy,hr.group_hr_manager,1,1,1,0
+access_hr_videocon_policy_manager,hr.videocon.policy.manager,model_hr_videocon_policy,hr.group_hr_manager,1,1,1,0
+access_hr_payroll_structure_base,hr.payroll.structure_base,hr_payroll.model_hr_payroll_structure,base.group_user,1,1,1,1
+access_hr_contribution_register_base,hr.contribution.register_base,hr_payroll.model_hr_contribution_register,base.group_user,1,1,1,0
+access_hr_salary_rule_category_base,hr.salary.rule.category_base,hr_payroll.model_hr_salary_rule_category,base.group_user,1,0,0,0
+access_hr_payslip_base,hr.payslip_base,hr_payroll.model_hr_payslip,base.group_user,1,1,1,1
+access_hr_payslip_line_base,hr.payslip.line_base,hr_payroll.model_hr_payslip_line,base.group_user,1,1,1,1
+access_hr_payslip_input_user_base,hr.payslip.input.user_base,hr_payroll.model_hr_payslip_input,base.group_user,1,1,0,0
+access_hr_payslip_worked_days _base,hr.payslip.worked_days_base,hr_payroll.model_hr_payslip_worked_days,base.group_user,1,1,0,0
+access_hr_payslip_run_base,hr.payslip.run_base,hr_payroll.model_hr_payslip_run,base.group_user,1,1,0,0
+access_hr_rule_input_base,hr.rule.input_base,hr_payroll.model_hr_rule_input,base.group_user,1,1,0,0
+access_hr_salary_rule_user_base,hr.salary.rule.user_base,hr_payroll.model_hr_salary_rule,base.group_user,1,1,0,0
+access_hr_employee_resource_user_base,resource.resource.user.base,resource.model_resource_resource,base.group_user,1,1,0,0
+access_ir_property_hr_user_base,ir_property hr_user.base,base.model_ir_property,base.group_user,1,1,0,0
+access_hr_employee_system_user_base,hr.employee system user.base,hr.model_hr_employee,base.group_user,1,1,0,0
+access_sale_register_report_user_base,sale.register.report user,model_sale_register_report,base.group_user,1,1,1,0
+access_sale_register_line_user_base,sale.register.report user,model_sale_register_line,base.group_user,1,1,1,0
+access_res_state_district_user_base,res.state.district user,model_res_state_district,base.group_user,1,1,1,1
+access_enquiry_type_user,enquiry.type user,model_enquiry_type,base.group_user,1,1,1,1
+access_crm_lead_log_list_user,crm.lead.log.list user,model_crm_lead_log_list,base.group_user,1,1,1,0
+access_project_contacts_user,access_enquiry_type_user,model_project_contacts,base.group_user,1,1,1,1
+access_org_master_user,org.master user,model_org_master,base.group_user,1,1,1,1
+access_warehouse_master_user,warehouse.master user,model_warehouse_master,base.group_user,1,1,1,1
+access_credit_note,credit_note user,model_credit_note,base.group_user,1,1,1,1
+access_credit_note_line,credit_note_line user,model_credit_note_line,base.group_user,1,1,1,0
+access_expense_automation,expense_automation user,model_expense_automation,base.group_user,1,1,1,1
+access_expense_automation_line,expense_automation_line user,model_expense_automation_line,base.group_user,1,1,1,1
+,,,,,,,
+access_external_db_connect_user,external_db_connect_user,model_external_db_connect,base.group_user,1,1,1,0
+access_external_db_configuration_user,external_db_configuration_user,model_external_db_configuration,base.group_user,1,1,1,0
+access_external_db_lines_user,external_db_lines_user,model_external_db_lines,base.group_user,1,1,1,0
+access_posting_error_user,posting_error_user,model_posting_error,base.group_user,1,1,1,0
+access_posting_error_lines_user,posting_error_lines_user,model_posting_error_lines,base.group_user,1,1,1,0
+access_bank_payment_user,bank_payment_user,model_bank_payment,base.group_user,1,1,1,1
+access_bank_payment_lines_user,bank_payment_lines_user,model_bank_payment_lines,base.group_user,1,1,1,1
+access_bank_invoice_lines_user,access_bank_invoice_lines,model_bank_invoice_lines,base.group_user,1,1,1,1
+access_bank_invoice_selected,access_bank_invoice_selected,model_bank_invoice_selected,base.group_user,1,1,1,1
+access_bank_invoice_filter,access_bank_invoice_filter,model_bank_invoice_filter,base.group_user,1,1,1,1
+access_credit_note_config,access_credit_note_config,model_credit_note_config,base.group_user,1,1,1,1
+access_credit_note_approver,access_credit_note_approver,model_credit_note_approver,base.group_user,1,1,1,1
+access_credit_note_user,access_credit_note_user,model_credit_note_user,base.group_user,1,1,1,1
+,,,,,,,
+access_res_letter,res_letter_user,model_res_letter,base.group_user,1,1,1,1
+access_letter_type_user,letter_type_user,model_letter_type,base.group_user,1,1,1,0
+access_letter_type_system,letter_type_system,model_letter_type,base.group_user,1,1,1,1
+access_letter_class_user,letter_class_user,model_letter_class,base.group_user,1,1,1,0
+access_letter_class_system,letter_class_system,model_letter_class,base.group_user,1,1,1,1
+access_letter_channel_user,letter_channel_user,model_letter_channel,base.group_user,1,1,1,0
+access_letter_channel_system,letter_channel_system,model_letter_channel,base.group_user,1,1,1,1
+access_letter_folder_user,letter_folder_user,model_letter_folder,base.group_user,1,1,1,0
+access_letter_folder_system,letter_folder_system,model_letter_folder,base.group_user,1,1,1,1
+access_letter_reassignment_user,letter_reassignment_user,model_letter_reassignment,base.group_user,1,1,1,0
+access_letter_reassignment_system,letter_reassignment_system,model_letter_reassignment,base.group_user,1,1,1,1
+access_ticket_booking,ticket_booking,model_ticket_booking,base.group_user,1,1,1,1
+access_fo_visit_user,fo.visit,model_fo_visit,sales_meet.group_vms_user,1,1,1,0
+access_fo_visitor_user,fo_visitor,model_fo_visitor,sales_meet.group_vms_user,1,1,1,0
+access_fo_visit_manager,fo.visit,model_fo_visit,sales_meet.group_vms_manager,1,1,1,1
+access_fo_visitor_manager,fo_visitor,model_fo_visitor,sales_meet.group_vms_manager,1,1,1,1
+access_fo_belongings_receptionist,fo.belongings,model_fo_belongings,base.group_user,1,1,1,0
+access_id_proof_receptionist,id.proof,model_id_proof,base.group_user,1,1,1,1
+access_fo_property_counter_receptionist,fo.property.counter,model_fo_property_counter,base.group_user,1,1,1,1
+access_fo_purpose_receptionist,fo.purpose,model_fo_purpose,base.group_user,1,1,1,1
+access_wp_erp_credentials,access_wp_erp_credentials,model_wp_erp_credentials,base.group_user,1,1,1,1
+access_wp_erp_charge,access_wp_erp_charge,model_wp_erp_charge,base.group_user,1,1,1,1
+access_erp_bank_master,access_erp_bank_master,model_erp_bank_master,base.group_user,1,1,1,1
+access_wp_c_period,access_wp_c_period,model_wp_c_period,base.group_user,1,1,1,1
+access_wp_c_elementvalue,access_wp_c_elementvalue,model_wp_c_elementvalue,base.group_user,1,1,1,1
+access_logistic_trail,access_logistic_trail,model_logistic_trail,base.group_user,1,1,1,1
+access_logistic_trail_line,access_logistic_trail_line,model_logistic_trail_line,base.group_user,1,1,1,1
+access_wp_employee_joining_details,access_wp_employee_joining_details,model_wp_employee_joining_details,base.group_user,1,1,1,1
+access_wp_employee_id_card,access_wp_employee_id_card,model_wp_employee_id_card,base.group_user,1,1,1,1
+access_wp_employee_mediclaim_revised,access_wp_employee_mediclaim_revised,model_wp_employee_mediclaim_revised,base.group_user,1,1,1,1
+access_wp_employee_mediclaim_reimbursement,access_wp_employee_mediclaim_reimbursement,model_wp_employee_mediclaim_reimbursement,base.group_user,1,1,1,1
+access_hr_job_wp,hr_job_user,hr.model_hr_job,base.group_user,1,1,1,0
+access_credit_note_charge,access_credit_note_charge,model_credit_note_charge,base.group_user,1,1,1,0
+access_wp_grn_import,access_wp_grn_import,model_wp_grn_import,base.group_user,1,1,1,1
+access_wp_grn_import_line,access_wp_grn_import_line,model_wp_grn_import_line,base.group_user,1,1,1,1
+access_wp_invoice_lines,access_wp_invoice_lines,model_wp_invoice_lines,base.group_user,1,1,1,1
+access_bank_receipt,access_bank_receipt,model_bank_receipt,base.group_user,1,1,1,1
+access_wp_invoice_line_products,access_wp_invoice_line_products,model_wp_invoice_line_products,base.group_user,1,1,1,1
+access_sample_requisition,access_sample_requisition,model_sample_requisition,base.group_user,1,1,1,1
+access_sample_issuance,access_sample_issuance,model_sample_issuance,base.group_user,1,1,1,1
+access_sample_product_line,access_sample_product_line,model_sample_product_line,base.group_user,1,1,1,1
+access_sample_automation,access_sample_automation,model_sample_automation,base.group_user,1,1,1,1
+access_sample_automation_line,access_sample_automation_line,model_sample_automation_line,base.group_user,1,1,1,1
+access_sample_master_config,access_sample_master_config,model_sample_master_config,base.group_user,1,1,1,1
+access_sample_master_approver,access_sample_master_approver,model_sample_master_approver,base.group_user,1,1,1,1
+access_sample_master_user,access_sample_master_user,model_sample_master_user,base.group_user,1,1,1,1
+access_approval_management,access_approval_management,model_approval_management,base.group_user,1,1,1,1
+access_approval_management_configuration,access_approval_management_configuration,model_approval_management_configuration,base.group_user,1,1,1,1
+access_approval_management_lines,access_approval_management_lines,model_approval_management_lines,base.group_user,1,1,1,1
+access_approval_mgmt_approver,access_approval_mgmt_approver,model_approval_mgmt_approver,base.group_user,1,1,1,0
+access_approval_mgmt_config,access_approval_mgmt_config,model_approval_mgmt_config,base.group_user,1,1,1,0
+access_hr_expense_wpconfig,access_hr_expense_wpconfig,model_hr_expense_wpconfig,base.group_user,1,1,1,0
+access_hr_expense_approver,access_hr_expense_approver,model_hr_expense_approver,base.group_user,1,1,1,0
+access_wp_retailer,access_wp_retailer,model_wp_retailer,base.group_user,1,1,1,1
+access_wp_retailer_order,access_wp_retailer_order,model_wp_retailer_order,base.group_user,1,1,1,1
+access_wp_retailer_order_line,access_wp_retailer_order_line,model_wp_retailer_order_line,base.group_user,1,1,1,1
+access_wp_retailer_scheme,access_wp_retailer_scheme,model_wp_retailer_scheme,base.group_user,1,1,1,1
+access_wp_retailer_scheme_line,access_wp_retailer_scheme_line,model_wp_retailer_scheme_line,base.group_user,1,1,1,1
+access_wp_scheme_working,access_wp_scheme_working,model_wp_scheme_working,base.group_user,1,1,1,1
+access_wp_scheme_working_line,access_wp_scheme_working_line,model_wp_scheme_working_line,base.group_user,1,1,1,1
+access_cir_extension,access_cir_extension,model_cir_extension,base.group_user,1,1,1,1
+access_cir_complaint_master,access_cir_complaint_master,model_cir_complaint_master,base.group_user,1,1,1,1
+access_cir_escalation_line,access_cir_escalation_line,model_cir_escalation_line,base.group_user,1,1,1,1
+access_cir_escalation_matrix,access_cir_escalation_matrix,model_cir_escalation_matrix,base.group_user,1,1,1,1
+,,,,,,,
+access_kr_kra,kr.kra.line,model_kr_kra,base.group_user,1,1,1,0
+access_kr_kra_category,kr.kra.category,model_kr_kra_category,base.group_user,1,1,1,0
+access_kr_kra_line,kr.kra.line,model_kr_kra_line,base.group_user,1,1,1,0
+access_mdm_config,access_mdm_config,model_mdm_config,base.group_user,1,1,1,1
+access_mdm_approver,access_mdm_approver,model_mdm_approver,base.group_user,1,1,1,1
+,,,,,,,
+access_barcode_marketing_manager,base.group_user,model_barcode_marketing,base.group_user,1,1,1,1
+access_barcode_marketing_line_manager,base.group_user,model_barcode_marketing_line,base.group_user,1,1,1,0
+access_barcode_marketing_check_manager,base.group_user,model_barcode_marketing_check,base.group_user,1,1,1,1
+access_barcode_scan_lines,access_barcode_scan_lines,model_barcode_scan_lines,base.group_user,1,1,1,1
+
+access_marketing_master,access_marketing_master,model_marketing_master,base.group_user,1,1,1,1
+access_marketing_master_line,access_marketing_master_line,model_marketing_master_line,base.group_user,1,1,1,1
+access_marketing_audience,access_marketing_audience,model_marketing_audience,base.group_user,1,1,1,1
+access_meeting_attendance,access_meeting_attendance,model_meeting_attendance,base.group_user,1,1,1,1
+access_meeting_attendance_line,access_meeting_attendance_line,model_meeting_attendance_line,base.group_user,1,1,1,1
+access_meet_requisition,access_meet_requisition,model_meet_requisition,base.group_user,1,1,1,1
+access_wp_employee_onboarding_details,access_wp_employee_onboarding_details,model_wp_employee_onboarding_details,base.group_user,1,1,1,1
+access_wp_employee_prejoining_details,access_wp_employee_prejoining_details,model_wp_employee_prejoining_details,base.group_user,1,1,1,1
+access_logistic_forecast,access_logistic_forecast,model_logistic_forecast,base.group_user,1,1,1,1
+access_logistic_fuel_log,access_logistic_fuel_log,model_logistic_fuel_log,base.group_user,1,1,1,1
+access_logistic_fuel_price,access_logistic_fuel_price,model_logistic_fuel_price,base.group_user,1,1,1,1
+
+access_erp_representative_approver,access_erp_representative_approver,model_erp_representative_approver,base.group_user,1,1,1,1
+access_wp_res_partner,access_wp_res_partner,model_wp_res_partner,base.group_user,1,1,1,1
+access_wp_exit_process_automation,access_wp_exit_process_automation,model_wp_exit_process_automation,base.group_user,1,1,1,1
+access_erp_representative_matrix,access_erp_representative_matrix,model_erp_representative_matrix,base.group_user,1,1,1,1
+

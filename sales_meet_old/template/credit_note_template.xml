@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<template id="sales_meet.email_creditnote" name="Email Credit Note Response">
+	<t t-call="web.layout">
+		<link rel="stylesheet" href="/website/static/src/less/import_bootstrap.less.css"/>
+		<style type="text/css">
+			body{
+				width: 100%;
+				background-color: #CECECE;
+				color: #000;
+				margin:0;
+				padding:0;
+			}
+			body .portal_page {
+				background-color: #FFFFFF;
+				margin-top: 50px;
+				margin-left: 16.666666666666664%;
+				margin-bottom: 100px;
+				width: 66%;
+				text-align: center;
+				vertical-align: middle;
+				height: auto;
+			}
+			body .row {
+				vertical-align: middle;
+				height: auto;
+			}
+			body .row_seperator {
+				border-top: 2px solid #F26D35;
+			}
+		</style>
+		<div class="portal_page text-center col-md-offset-2 col-xs-8">
+			
+			<t t-if="invalid">
+				<div class="row row_seperator">
+					<t t-if="title"><h1><t t-esc="title"/></h1></t>
+					<t t-if="not title"><h1>Invalid Expense</h1></t>
+				</div>
+			</t>
+			
+			<t t-if="not invalid">
+				<t t-if="approve_credit_note_manager">
+					<div class="row row_seperator">
+						<h1>Credit Note Approved</h1>
+					</div>
+				</t>
+
+				<t t-if="refuse_credit_note">
+					<div class="row row_seperator">
+						<h1>Credit Note Rejected</h1>
+					</div>
+				</t>
+				
+				<!-- <t t-if="refuse_credit_note">
+					<t t-if="not reason">
+						<div class="row row_seperator">
+							<textarea id="reason" name="reason" rows="4" cols="50" placeholder="Please give reason for rejection" style="margin-top: 30px;"/><br/>
+							<button id="reject" name="reject" onclick="refuse_credit_note()" style="-webkit-user-select: none; padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#a24689; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #a24689; border: 1px solid #a24689;" >Reject</button>
+						</div>
+					</t>
+					<t t-if="reason">
+						<div class="row row_seperator">
+							<h1>Credit Note Rejected</h1>
+						</div>
+					</t>
+				</t> -->
+				
+				<t t-if="info">
+					<t t-if="not message">
+						<div class="row row_seperator">
+							<textarea id="info" name="info" rows="4" cols="50" placeholder="Ask for Information" style="margin-top: 30px;"/><br/>
+							<button id="more_info" name="More Information" onclick="more_info_email()" style="-webkit-user-select: none; padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#a24689; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #a24689; border: 1px solid #a24689;" >Send</button>
+						</div>
+					</t>
+					<t t-if="message">
+						<div class="row row_seperator">
+							<h1>More Information Requested</h1>
+						</div>
+					</t>
+				</t>
+
+
+				
+				<!--<t t-if="reply">
+					<t t-if="not reply">
+						<div class="row row_seperator">
+							<textarea id="reply" name="reply" rows="4" cols="50" placeholder="Reply to Informatoion asked for" style="margin-top: 30px;"/><br/>
+							<button id="more_info" name="More Information" onclick="reply_Expense()" style="-webkit-user-select: none; padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#a24689; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #a24689; border: 1px solid #a24689;" >Reply</button>
+						</div>
+					</t>
+					<t t-if="message">
+						<div class="row row_seperator">
+							<h1>Replied for Information</h1>
+						</div>
+					</t>
+				</t>-->
+			</t>
+			
+			<div class="row" style="height: 20px;"/>
+		</div>
+		<script>
+		function refuse_expenses() {
+			var reason = document.getElementById("reason").value;
+			var url = window.location.href
+			if (reason.length) {
+				url += '&amp;reason='+reason;
+				window.location.href = url;
+			}
+		}
+
+		function more_info_Expense() {
+			var info = document.getElementById("info").value;
+			var url = window.location.href
+			if (info.length) {
+				url += '&amp;message='+info;
+				window.location.href = url;
+			}
+		}
+
+		function hold_Expense() {
+			var reason = document.getElementById("reason").value;
+			var url = window.location.href
+			if (reason.length) {
+				url += '&amp;reason='+reason;
+				window.location.href = url;
+			}
+		}
+
+		<!--function reply_Expense() {
+			var reply = document.getElementById("reply").value;
+			var url = window.location.href
+			if (reply.length) {
+				url += '&amp;message='+reply;
+				window.location.href = url;
+			}
+		}-->
+		</script>
+
+	</t>
+</template>
+
+
+</data>
+</openerp>

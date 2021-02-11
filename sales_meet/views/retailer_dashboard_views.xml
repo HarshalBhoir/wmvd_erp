@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <record id="retailer_action_dashboard" model="ir.actions.client">
+            <field name="name">Retailers Dashboard</field>
+            <field name="tag">retailer_dashboard</field>
+        </record>
+
+
+    </data>
+
+
+    <template id="assets_backend" name="Retailer Dashboard assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/sales_meet/static/src/js/retailer_dashboard.js"/>
+            
+        </xpath>
+    </template>
+
+    
+</odoo>

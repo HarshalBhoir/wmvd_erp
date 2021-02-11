@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+    <record id="view_mdm_config_tree" model="ir.ui.view">
+        <field name="name">mdm.config.tree</field>
+        <field name="model">mdm.config</field>
+        <field name="arch" type="xml">
+            <tree >
+                <field name="name" />
+                <field name="org_id"  />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+		
+
+    <record id="view_mdm_config_form" model="ir.ui.view">
+        <field name="name">mdm.config.form</field>
+        <field name="model">mdm.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Basic Details" col="4" colspan="4">
+                            <field name="name" attrs="{'invisible':[('name','=',False)]}" />
+                            <field name="company_id" required="1" />
+                            <field name="org_id" required="0" domain="[('company_id','=',company_id)]"/>
+                            <field name="active"/>
+                        </group>
+
+                        <group string="Approver">
+                            <field name="mdm_approver_one2many" nolabel="1" context="{'default_company_id': company_id}">
+                                <tree editable='bottom' >
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="mdm_type"/>
+                                    <field name="approver"/>
+                                    <field name="company_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mdm_mgmt_config" model="ir.actions.act_window">
+        <field name="name">MDM Config</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mdm.config</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+           
+
+
+    <record id="view_respartner_group_form" model="ir.ui.view">
+        <field name="name">res.partner.group.form</field>
+        <field name="model">res.partner.group</field>
+        <field name="arch" type="xml">
+            <form>
+              <sheet>
+                  <group>
+                    <field name="name" />
+                    <field name="value"/>
+                    <field name="isactive"/>
+                    <field name="c_bp_group_id"/>
+                    <field name="company_id"/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_respartner_group_tree" model="ir.ui.view">
+        <field name="name">res.partner.group.tree</field>
+        <field name="model">res.partner.group</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="value"/>
+                <field name="isactive"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record id="action_respartner_group" model="ir.actions.act_window">
+        <field name="name">Partner Groups</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner.group</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    
+
+    <record id="re_res_country_form" model="ir.ui.view">
+      <field name="name">sales.meet.res.country.form</field>
+      <field name="model">res.country</field>
+      <field name="inherit_id" ref="base.view_country_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='code']" position="after">
+          <field name="active" />
+          <field name="c_country_id" />
+        </xpath>
+      </field>
+    </record>
+
+    <record id="re_res_company_form" model="ir.ui.view">
+      <field name="name">sales.meet.res.company.form</field>
+      <field name="model">res.company</field>
+      <field name="inherit_id" ref="base.view_company_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='website']" position="after">
+          <field name="ad_client_id" />
+        </xpath>
+
+        <notebook position="inside">
+            <page string="Attendances" name="attendance">
+                <group name="attendance">
+                    <field name="attendance_maximum_hours_per_day" widget="float_time"/>
+                </group>
+            </page>
+        </notebook>
+        
+      </field>
+    </record>
+
+
+
+
+    <record id="re_view_country_state_form" model="ir.ui.view">
+      <field name="name">sales.meet.res.country.state.form</field>
+      <field name="model">res.country.state</field>
+      <field name="inherit_id" ref="base.view_country_state_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='code']" position="after">
+          <field name="active" />
+          <field name="c_region_id"/>
+        </xpath>
+
+         <xpath expr="//form/group" position="after">
+
+          <label for="district_ids"/>
+          <field name="district_ids">
+              <tree editable="bottom">
+                  <field name="name"/>
+                  <field name="code"/>
+              </tree>
+          </field>
+        </xpath>
+
+      </field>
+    </record>
+
+
+    <record id="view_state_district_tree" model="ir.ui.view">
+        <field name="name">res.state.district.tree</field>
+        <field name="model">res.state.district</field>
+        <field name="arch" type="xml">
+            <tree string="Districts">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="state_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_state_district_form" model="ir.ui.view">
+        <field name="name">res.state.district.form</field>
+        <field name="model">res.state.district</field>
+        <field name="arch" type="xml">
+            <form string="Districts">
+                <group col="4" colspan="4">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="c_city_id"/>
+                    <field name="active" />
+                    <field name="state_id" options='{"no_open": True}'/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_state_district" model="ir.actions.act_window">
+        <field name="name">Districts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.state.district</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_state_district_tree"/>
+    </record>
+
+
+    <record id="view_customer_erp_update_form" model="ir.ui.view">
+        <field name="name">customer.erp.update.form</field>
+        <field name="model">customer.erp.update</field>
+        <field name="arch" type="xml">
+            <form>
+                <group><field name="name" required="1"/></group>
+                
+                <footer >
+                    <button name="update_customer" string="Update" type="object" class="btn-primary"/>
+                    <button string="Close" class="btn-default" special="cancel" />
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+    <record model='ir.actions.act_window' id='action_customer_erp_update'>
+        <field name="name">Customer Update</field>
+        <field name="res_model">customer.erp.update</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_customer_erp_update_form"/>
+        <field name="target">new</field>
+    </record>
+
+
+    <record id="view_org_master_form" model="ir.ui.view">
+    <field name="name">org.master.form</field>
+    <field name="model">org.master</field>
+    <field name="arch" type="xml">
+        <form>
+          <group  col="4" colspan="4">
+                <field name="name" />
+                <field name="value" />
+                <field name="isactive"/>
+                <field name="cir_bool" />
+                <field name="ad_org_id"/>
+                <field name="company_id"/>
+                <field name="prefix" />
+                <field name="default" />
+          </group>
+          <group>
+             <field name="warehouse_master_ids" string="Warehouse" >
+               <tree editable="bottom" >
+                  <field name="name" />
+                  <field name="value" />
+                  <field name="isactive"/>
+                  <field name="m_warehouse_id"/>
+                  <field name="org_master_id" invisible="1"/>
+               </tree>
+             </field>
+             </group>
+        </form>
+    </field>
+</record>
+
+
+<record id="view_org_master_tree" model="ir.ui.view">
+    <field name="name">org.master.tree</field>
+    <field name="model">org.master</field>
+    <field name="arch" type="xml">
+        <tree >
+            <field name="name" />
+            <field name="value" />
+            <field name="isactive"/>
+            <field name="ad_org_id"/>
+            <field name="company_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="action_org_master" model="ir.actions.act_window">
+    <field name="name">Org Master</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">org.master</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<record id="view_grade_master_form" model="ir.ui.view">
+    <field name="name">grade.master.form</field>
+    <field name="model">grade.master</field>
+    <field name="arch" type="xml">
+        <form>
+            <group col="4" colspan="4">
+              <field name="name" />
+              <field name="designation"/>
+              <field name="notice_during_probation"/>
+              <field name="notice_after_confirmation"/>
+              <field name="isactive"/>
+            </group>
+             <field name="grade_line_ids" string="Grade Lines" >
+               <tree editable="bottom" nolabel="1">
+                  <field name="name" />
+                  <field name="value"/>
+                  <field name="fixed_asset"/>
+                  <field name="once_only"/>
+                  <field name="place"/>
+               </tree>
+             </field>
+        </form>
+    </field>
+</record>
+
+
+<record id="view_grade_master_tree" model="ir.ui.view">
+    <field name="name">grade.master.tree</field>
+    <field name="model">grade.master</field>
+    <field name="arch" type="xml">
+        <tree >
+            <field name="name" />
+            <field name="designation"/>
+            <field name="notice_during_probation"/>
+            <field name="notice_after_confirmation"/>
+            <field name="isactive"/>
+        </tree>
+    </field>
+</record>
+
+<record id="action_grade_master" model="ir.actions.act_window">
+    <field name="name">Grade master</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">grade.master</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<record id="view_erp_elementvalue_form" model="ir.ui.view">
+    <field name="name">wp.c.elementvalue.form</field>
+    <field name="model">wp.c.elementvalue</field>
+    <field name="arch" type="xml">
+      <form >
+        <sheet>
+          <group>
+            <group>
+              <field name="c_elementvalue_id"/>
+              <field name="ad_client_id"/>
+              <field name="active"/>
+              <field name="value"/>
+              <field name="name"/>
+              <field name="description"/>
+              <field name="accounttype"/>
+              <field name="accountsign"/>
+              <field name="isdoccontrolled"/>
+              <field name="c_element_id"/>
+              <field name="issummary"/>
+              <field name="company_id" />
+              <field name="bd_default" />
+            </group>
+            <group>
+              <field name="postactual"/>
+              <field name="postbudget"/>
+              <field name="postencumbrance"/>
+              <field name="poststatistical"/>
+              <field name="isbankaccount"/>
+              <field name="c_bankaccount_id"/>
+              <field name="isforeigncurrency"/>
+              <field name="c_currency_id"/>
+              <field name="account_id"/>
+              <field name="isdetailbpartner"/>
+              <field name="isdetailproduct"/>
+              <field name="bpartnertype"/>
+              <field name="function_default" />
+            </group>
+          </group>
+
+        </sheet>
+
+      </form>
+    </field>
+  </record>
+
+
+
+
+  <record id="view_erp_erp_elementvalue_tree" model="ir.ui.view">
+    <field name="name">wp.c.elementvalue.tree</field>
+    <field name="model">wp.c.elementvalue</field>
+    <field name="arch" type="xml">
+      <tree >
+        <field name="c_elementvalue_id"/>
+        <field name="ad_client_id"  invisible="1"/>
+        <field name="active" invisible="1"/>
+        <field name="value"/>
+        <field name="display_name"/>
+        <field name="name" invisible="1"/>
+        <field name="description"/>
+        <field name="accounttype" invisible="1"/>
+        <field name="accountsign"  invisible="1"/>
+        <field name="isdoccontrolled"  invisible="1"/>
+        <field name="c_element_id"  invisible="1"/>
+        <field name="issummary"  invisible="1"/>
+        <field name="postactual"  invisible="1"/>
+        <field name="postbudget"  invisible="1"/>
+        <field name="postencumbrance"  invisible="1"/>
+        <field name="poststatistical"  invisible="1"/>
+        <field name="isbankaccount" invisible="1"/>
+        <field name="c_bankaccount_id" invisible="1"/>
+        <field name="isforeigncurrency" invisible="1"/>
+        <field name="c_currency_id" invisible="1"/>
+        <field name="account_id" invisible="1"/>
+        <field name="isdetailbpartner" invisible="1"/>
+        <field name="isdetailproduct" invisible="1"/>
+        <field name="bpartnertype" invisible="1"/>
+        <field name="company_id" />
+      </tree>
+    </field>
+  </record>
+
+
+  <record id="action_erp_elementvalue" model="ir.actions.act_window">
+    <field name="name">ERP ElementValue</field>
+    <field name="res_model">wp.c.elementvalue</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+
+  <record id="view_erp_erp_period_master_form" model="ir.ui.view">
+    <field name="name">wp.c.period.form</field>
+    <field name="model">wp.c.period</field>
+    <field name="arch" type="xml">
+      <form >
+        <sheet>
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="c_period_id"/>
+              <field name="ad_client_id"/>
+              <field name="company_id" />
+            </group>
+            <group>
+              <field name="active"/>
+              <field name="periodno"/>
+              <field name="c_year_id"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+
+  <record id="view_erp_period_master_tree" model="ir.ui.view">
+    <field name="name">wp.c.period.tree</field>
+    <field name="model">wp.c.period</field>
+    <field name="arch" type="xml">
+      <tree >
+        <field name="c_period_id"/>
+        <field name="ad_client_id"/>
+        <field name="active"/>
+        <field name="name"/>
+        <field name="periodno"/>
+        <field name="c_year_id"/>
+        <field name="company_id" />
+      </tree>
+    </field>
+  </record>
+
+
+  <record id="action_erp_period_master" model="ir.actions.act_window">
+    <field name="name">ERP Periods</field>
+    <field name="res_model">wp.c.period</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+
+
+	</data>
+</odoo>

@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_wp_retailer_partner_tree" model="ir.ui.view">
+            <field name="name">wp.retailer.tree</field>
+            <field name="model">wp.retailer</field>
+            <field name="arch" type="xml">
+                <tree >
+                    <field name="code" />
+                    <field name="name" />
+                    <field name="date"/>
+                    <field name="mobile" />
+                    <field name="city" />
+                    <field name="zone" />
+                    <field name="distributer_id"  />
+                    <field name="company_id"  />
+                    <field name="salesperson_id" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_wp_retailer_partner_form" model="ir.ui.view">
+            <field name="name">wp.retailer.form</field>
+            <field name="model">wp.retailer</field>
+            <field name="arch" type="xml">
+                <form >
+                    <sheet>
+
+                        <field name="image" widget='image' class="oe_avatar" 
+                            options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="Name"  required="1"/>
+                            </h1>
+                            <h4>
+                                <field name="code"  
+                                    attrs="{'invisible': [('code', '=',False)],'readonly': [('code', '!=',False)]}" />
+                            </h4>
+
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="distributer_id" required="1"/>
+                                <label for="street" string="Address"/>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street" />
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street" />
+                                    <field name="city" placeholder="City" class="o_address_city" />
+                                    <field name="state_id" class="o_address_state" placeholder="State" 
+                                           options='{"no_open": True}'
+                                           context="{'country_id': country_id, 'zip': zip}"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <field name="country_id" placeholder="Country" class="o_address_country"
+                                     options='{"no_open": True, "no_create": True}' />
+                                </div>
+                                <field name="zone" />
+                                <field name="pan_no" />
+                            </group>
+                            <group>
+                                <field name="mobile" widget="phone" required="1"/>
+                                <field name="phone" widget="phone"/>
+                                <field name="user_ids" invisible="1"/>
+                                <field name="email" widget="email" />
+                                <field name="website" widget="url" />
+                                <field name="date" 
+                                       attrs="{'invisible': [('date', '=',False)],'readonly': [('date', '!=',False)]}" />
+                                <field name="lead_id" invisible="0"/>
+                                <field name="salesperson_id" options='{"no_open": True, "no_create": True}'  
+                                       required="1"/>
+                                <field name="company_id" options='{"no_open": True, "no_create": True}' readonly="1" />
+                            </group>
+                        </group>                       
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="wp_retailer_partner_kanban_view" model="ir.ui.view">
+            <field name="name">wp.retailer.kanban</field>
+            <field name="model">wp.retailer</field>
+            <field name="arch" type="xml">
+
+                <kanban class="o_kanban_mobile">
+                    <field name="image"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="distributer_id"/>
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_res_partner_kanban">
+                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+
+                                    <div class="o_kanban_image">
+                                        <t t-if="record.image.raw_value">
+                                            <img t-att-src="kanban_image('wp.retailer', 'image', record.id.value)"/>
+                                        </t>
+                                        <t t-if="!record.image.raw_value">
+                                            <img t-att-src='_s + "/base/static/src/img/avatar.png"'/>
+                                        </t>
+                                    </div>
+
+
+                                    <div class="oe_kanban_details">
+                                        <strong class="oe_partner_heading">
+                                            <field name="name"/>
+                                        </strong>
+                                        <ul>
+                                            <!-- <li>Name :<field name="name"/></li> -->
+                                            <li>Code:<field name="code"/></li>
+                                            <li>City:<field name="city"/></li>
+                                            <li>Zone:<field name="zone" /></li>
+                                            <li>Distributer: <strong class="oe_partner_heading"><field name="distributer_id"/></strong></li>
+                                        </ul>    
+                                    </div>
+                            </div>
+                         </t>
+                     </templates>
+                </kanban>
+
+
+            </field>
+        </record>
+
+        <record id="action_wp_retailer_partner_form" model="ir.actions.act_window">
+            <field name="name">Retailers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wp.retailer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <record id="view_wp_retailer_order_tree" model="ir.ui.view">
+            <field name="name">wp.retailer.order.tree</field>
+            <field name="model">wp.retailer.order</field>
+            <field name="arch" type="xml">
+                <tree >
+                    <field name="name" />
+                    <field name="date"/>
+                    <field name="retailer_id" />
+                    <field name="distributer_id"/>
+                    <field name="total_qty" />
+                    <field name="total_bags" />
+                    <field name="total_tons" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_wp_retailer_order_form" model="ir.ui.view">
+            <field name="name">wp.retailer.order.form</field>
+            <field name="model">wp.retailer.order</field>
+            <field name="arch" type="xml">
+                <form >
+                    <header>
+                        <button string="Confirm" name="confirm_order"  type="object"  class="btn-primary"  attrs="{'invisible': [('state', '=','confirmed')]}"  />
+                        <field name="state" widget="statusbar"  statusbar_visible="draft" />
+                    </header>
+                    <sheet>
+
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+
+
+                        <group col="12">
+                            <field name="date" colspan="6"  class="oe_inline" required="1" />
+                            <field name="distributer_id" required="1" colspan="6" 
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            
+                            
+                        </group>
+
+                        <group col="12">
+                            <field name="invoice_no"  required="1"   colspan="6"/>
+                            <field name="retailer_id"  colspan="6" options="{'no_create': True, 'no_open': True}" required="1" />
+                        </group>
+
+                       
+                        <field name="line_ids"  >
+                          <tree editable="bottom" >
+                              <field name="name" invisible="1"/>
+                              <field name="product_id" invisible="0"  required="1" />
+                              <field name="uom_id" invisible="0"  required="1" />
+                              <field name="bags" sum="Total Bags" />
+                              <field name="qty" invisible="0" sum="Total Qty"/>
+                              <field name="tons" sum="Total Tons"/>
+                          </tree>
+                        </field>
+
+                        <group>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="qty_total">
+                                <field name="total_qty" />
+                                <field name="total_bags" />
+                                <field name="total_tons" />
+                            </group>
+                        </group>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+
+
+        <record id="action_wp_retailer_order_form" model="ir.actions.act_window">
+            <field name="name">Retailers Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wp.retailer.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record id="view_wp_retailer_scheme_tree" model="ir.ui.view">
+            <field name="name">wp.retailer.scheme.tree</field>
+            <field name="model">wp.retailer.scheme</field>
+            <field name="arch" type="xml">
+                <tree >
+                    <field name="name" />
+                    <field name="date"/>
+                    <field name="expiry_date" />
+                    <field name="quarter"/>
+                    <field name="zone"/>
+                    <field name="company_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_wp_retailer_scheme_form" model="ir.ui.view">
+            <field name="name">wp.retailer.scheme.form</field>
+            <field name="model">wp.retailer.scheme</field>
+            <field name="arch" type="xml">
+                <form >
+                    <header>
+                        <field name="state" widget="statusbar"  statusbar_visible="draft"/>
+                    </header>
+                    <sheet>
+
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+
+
+                        <group col="12">
+                            <field name="date" colspan="4"   required="0" />
+                            <field name="expiry_date" colspan="4"   required="0" />
+                            <field name="quarter" colspan="4"   required="0" />
+                            
+                        </group>
+
+                        <group col="12">
+                            <field name="zone" colspan="4"   required="0" />
+                            <field name="user_id" colspan="4"   required="0" />
+                            <field name="company_id" colspan="4"   required="0" />                          
+                        </group>
+
+                        <field name="line_ids"  >
+                          <tree editable="bottom" >
+                              <field name="name" invisible="1"/>
+                              <field name="scheme_id"  invisible="1" />
+                              <field name="state"  invisible="1"/>
+                              <field name="slab" />
+                              <field name="sale_mt" />
+                              <field name="base" />
+                              <field name="max_tons" />
+                              <field name="scheme_pmt" />
+                              <field name="scheme_budget" />
+                              <field name="gift_item" />
+                              <field name="brand" />
+                              <field name="cost" sum="Total Cost"/>
+                              <field name="mrp" sum="Total MRP"/>
+
+                          </tree>
+                        </field>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+
+
+        <record id="action_wp_retailer_scheme_form" model="ir.actions.act_window">
+            <field name="name">Retailers Scheme</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wp.retailer.scheme</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record id="view_wp_retailer_scheme_line_tree" model="ir.ui.view">
+            <field name="name">wp.retailer.scheme.line.tree</field>
+            <field name="model">wp.retailer.scheme.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                  <field name="name" invisible="0"/>
+                  <field name="scheme_id" />
+                  <field name="state" />
+                  <field name="slab" />
+                  <field name="sale_mt" />
+                  <field name="base" />
+                  <field name="scheme_pmt" />
+                  <field name="scheme_budget" />
+                  <field name="gift_item" />
+                  <field name="cost" />
+                  <field name="mrp" />
+                  <!-- <field name="tons"  sum="Total Tons"/> -->
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="action_wp_retailer_scheme_line_form" model="ir.actions.act_window">
+            <field name="name">Scheme Line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wp.retailer.scheme.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+
+
+        <record id="view_wp_scheme_working_tree" model="ir.ui.view">
+            <field name="name">wp.scheme.working.tree</field>
+            <field name="model">wp.scheme.working</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state=='draft';blue:state=='sent_for_approval';lightgrey:state=='rejected';green:state=='approved';">
+                    <field name="name" />
+                    <field name="date"/>
+                    <field name="scheme_id" />
+                    <field name="distributer_id"/>
+                    <field name="total_tons"/>
+                    <field name="company_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_wp_scheme_working_form" model="ir.ui.view">
+            <field name="name">wp.scheme.working.form</field>
+            <field name="model">wp.scheme.working</field>
+            <field name="arch" type="xml">
+                <form >
+                    <header>
+                        <button name="approve_retailer_working" type="object" string="Approve"  
+                            class="btn-primary" style="font-size: 16px;"  states='sent_for_approval' />
+                            <!-- attrs="{'invisible':[('state','in',('approved','draft','posted'))]}" -->
+                        <button name="refuse_scheme_working" type="object" string="Refuse"  
+                            class="btn-primary" style="font-size: 16px;"  states='sent_for_approval' />
+                        <field name="state" widget="statusbar"  statusbar_visible="draft"/>
+                    </header>
+                    <sheet>
+
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+
+
+                        <group col="12">
+                            <field name="date" colspan="4"   required="0" />
+                            <field name="expiry_date" colspan="4"   required="0" />
+                            <field name="user_id" colspan="4"   required="0" />
+                            
+                        </group>
+                        <field name="quarter" colspan="4"  invisible="1" />
+
+                        <group col="12">
+                            <field name="distributer_id" colspan="4"   required="1" />
+                            <field name="scheme_id" colspan="4"   required="1" />
+                            <field name="company_id" colspan="4"   required="1" />                          
+                        </group>
+
+
+                        <group  >
+                            <field name="retailer_csv_data" invisible="1"/> 
+                            <field name="retailer_file_name" filename="retailer_csv_data" colspan="4" widget="upload" 
+                                attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+
+                        <group col="4" colspan="2"  >
+                            <div class="col-xs-12" style="margin-top:1%;">
+                                <center>
+                                    <div class="col-xs-1" />
+                                    <button name= "action_upload" string="Upload" type="object"  class="btn-primary col-xs-2"  
+                                        style="font-size: 16px;" states='draft' />
+
+                                    <div class="col-xs-1" />
+                                    <button name= "action_update" string="Update" type="object"  
+                                        class="btn-primary col-xs-2"  style="font-size: 16px;" />
+
+                                    <div class="col-xs-1"/>
+                                    <button name="send_approval" type="object" string="Send Approval"  
+                                        class="btn-primary col-xs-2"  style="font-size: 16px;" 
+                                        states='generated'/>
+
+                                </center>
+                            </div>
+                        </group>
+
+                        <field name="line_ids"  >
+                          <tree editable="bottom" >
+                              <field name="name" invisible="1"/>
+                              <field name="working_id" invisible="1"/>
+                              <field name="state" invisible="1"/>
+                              <field name="retailer_id" />
+                              <field name="scheme_line_id" invisible="1" />
+                              <field name="mail_opt_out" />
+                              <field name="gift_item" />
+                              <field name="brand" />
+                              <field name="cost" sum="Total Cost"/>
+                              <field name="mrp" sum="Total MRP"/>
+                              <field name="tons"  sum="Total Tons"/>
+                              <field name="distributer_id"  invisible="1" />
+                              <field name="salesperson_id" />
+                          </tree>
+                        </field>
+
+                        <group>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="qty_total">
+                                <field name="total_tons" />
+                            </group>
+                        </group>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_wp_scheme_working_form" model="ir.actions.act_window">
+            <field name="name">Retailer Gift</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wp.scheme.working</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="view_wp_scheme_working_line_form" model="ir.ui.view">
+            <field name="name">wp.scheme.working.line.form</field>
+            <field name="model">wp.scheme.working.line</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                     <header>
+                        <button name= "action_submitted" string="Submit" type="object"  
+                            class="btn-primary col-xs-2" attrs="{'invisible':[('state','=','submitted')]}" />
+                        <field name="state" widget="statusbar"  statusbar_visible="draft"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group >
+                            <group>
+                              <!-- <field name="name" /> -->
+                              <field name="working_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                              <!-- <field name="state" /> -->
+                              <field name="retailer_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                              <field name="scheme_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','!=','draft')]}" />
+                              <field name="scheme_line_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly':[('state','!=','draft')]}" invisible="1"/>
+                              <field name="gift_item" attrs="{'readonly':[('state','!=','draft')]}"/>
+                              <field name="salesperson_id" options="{'no_create': True, 'no_open': True}" readonly="1"/>
+                              <field name="company_id" options="{'no_create': True, 'no_open': True}"  readonly="1" />
+
+                            </group>
+                            <group>
+                              <field name="brand" attrs="{'readonly':[('state','!=','draft')]}"/>
+                              <field name="cost" sum="Total Cost" attrs="{'readonly':[('state','!=','draft')]}"/>
+                              <field name="mrp" sum="Total MRP" attrs="{'readonly':[('state','!=','draft')]}"/>
+                              <field name="tons"  sum="Total Tons" attrs="{'readonly':[('state','!=','draft')]}"/>
+                              <field name="distributer_id" options="{'no_create': True, 'no_open': True}"
+                                     attrs="{'readonly':[('state','!=','draft')]}"/>
+                              
+                            </group>
+                      </group>
+                      <field name="retailer_attachments" widget='many2many_binary' attrs="{'readonly':[('state','=','submitted')]}"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_wp_scheme_working_line_tree" model="ir.ui.view">
+            <field name="name">wp.scheme.working.line.tree</field>
+            <field name="model">wp.scheme.working.line</field>
+            <field name="arch" type="xml">
+                <tree create="false" 
+                    colors="red:state=='draft';green:state=='submitted';lightgrey:state=='rejected';blue:state=='approved';">
+                      <field name="name" />
+                      <field name="working_id" />
+                      <field name="state" />
+                      <field name="retailer_id" />
+                      <field name="scheme_line_id" />
+                      <field name="scheme_id" />
+                      <field name="gift_item" />
+                      <field name="brand" />
+                      <field name="cost" sum="Total Cost"/>
+                      <field name="mrp" sum="Total MRP"/>
+                      <field name="tons"  sum="Total Tons"/>
+                      <field name="distributer_id" />
+                      <field name="salesperson_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_wp_scheme_working_line_form" model="ir.actions.act_window">
+            <field name="name">Retailer Acknowledgement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wp.scheme.working.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">['|',('state','in',('approved','submitted')),('gift_item','!=',False)]</field>
+        </record>
+
+
+    </data>
+</odoo>

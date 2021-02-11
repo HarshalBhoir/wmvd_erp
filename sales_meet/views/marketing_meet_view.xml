@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		
+		<record id="view_calendar_event_form_extension" model="ir.ui.view">
+            <field name="name">calendar.event.form</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form" />
+            <field name="model">calendar.event</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[2]" position="attributes">
+                   <attribute name="groups">base.group_no_one</attribute>
+                </xpath>
+
+                <xpath expr="//page[1]/group[1]" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[1]/group[2]/group[1]" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//label[@for='partner_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//label[@for='duration']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]/group[2]/group[1]/div" position="attributes">
+                     <attribute name ="invisible">1</attribute>
+                </xpath>
+
+                <field name="alarm_ids" position='attributes' >
+                    <attribute name ="invisible">1</attribute>
+                </field>
+
+                <field name="partner_ids" position="replace"/>
+                <field name="start_datetime" position="replace"/>
+                <field name="categ_ids" position="replace"/>
+                <label for="description"  position='replace'/>
+                <field name="description" position='replace' />
+                <label for="name" position='replace' />
+
+                <xpath expr="//sheet" position="before">
+                   <header>
+                       <button type="object"
+                                class="fa fa-money btn-primary"
+                                id="attached_docs_button"
+                                name="get_attached_docs"
+                                style="height:34px;font-size: 18px; box-shadow: none;" 
+                                attrs="{'invisible':[('expense_bool','=',False)]}">
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                    <field string="Expenses" name="attach_doc_count" widget="statinfo" style="color: white;"/>
+                                </span>
+                            </div>
+                        </button>
+                   </header>
+
+                </xpath>
+
+                <field name="state" position="after">
+                    
+                    <!-- <button string="Click" custom="click"/> -->
+
+                    <button string="Check In" name="checkin" 
+                            class="geo_checkin fa fa-sign-out btn-primary oe_edit_only"
+                            type="object" attrs="{'invisible':[('status','!=','draft')]}"
+                            style="height:50px;background-color: #ff6666;width: 72%;font-size: 25px; box-shadow: none;display: table;margin: 0 auto;" />
+
+                    <button string="Checked In" name="checkedin"  
+                            class="fa fa-sign-out btn-primary"
+                            style="height:50px;background-color: #61a920;width: 72%;font-size: 25px; box-shadow: none;display: table;margin: 0 auto;" 
+                            type="object" attrs="{'invisible':[('status','=','draft')],'readonly': [('status','!=','draft')]}" />
+
+                    <br/>
+
+                    <button string="Create Expense"  name="create_expense"  type="object"
+                            class="fa fa-money btn-primary" id="invoice_button"
+                            style="height:50px;background-color: #337ab7;width: 72%;font-size: 25px; box-shadow: none;color: white;display: table;margin: 0 auto;"
+                            attrs="{'invisible':[('expense_bool','=',False)]}"/>
+
+                   
+
+                    <group  class="oe_title" >
+                        <field name="ishome"  attrs="{'invisible':[('ischeck','!=',False)],'readonly':[('status','!=','open')]}" />
+                    </group>
+
+                    <a class="oe_edit_only"><hr style="color:black;" /></a>
+
+                    <!-- <group  class="oe_title" attrs="{'invisible':[('ishome','!=',False)]}" col="4" >
+                        <field name="ischeck"  string="Is Lead/Customer?"  class="oe_edit_only" style="width: 100%;height: 40px;"
+                            attrs="{'readonly':[('status','!=','open')],'required':[('status','=','open'),('ishome','=',False)]}" colspan="2"/>
+                        
+                        <field name="opportunity_id" style="height: 40px;" options="{'no_create': True, 'no_edit': True}"
+                         attrs="{'invisible': [('ischeck', '!=','opportunity')],'required': [('ischeck','in',('opportunity')),('ishome','=',False)]}" 
+                          domain="('user_id', '=', self.env.uid)" class="oe_edit_only" colspan="2"/>
+                        
+                    </group>
+                    <a class="oe_edit_only" ><hr style="color:black;" /></a>
+
+                    <group col="4">
+                        <field name="lead_id" style="height: 40px;" options="{'no_create': True, 'no_edit': True}" 
+                         attrs="{'readonly':[('status','!=','open')],'invisible': [('ischeck','!=','lead')],'required': [('ischeck','in',('lead')),('ishome','=',False)]}"
+                         class="oe_edit_only" colspan="2"/>
+                         <br/><br/>
+
+                        <field name="partner_id" style="width: 124%;" placeholder="Select Customer..." class="oe_edit_only" colspan="2"
+                        attrs="{'invisible': [('ischeck', '!=','customer')],'required': [('ischeck','=','customer'),('ishome','=',False)]}"/>
+
+                    </group> -->
+
+                    <group  class="oe_title" attrs="{'invisible':[('ishome','!=',False)]}" >
+                        <field name="ischeck"  string="Is Lead/Customer?" default_focus="1" class="oe_edit_only" style="width: 100%;height: 40px;"
+                            attrs="{'readonly':[('status','!=','open')],'required':[('status','=','open'),('ishome','=',False)]}"/>
+
+                        <!-- <br/><br/> -->
+                        
+                        <field name="opportunity_id" style="width: 100%;height: 40px;" options="{'no_create': True, 'no_edit': True}"
+                         attrs="{'invisible': [('ischeck', '!=','opportunity')],'required': [('ischeck','in',('opportunity')),('ishome','=',False)]}" 
+                          domain="('user_id', '=', self.env.uid)" class="oe_edit_only harshal-crm" />
+                        
+                    </group>
+                    <a class="oe_edit_only" ><hr style="color:black;" /></a>
+
+                    <group >
+                        <field name="lead_id" options="{'no_create': True, 'no_edit': True}" 
+                         attrs="{'readonly':[('status','!=','open')],'invisible': [('ischeck','!=','lead')],'required': [('ischeck','in',('lead')),('ishome','=',False)]}"
+                         class="oe_edit_only harshal-crm" />
+                         <br/><br/>
+
+                        <field name="partner_id" style="width: 100%;" placeholder="Select Customer........" class="oe_edit_only harshal-crm" 
+                        attrs="{'invisible': [('ischeck', '!=','customer')],'required': [('ischeck','=','customer'),('ishome','=',False)]}"/>
+
+                    </group>
+
+
+                    
+                </field>
+                    
+                <field name="name" position="replace">
+                    
+                    <div class="oe_edit_only" invisible="0">
+                        <label for="name" attrs="{'invisible':[('ishome','!=',False)]}" />
+                    </div>
+                    <field name="name"  placeholder="e.g. Meeting Subject" invisible="0"
+                        style="width: 109%;height: 40px;word-wrap: break-word; word-break: break-all;"
+                        attrs="{'required':[('status','=','open'),('ishome','=',False)],'readonly':[('status','!=','open')]}"
+                        />
+                        <!--   -->
+                    <a><hr style="color:black;" /></a>
+                        
+                </field>
+
+                
+              
+                <xpath expr="/form/sheet/div" position="after" >
+                    <group attrs="{'invisible':[('ishome','!=',False)]}" col="4" >
+
+                        <field name="stage_id"  widget="selection"  colspan="2" style="height: 40px;"
+                        attrs="{'readonly':[('status','!=','open')],'required':[('status','=','open'),('ishome','=',False)]}"  />
+                        <field name="status" clickable="True"  invisible="1"  colspan="2"/>
+                        
+                    </group>
+                    <a><hr style="color:black;" /></a>
+                    <group attrs="{'invisible':[('ishome','!=',False)]}" col="4" >
+                        
+                        <field name="categ_id" widget="selection" colspan="2" style="height: 40px;"
+                         attrs="{'readonly':[('status','!=','open')],'required':[('status','=','open'),('ishome','=',False)]}"/>
+                         <field name="next_flag" invisible="1" colspan="2"/>
+                    </group>
+                    <a><hr style="color:black;" /></a>
+
+                    <group col="4">
+
+                        <field name="destination" string='Address' colspan="2" style="height: 40px;"
+                        attrs="{'readonly':[('status','!=','open')],'required':[('status','=','open'),('ishome','=',False)],'invisible':[('ishome','!=',False)]}"/>
+
+                        <field name="draft_entries" invisible="1" colspan="2" />
+
+
+                    </group>
+
+                    <a><hr style="color:black;" /></a>
+
+                    <group col="4">
+
+                        <field name="description" style="word-wrap: break-word; background-color: #fbe0164f; word-break: break-all;" 
+                        attrs="{'readonly':[('status','!=','open')],'required':[('status','=','open'),('ishome','=',False)]}"/>
+
+                        <field name="expense_bool" invisible="1"  colspan="2" />
+
+
+                    </group>
+
+                    <a><hr style="color:black;" /></a>
+
+                    <group col="4"  >
+                        <field name="business_generated" colspan="2" style="height: 40px;"
+                         attrs="{'readonly':[('status','!=','open')],'required':[('status','=','open'),('ishome','=',False)],'invisible':[('ishome','!=',False)]}"/>
+                        <field name="source" invisible="1"  colspan="2"  />
+
+                    </group>
+                    <a><hr style="color:black;" /></a>
+
+                    <group col="4">
+                        <field name="start_datetime"  style="width: 66%;" string="Starting at" 
+                        attrs="{'invisible': [('allday','=',True)]}" class="oe_inline" colspan="2" readonly="1"/>
+
+                        <field name="expense_date" invisible="1" colspan="2"/>
+
+                    </group>
+                    <a><hr style="color:black;" /></a>
+
+                    
+                </xpath>
+
+                <field name="location" position='replace' >
+                    
+
+                    <label for="next_activity_id" attrs="{'invisible':[('ishome','!=',False)]}"   class="oe_edit_only"/>
+                    <div attrs="{'invisible':[('ishome','!=',False)]}" >
+                        <div class="o_row mr16">
+                            <field name="next_activity_id"
+                                   options="{'no_create': True, 'no_open': True}" widget="selection" 
+                                   attrs="{'readonly':[('status','!=','open')]}"/>
+                                   <br/>
+                            <span class="oe_form_field oe_edit_only" style="font-size: 16px;">&#160;on&#160;</span>
+                            <field name="date_action"  placeholder="Choose a Date" 
+                                attrs="{'readonly':[('status','!=','open')],'required':[('next_activity_id','!=',False)]}"/>
+                        </div>
+                        <div>
+                            <button string="Create Reminder" name="create_event" class="oe_edit_only"  type="object" style="height:40px;width: 60%;font-size: 25px;" 
+                                attrs="{'readonly':[('status','!=','open')],'required':[('next_activity_id','!=',False)],'invisible': [('status', '=', 'close')]}" />
+                        </div>
+                    </div>
+                    <field name="reverse_location" attrs="{'invisible': ['|',('status','=','draft'),('reverse_location','=',False)],'readonly':[('status','=','open')]}"   />
+                    <field name="expense_id" invisible="1"/>
+
+                </field>
+
+                <field name="user_id" position='after' >
+                    <field name="company_id" invisible="0"/>
+                </field>
+                
+                <xpath expr="//page[3]" position="before">
+                   <page name="logging_detail" string="Logging Details" groups="base.group_no_one">
+                    <field name="source_address" invisible="1"/>
+                    <group>
+                        <group>
+                           <field name="checkin_lattitude" id="checkin_lattitude" class="checkin_lattitude" 
+                                attrs="{'invisible': [('status','=','draft')],'readonly':[('status','in',('open','close'))]}"/>
+                            
+                            <field name="partner_latitude"  invisible="1"/>
+                            <field name="partner_longitude" invisible="1"/>
+                            <field name="checkin_longitude" id="checkin_longitude" class="checkin_longitude"
+                                attrs="{'invisible': [('status','=','draft')],'readonly':[('status','in',('open','close'))]}"/>
+                            <field name="destination_address" attrs="{'invisible': [('status','=','draft')],'readonly':[('status','in',('close'))]}"/>
+                            <field name="timein"  attrs="{'readonly':[('status','=','open')]}"  invisible="1" />
+                            
+                        </group>
+                         <group>
+                            <field name="partner_dest_latitude"   invisible="1"/>
+                            <field name="partner_dest_longitude" invisible="1"/>
+                            <field name="timeout"  invisible="1" />
+                            <field name="distance"  invisible="0"  attrs="{'readonly':[('status','!=','open')]}" />
+                            <field name="duration" invisible="0"  attrs="{'readonly':[('status','!=','open')]}"/>
+                            
+                        </group>
+                    </group>
+                    </page>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+
+    <record id="view_calendar_event_tree_extension" model="ir.ui.view">
+            <field name="name">calendar.event.tree</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_tree" />
+            <field name="model">calendar.event</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//tree[1]" position="attributes">
+                     <attribute name="colors">red:name==False;green:next_flag==True;purple:ho_lead==True;</attribute>
+                </xpath>
+                <xpath expr="//tree[1]" position="attributes">
+                     <attribute name="limit">10</attribute>
+                </xpath>
+
+                <field name="duration" position="after" >
+                    <field name="user_id"/>
+                    <field name="lead_id" invisible="0"/>
+                    <field name="checkin_lattitude" invisible="1"/>
+                    <field name="checkin_longitude" invisible="1"/>
+                    <field name="reverse_location" invisible="1"/>
+                    <field name="source_address" invisible="1"/>
+                    <field name="destination_address" invisible="1"/>
+                    <field name="description" invisible="1"/>
+                    <field name="stage_id" invisible="1"/>
+                    <field name="categ_id" invisible="1"/>
+                    <field name="start_datetime" invisible="1"/>
+                    <field name="partner_id" invisible="1"/>
+                    <field name="source" invisible="1"/>
+                    <field name="destination" invisible="1"/>
+                    <field name="next_activity_id" invisible="1"/>
+                    <!-- <field name="title_action" invisible="1"/> -->
+                    <field name="date_action" invisible="1"/>
+                    <field name="next_flag" invisible="1"/>
+                    <field name="id" invisible="1"/>
+                    <field name="distance" sum="Total Distance"/>
+                    <field name="ho_lead" invisible="1"/>
+                </field>
+
+                 <field name="duration" position="replace" >
+                    <field name="duration" sum="Total Duration"/>
+                 </field>
+
+                <field name="stop" position="attributes" >
+                       <attribute name="invisible">1</attribute>
+                </field>
+                <field name="partner_ids" position="attributes" >
+                       <attribute name="invisible">1</attribute>
+                </field>
+                 <field name="location" position="attributes" >
+                       <attribute name="invisible">1</attribute>
+                </field>
+                <field name="duration" position="attributes" >
+                       <attribute name="invisible">1</attribute>
+                </field>
+                <!-- <field name="name" position="attributes" >
+                       <attribute name="style">font-size: 15px;</attribute>
+                </field> -->
+
+            </field>
+        </record>
+
+
+    <record model="ir.ui.view" id="view_calendar_event_graph">
+       <field name="name">calendar.event.graph</field>
+       <field name="model">calendar.event</field>
+       <field name="type">graph</field>
+       <field name="arch" type="xml">
+             <graph string="Meetings Graph">
+                  <field name="user_id" group="True"/>
+                  <field name="lead_id" operator="*"/>
+            </graph>
+        </field>
+    </record>
+
+
+    <record id="action_calendar_event_crm" model="ir.actions.act_window">
+        <field name="name">Meetings</field>
+        <field name="res_model">calendar.event</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="inherit_id" ref="calendar.action_calendar_event" /> -->
+        <field name="view_id" ref="calendar.view_calendar_event_tree"/>
+        <field name="search_view_id" ref="calendar.view_calendar_event_search"/>
+        <field name="limit">10</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to schedule a new meeting.
+          </p><p>
+            The calendar is shared between employees and fully integrated with
+            other applications such as the employee holidays or the business
+            opportunities.
+          </p>
+        </field>
+    </record>
+
+    <record id="calendar.view_calendar_event_calendar" model="ir.ui.view">
+        <field name="name">calendar.event.calendar</field>
+        <field name="model">calendar.event</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <calendar string="Meetings" date_start="start" date_stop="stop" date_delay="duration" all_day="allday"
+                         display="[participants_names]" color="color_partner_id" attendee="partner_ids" avatar_model="res.partner"
+                         use_contacts="True" event_open_popup="%(calendar.view_calendar_event_form_popup)s">
+                <field name="name"/>
+                <field name="user_name"/>
+                <field name="participants_names"/>
+                <field name="user_id"/>
+                <field name="color_partner_id"/>
+                <field name="partner_ids"/>
+            </calendar>
+        </field>
+    </record>
+           
+	</data>
+</odoo>

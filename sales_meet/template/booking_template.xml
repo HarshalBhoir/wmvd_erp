@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<template id="sales_meet" name="sales_meet assets_backend" inherit_id="web.assets_backend">
+	<xpath expr="." position="inside">
+		<link rel="stylesheet" type="text/css" href="/sales_meet/static/src/less/style.less"/>
+	</xpath>
+</template>
+
+
+
+<template id="sales_meet.email_ticketbooking" name="Email Booking Response">
+	<t t-call="web.layout">
+		<link rel="stylesheet" href="/website/static/src/less/import_bootstrap.less.css"/>
+		<style type="text/css">
+			body{
+				width: 100%;
+				background-color: #CECECE;
+				color: #000;
+				margin:0;
+				padding:0;
+			}
+			body .portal_page {
+				background-color: #FFFFFF;
+				margin-top: 50px;
+				margin-left: 16.666666666666664%;
+				margin-bottom: 100px;
+				width: 66%;
+				text-align: center;
+				vertical-align: middle;
+				height: auto;
+			}
+			body .row {
+				vertical-align: middle;
+				height: auto;
+			}
+			body .row_seperator {
+				border-top: 2px solid #F26D35;
+			}
+		</style>
+		<div class="portal_page text-center col-md-offset-2 col-xs-8">
+			
+			<t t-if="invalid">
+				<div class="row row_seperator">
+					<t t-if="title"><h1><t t-esc="title"/></h1></t>
+					<t t-if="not title"><h1>Invalid Booking</h1></t>
+				</div>
+			</t>
+			
+			<t t-if="not invalid">
+				<t t-if="approve_ticket_booking_manager">
+					<div class="row row_seperator">
+						<h1>Booking Approved</h1>
+					</div>
+				</t>
+				
+				<t t-if="refuse_ticket_booking">
+					<t t-if="not reason">
+						<div class="row row_seperator">
+							<textarea id="reason" name="reason" rows="4" cols="50" placeholder="Please give reason for rejection" style="margin-top: 30px;"/><br/>
+							<button id="refuse_ticket_booking" name="refuse_ticket_booking" onclick="refuse_ticket_booking()" style="-webkit-user-select: none; padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#a24689; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #a24689; border: 1px solid #a24689;" >Reject</button>
+						</div>
+					</t>
+					<t t-if="reason">
+						<div class="row row_seperator">
+							<h1>Booking Rejected</h1>
+						</div>
+					</t>
+				</t>
+				
+				<t t-if="info">
+					<t t-if="not message">
+						<div class="row row_seperator">
+							<textarea id="info" name="info" rows="4" cols="50" placeholder="Ask for Information" style="margin-top: 30px;"/><br/>
+							<button id="more_info" name="More Information" onclick="more_info_email()" style="-webkit-user-select: none; padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#a24689; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #a24689; border: 1px solid #a24689;" >Send</button>
+						</div>
+					</t>
+					<t t-if="message">
+						<div class="row row_seperator">
+							<h1>More Information Requested</h1>
+						</div>
+					</t>
+				</t>
+
+			</t>
+			
+			<div class="row" style="height: 20px;"/>
+		</div>
+		<script>
+		function refuse_ticket_booking() {
+			var reason = document.getElementById("reason").value;
+			var url = window.location.href
+			if (reason.length) {
+				url += '&amp;reason='+reason;
+				window.location.href = url;
+			}
+		}
+
+		</script>
+
+	</t>
+</template>
+
+
+<record id="email_template_booking_user" model="mail.template">
+    <field name="name">Booking Details - Send by Email</field>
+    <field name="email_from">${object.company_id.name}&lt;${object.company_id.email}&gt;</field>
+    <field name="subject"> (Ref ${object.name or 'n/a' })</field>
+    <field name="email_to">${object.employee_id.work_email},${object.manager_id.work_email}</field>
+    <field name="model_id" ref="sales_meet.model_ticket_booking"/>
+    <field name="body_html"><![CDATA[
+			<p>Dear ${object.employee_id.name}</p>
+
+			<h4> Kindly find attached your ticket. </h4>
+
+			<br/><br/>
+
+			<h4>Have a safe journey! </h4>
+
+			<br/><br/>
+
+			<p>Thank you,</p>
+
+			]]></field>
+</record>
+
+        <!--Default Notification Email template for invoices-->
+        <record id="sales_meet.mail_template_data_notification_email_wp_ticket_booking" model="mail.template">
+            <field name="name">Booking Notification Email</field>
+            <field name="subject">${object.subject}</field>
+            <field name="model_id" ref="mail.model_mail_message"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[<html>
+                <head></head>
+                % set record = ctx.get('record')
+                % set company = record and record.company_id or user.company_id
+                <body style="margin: 0; padding: 0;">
+                <table border="0" width="100%" cellpadding="0" bgcolor="#ededed" style="padding: 20px; background-color: #ededed; border-collapse:separate;" summary="o_mail_notification">
+                    <tbody>
+
+                      <!-- HEADER -->
+                      <tr>
+                        <td align="center" style="min-width: 590px;">
+                          <table width="590" border="0" cellpadding="0" bgcolor="#875A7B" style="min-width: 590px; background-color: rgb(135,90,123); padding: 20px; border-collapse:separate;">
+                            <tr>
+                              <td valign="middle">
+                                  <span style="font-size:20px; color:white; font-weight: bold;">
+                                      ${object.record_name}
+                                  </span>
+                              </td>
+
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+
+                      <!-- CONTENT -->
+                      <tr>
+                        <td align="center" style="min-width: 590px;">
+                          <table width="590" border="0" cellpadding="0" bgcolor="#ffffff" style="min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px; border-collapse:separate;">
+                            <tbody>
+                              <td valign="top" style="font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;">
+                                ${object.body | safe}
+                              </td>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+
+                      <!-- FOOTER -->
+                      <tr>
+                        <td align="center" style="min-width: 590px;">
+                          <table width="590" border="0" cellpadding="0" bgcolor="#875A7B" style="min-width: 590px; background-color: rgb(135,90,123); padding: 20px; border-collapse:separate;">
+                            <tr>
+                              <td valign="middle" align="left" style="color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;">
+                                ${company.name}<br/>
+                                ${company.phone or ''}
+                              </td>
+                              <td valign="middle" align="right" style="color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;">
+                                % if company.email:
+                                <a href="mailto:${company.email}" style="text-decoration:none; color: white;">${company.email}</a><br/>
+                                % endif
+                                % if company.website:
+                                    <a href="${company.website}" style="text-decoration:none; color: white;">
+                                        ${company.website}
+                                    </a>
+                                % endif
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                </table>
+                </body>
+                </html>
+            ]]></field>
+        </record>
+
+
+</data>
+</odoo>

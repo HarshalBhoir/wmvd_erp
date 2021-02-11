@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- MRP.WORKORDER -->
+    <record id="mrp_workorder_view_form_inherit_templiner" model="ir.ui.view">
+        <field name="name">mrp.workorder.view.form.inherit.templiner</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="quality_mrp.mrp_workorder_view_form_inherit_quality"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='open_tablet_view']" position="after">
+                <button name="open_tablet_all_view" type="object" string="Producción Completa" attrs="{'invisible': [('state', 'not in', ('ready', 'progress'))]}"/>
+            </xpath>
+         
+        </field>
+    </record>
+
+
+</odoo>

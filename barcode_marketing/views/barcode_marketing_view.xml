@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+<record id="view_barcode_marketing_form" model="ir.ui.view">
+    <field name="name">barcode.marketing.form</field>
+    <field name="model">barcode.marketing</field>
+    <field name="arch" type="xml">
+        <form>
+          <header><field name="state" widget="statusbar"/></header>
+          <sheet>
+            <h2><field name="name" states='generated,print'/></h2>
+              <group>
+                  <field name="date"  attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                  <field name="barcode" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                  <field name="amount" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                  <field name="report" filename="name" colspan="4" states='print'/>
+              </group>
+              <group>
+                  <button name="generate_barcode" string="Generate Barcode" type="object" class="btn-primary" states='draft'/>
+                  <button name="print_report" string="Print Report" type="object" class="btn-primary" states='generated'/>
+              </group>
+          </sheet>
+           <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+              <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+    </field>
+</record>
+
+
+<record id="view_barcode_marketing_tree" model="ir.ui.view">
+    <field name="name">barcode.marketing.tree</field>
+    <field name="model">barcode.marketing</field>
+    <field name="arch" type="xml">
+        <tree >
+            <field name="name" />
+            <field name="date"/>
+            <field name="barcode"/>
+            <field name="amount" />
+        </tree>
+    </field>
+</record>
+
+<record id="action_barcode_marketing" model="ir.actions.act_window">
+    <field name="name">QR Code</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">barcode.marketing</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<record id="view_barcode_marketing_line_form" model="ir.ui.view">
+    <field name="name">barcode.marketing.line.form</field>
+    <field name="model">barcode.marketing.line</field>
+    <field name="arch" type="xml">
+        <form create="false" edit="false" >
+          <group>
+            <field name="name" />
+            <field name="sequence_no" />
+            <field name="date"/>
+            <field name="partner_id" />
+            <field name="flag" />
+            <field name="amount" />
+            <field name="barcode_marketing_id"/>
+            </group>
+        </form>
+    </field>
+</record>
+
+
+<record id="view_barcode_marketing_line_tree" model="ir.ui.view">
+    <field name="name">barcode.marketing.line.tree</field>
+    <field name="model">barcode.marketing.line</field>
+    <field name="arch" type="xml">
+        <tree create="false" >
+            <field name="name" />
+            <field name="sequence_no" invisible="1"/>
+            <field name="amount" string="Worth"/>
+            <field name="partner_id" string="Customer"/>
+            <field name="flag" />
+            <field name="date" invisible="0"/>
+            <field name="barcode_marketing_id" invisible="1"/>
+        </tree>
+    </field>
+</record>
+
+<record id="action_barcode_marketing_line" model="ir.actions.act_window">
+    <field name="name">QR Code Lines</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">barcode.marketing.line</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<record id="view_barcode_marketing_check_form" model="ir.ui.view">
+    <field name="name">barcode.marketing.check.form</field>
+    <field name="model">barcode.marketing.check</field>
+    <field name="arch" type="xml">
+        <form >
+            <header>
+             <button name="update_records" string="Update" type="object" class="btn-primary" />
+              <field name="state" widget="statusbar"/>
+             </header>
+          <sheet>
+          <h1><field name="name"  states='create' /></h1>
+              <group>
+                <h1>
+                <field name="barcode"  id="codes" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                <button name="clear_records" string="Clear" type="object" class="btn-primary"  states='draft'/>
+                </h1>
+              </group>
+              <group>
+                  <group>
+                      <field name="flag" invisible="1"/>
+                      <field name="accepted_count" />
+                      <field name="count_accepted" invisible="1"/>
+                      <field name="date" invisible="1"/>
+                      <field name="flag" />
+                      <field name="manual_count" />
+                      <field name="accepted" id="output"  attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('flag', '=', False)]}"/>
+                  </group>
+                  <group>
+                      <field name="rejected_count" />
+                      <field name="count_rejected" invisible="1" />
+                      <field name="partner_id" />
+                      <field name="amount" />
+                      <field name="rejected" id="rejected_output"  attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('flag', '=', False)]}"/>
+                  </group>
+              </group>
+              <group>
+                <group><field name="charge" invisible="0" /></group>
+                <group   name="sale_total">
+                  <field name="total_amount"  widget="monetary" />
+                </group>
+              </group>
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+    </field>
+</record>
+
+
+<record id="view_barcode_marketing_check_tree" model="ir.ui.view">
+    <field name="name">barcode.marketing.check.tree</field>
+    <field name="model">barcode.marketing.check</field>
+    <field name="arch" type="xml">
+        <tree  colors="green:imported==True;">
+            <field name="name" />
+            <field name="create_date" />
+            <field name="count_accepted" />
+            <field name="count_rejected" />
+            <field name="manual_count" />
+            <field name="total_amount"/>
+            <field name="partner_id" />
+            <field name="imported" />
+        </tree>
+    </field>
+</record>
+
+<record id="action_barcode_marketing_check" model="ir.actions.act_window">
+    <field name="name">QR Code Scan</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">barcode.marketing.check</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<menuitem name="QR Code" id="menu_barcode_marketing"  sequence="4"  web_icon="barcode_marketing,static/description/icon.png" 
+          groups='barcode_marketing.group_barcode_marketing_user,barcode_marketing.group_barcode_marketing_manager'  />
+
+<menuitem name="QR Code Scan" id="menu_barcode_marketing_check_sub" action="action_barcode_marketing_check"
+          parent="menu_barcode_marketing" sequence="1"   />
+
+<menuitem name="Report" id="menu_barcode_marketing_report" action="action_barcode_details_report"
+          parent="menu_barcode_marketing" sequence="2"   />
+
+<menuitem name="QR Code" id="menu_barcode_marketing_sub" action="action_barcode_marketing"
+          parent="menu_barcode_marketing" sequence="3" groups="barcode_marketing.group_barcode_marketing_manager"  />
+
+<menuitem name="QR Code Lines" id="menu_barcode_marketing_line_sub" action="action_barcode_marketing_line"
+          parent="menu_barcode_marketing" sequence="4"   />
+           
+	</data>
+</openerp>

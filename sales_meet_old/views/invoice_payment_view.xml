@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+
+    <record model='ir.ui.view' id='wizard_reject_form'>
+        <field name="name">wizard.reject</field>
+        <field name="model">wizard.reject</field>
+        <field name="arch" type="xml">
+            <form string="Hold Invoice">
+                <group>
+                    <field name="delay_days"/>
+                    <field name="invoice_id" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="delay_invoice" string="Delay" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model='ir.actions.act_window' id='wizard_reject_act'>
+        <field name="name">Hold Invoice</field>
+        <field name="res_model">wizard.reject</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_reject_form"/>
+        <field name="target">new</field>
+    </record>
+
+
+        
+<record id="view_invoice_payment_form" model="ir.ui.view">
+    <field name="name">bank.payment.invoice.form</field>
+    <field name="model">bank.payment</field>
+    <field name="arch" type="xml">
+        <form>
+            <header><field name="state" widget="statusbar" statusbar_visible="draft,generated_invoice,generated_invoice_template,erp_posted"/></header>
+            <sheet>
+                <h2><field name="name" attrs="{'invisible':[('state','=','draft')],'readonly':[('state','!=','draft')]}"/></h2>
+
+                <group>
+                    <group>
+                        <field name="date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="delegate_user_id" invisible="1"  widget="many2many_tags"  />
+                        <field name="erp_bank_id" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="partner_name" attrs="{'invisible':[('state','in',('draft','erp_posted'))]}"/>
+
+                        <field name="inv_rep_bool" invisible="1" />
+                        <field name="filter_rep_bool" invisible="1" />
+                        
+                        <field name="condition" invisible="1" />
+                        <field name="can_edit_name" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="user_id" invisible="1"/>
+                        <field name="company_id"  attrs="{'readonly':[('state','!=','draft')]}" required="1" />
+                        <field name="ad_org_id"  required="1"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <!-- attrs="{'readonly':[('state','!=','draft')]}" -->
+                        <!-- <button name="delegate_user" string="Delegate" type="object" 
+                            class="btn-primary col-xs-2" style="font-size: 16px;width: 100px;" invisible="1" /> -->
+                    </group>
+                </group>
+
+                <group>
+                    <group attrs="{'invisible':[('file_name2','=',False)]}">
+                        <field name="hr_payment_data2" colspan="4" invisible="1" />
+                        <field name="file_name2" filename="hr_payment_data2" colspan="4" readonly="1" attrs="{'invisible':[('file_name2','=',False)]}"/>
+                    </group>
+                </group>
+          
+                <group col="4" colspan="2"  attrs="{'invisible':[('state','=','erp_posted')]}" >
+                    <div class="col-xs-20" >
+                        <center>
+                            <!-- <div class="col-xs-1" states='draft'/> -->
+                            <button name="sync_invoices" string="Sync Due Invoice" type="object" class="btn-primary col-xs-2" 
+                                style="font-size: 16px;" states='draft'/>
+
+                            <!-- <div class="col-xs-1"/> -->
+
+                            <button name="generate_invoice_report" string="Invoice Report" type="object" class="btn-primary col-xs-2" 
+                                style="font-size: 16px;" attrs="{'invisible':['|',('inv_rep_bool','=',True),('state','=','draft')]}"  />
+
+
+                            <div class="col-xs-1" attrs="{'invisible':['|',('inv_rep_bool','=',True),('state','=','draft')]}"/>
+                            <button name="sync_selected_invoices" string="Search Partner" type="object" class="btn-primary col-xs-2" 
+                                style="font-size: 16px;" states='generated_invoice,generated_invoice_template'   />
+
+                            <div class="col-xs-1"/>
+                            <button name="select_all" type="object" string="Select All"   class="btn-primary col-xs-2"  style="font-size: 16px;" 
+                                 states='generated_invoice,generated_invoice_template'/>
+
+                            <div class="col-xs-1"/>
+
+                            <button name="generate_payment_report" string="Payment Template" type="object"  class="btn-primary col-xs-2"
+                             style="font-size: 16px;" states='generated_invoice,generated_invoice_template' invisible="1" />
+
+                            <button name="generate_payment_webservice" string="Push to ERP" type="object"  class="btn-primary col-xs-2"
+                             style="font-size: 16px;"  states='generated_invoice,generated_invoice_template' />
+
+                        </center>
+                    </div>
+                </group>
+
+                 <notebook>
+                        <page string="Due Invoices" name="components"   autofocus="1"  attrs="{'invisible':[('state','not in',('generated_invoice','generated_invoice_template','submitted_to_manager'))]}" >
+                           <group col="4" colspan="4" >
+                                <field name="invoice_lines_one2many"  
+                                       string="Invoices" nolabel="1" >
+                                    <tree create="false" delete="false" editable='bottom' colors="green:state=='approved';purple:state=='hold';">
+                                        <field name="check_invoice" invisible="1"/>
+                                         <button name="approve_invoice" icon="fa fa-check" string="Approve" aria-hidden="true" type="object" style="color:green !important;"
+                                             attrs="{'invisible':[('state','=','generated_payment')]}"/>
+
+                                        <field name="name"  invisible="1"/>
+                                        <field name="invoice_id" invisible="1"/>
+                                        <field name="value_date" readonly="1"/>
+                                        <field name="invoiceno" readonly="1"/>
+                                        <field name="documentno" readonly="1"/>
+                                        <field name="customercode" readonly="1"/>
+                                        <field name="beneficiary_name"/>
+                                        <field name="totalamt" readonly="1"/>
+                                        <field name="allocatedamt" readonly="1"/>
+                                        <field name="unallocated" readonly="1"/>
+                                        <field name="duedays" readonly="1"/>
+                                        <field name="description"  invisible="1"/>
+                                        <field name="transaction_amount" invisible="1"/>
+                                        <field name="payment_term"  invisible="1"/>
+                                        <field name="transaction_type" invisible="1"/>
+                                        <field name="beneficiary_code"  invisible="1"/>
+                                        <field name="beneficiary_account_number"  invisible="1"/>                                    
+                                        <field name="customer_reference_number"  invisible="1"/>
+                                        <field name="owner"  invisible="1"/>
+                                        <field name="ifsc_code"  invisible="1"/>
+                                        <field name="beneficiary_email_id"  invisible="1"/>
+                                        <field name="owner_email" invisible="1"/>
+                                        <field name="user_id" invisible="1" />
+                                        <field name="create_uid"  invisible="1"/>
+                                        <field name="state"  invisible="1"/>
+                                        <field name="delegate_user_id" invisible="1"  widget="many2many_tags" />
+                                        <field name="delay_date" invisible="1"/>
+
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+
+                        <page string="Selected Invoices" name="components2" style="font-size: x-large;" attrs="{'invisible':[('state','not in',('generated_invoice','generated_invoice_template','submitted_to_manager'))]}" >
+                           <group col="4" colspan="4" >
+                                <field name="invoice_selected_one2many" 
+                                       string="Invoices" nolabel="1" >
+                                    <tree create="false" editable='bottom' colors="green:state=='approved';purple:state=='hold';">
+                                        <field name="check_invoice" invisible="1"/>
+                                        <button name="approve_invoice" icon="fa fa-check" string="Approve" aria-hidden="true" 
+                                                type="object" style="color:green !important;"
+                                                attrs="{'invisible':[('state','=','generated_payment')]}"/>
+
+                                        <field name="name"  invisible="1"/>
+                                        <field name="invoice_selected_id" invisible="1"/>
+                                        <field name="value_date" readonly="1"/>
+                                        <field name="invoiceno" readonly="1"/>
+                                        <field name="documentno" readonly="1"/>
+                                        <field name="customercode" readonly="1"/>
+                                        <field name="beneficiary_name"/>
+                                        <field name="totalamt" readonly="1"/>
+                                        <field name="allocatedamt" readonly="1" sum="Allocated Total Amount"/>
+                                        <field name="unallocated" readonly="1" sum="Total Amount"/>
+                                        <field name="duedays" readonly="1"/>
+                                        <field name="description"  invisible="1"/>
+                                        <field name="transaction_amount" invisible="1"/>
+                                        <field name="payment_term"  invisible="1"/>
+                                        <field name="transaction_type" invisible="1"/>
+                                        <field name="beneficiary_code"  invisible="1"/>
+                                        <field name="beneficiary_account_number"  invisible="1"/>                                    
+                                        <field name="customer_reference_number"  invisible="1"/>
+                                        <field name="owner"  invisible="1"/>
+                                        <field name="ifsc_code"  invisible="1"/>
+                                        <field name="beneficiary_email_id"  invisible="1"/>
+                                        <field name="owner_email" invisible="1"/>
+                                        <field name="user_id" invisible="1" />
+                                        <field name="create_uid"  invisible="1"/>
+                                        <field name="state"  invisible="1"/>
+                                        <field name="delegate_user_id" invisible="1"  widget="many2many_tags" />
+                                        <field name="delay_date" invisible="1"/>
+
+                                    </tree>
+                                </field>
+                            </group>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="bp_total">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="amount_total" />
+                                    <button string="Update" name="refresh_form" class="fa fa-refresh btn-primary" type="object"  />
+                                </div>
+                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary'  
+                                    attrs="{'readonly': [('can_edit_name', '=', False)]}"/>
+                            </group>
+                        </page>
+
+                        <page string="Filtered Invoices" name="components2" style="font-size: x-large;" attrs="{'invisible':[('state','not in',('generated_invoice','generated_invoice_template','submitted_to_manager','erp_posted'))]}"  >
+
+                             <group  col="4" colspan="4">
+                                <div class="col-xs-20" >
+
+                                    <button string="Refresh" name="refresh_form" class="fa fa-refresh btn-primary  col-xs-2"
+                                            type="object"  style="font-size: 16px;"  />
+                      
+                                    <div class="col-xs-1" attrs="{'invisible':[('state','=','generated_invoice_template')]}"/>
+
+                                     <button name="generate_filter_invoice_report" string="Filtered Invoice Report" type="object" class="btn-primary  col-xs-2" style="font-size: 16px;"  
+                                        attrs="{'invisible':['|',('filter_rep_bool','=',True),('state','=','generated_invoice_template')]}"/>
+
+                                     <div class="col-xs-1"/>
+
+                                     <field name="export_file" colspan="4" invisible="1" />
+
+                                     <div class="col-xs-1"/>
+                                        <field name="output_file" filename="export_file" colspan="4" readonly="1" attrs="{'invisible':[('output_file','=',False)]}" />
+                                      
+                                </div>
+                            </group>
+
+
+                           <group col="4" colspan="4" >
+                                <field name="invoice_filter_one2many" attrs="{'readonly':[('state','=','erp_posted')]}"
+                                       string="Invoices" nolabel="1" >
+
+                                    <tree create="false" editable='bottom' colors="green:state=='approved';red:log=='error';">
+                                        <field name="check_invoice" invisible="1"/>
+                                        <field name="name"  invisible="1"/>
+                                        <field name="invoice_filter_id" invisible="1"/>
+                                        <field name="value_date"  readonly="1"  />
+                                        <field name="invoiceno" readonly="1"/>
+                                        <field name="ad_org_id"/>
+                                        <field name="documentno" readonly="1" />
+                                        <field name="customercode" readonly="1"  />
+                                        <field name="beneficiary_name" readonly="1" />
+                                        <field name="totalamt" readonly="1"  />
+                                        <field name="allocatedamt"  readonly="1" />
+                                        <field name="unallocated"  sum="Total Amount"/>
+                                        <field name="unallocated2"  invisible="1" />
+                                        <field name="duedays" readonly="1" />
+                                        <field name="description"  invisible="1"/>
+                                        <field name="transaction_amount" invisible="1"/>
+                                        <field name="payment_term"  invisible="1"/>
+                                        <field name="transaction_type" invisible="1"/>
+                                        <field name="beneficiary_code"  invisible="1"/>
+                                        <field name="beneficiary_account_number"  invisible="1"/>                                    
+                                        <field name="customer_reference_number"  invisible="1"/>
+                                        <field name="owner"  invisible="1"/>
+                                        <field name="ifsc_code"  invisible="1"/>
+                                        <field name="beneficiary_email_id"  invisible="1"/>
+                                        <field name="owner_email" invisible="1"/>
+                                        <field name="user_id" invisible="1" />
+                                        <field name="create_uid"  invisible="1"/>
+                                        <field name="state"  invisible="1"/>
+                                        <field name="delegate_user_id" invisible="1"  widget="many2many_tags" />
+                                        <field name="delay_date" invisible="1"/>
+                                        <field name="log" invisible="0"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        
+                    </notebook> 
+
+                <field name="note" placeholder="Note .." />
+
+             </sheet>
+
+             <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+              </div>
+        </form>
+    </field>
+</record>
+
+
+
+    <record id="view_bank_invoice_lines" model="ir.ui.view">
+        <field name="name">bank.invoice.lines.tree</field>
+        <field name="model">bank.invoice.lines</field>
+        <field name="priority" eval="50"/>
+        <field name="arch" type="xml">
+            <tree create="false" >
+                <field name="check_invoice" invisible="1"/>
+                <field name="name"  invisible="1"/>
+                <field name="invoice_id" invisible="1"/>
+                <field name="documentno"/>
+                <field name="beneficiary_name"/>
+                <field name="transaction_amount"/>
+                <field name="description"/>
+                <field name="payment_term"  invisible="1"/>
+                <field name="transaction_type" invisible="0"/>
+                <field name="beneficiary_code"  invisible="1"/>
+                <field name="beneficiary_account_number"  invisible="1"/>                                    
+                <field name="customer_reference_number"  invisible="1"/>
+                <field name="value_date"/>
+                <field name="owner"  invisible="1"/>
+                <field name="ifsc_code"  invisible="1"/>
+                <field name="beneficiary_email_id"  invisible="1"/>
+                <field name="owner_email" invisible="1"/>
+                <field name="user_id"/>
+                <field name="create_uid"  invisible="1"/>
+                <field name="state"  invisible="1"/>
+                <field name="delegate_user_id" invisible="0"  widget="many2many_tags" />
+                <field name="delay_date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_bank_invoice_lines" model="ir.actions.act_window">
+        <field name="name">Invoice lines</field>
+        <field name="res_model">bank.invoice.lines</field>
+        <field name="view_mode">tree</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_bank_invoice_lines"/>
+    </record>
+
+
+    <record id="action_invoice_to_payment" model="ir.actions.act_window">
+        <field name="name">Invoice-Payment Process</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bank.payment</field>
+        <field name="view_type">form</field>
+        <field name="domain">[('condition','=','invoice')]</field>
+        <field name="context">{
+                'default_condition':'invoice',
+            }
+        </field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.actions.act_window.view" id="action_invoice_to_payment_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_bank_payment_tree"/>
+        <field name="act_window_id" ref="action_invoice_to_payment"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_invoice_to_payment_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_invoice_payment_form"/>
+        <field name="act_window_id" ref="action_invoice_to_payment"/>
+    </record>
+           
+  </data>
+</openerp>

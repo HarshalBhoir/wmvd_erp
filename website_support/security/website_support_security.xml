@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+
+<record model="ir.module.category" id="module_category_website_support">
+    <field name="name">TechSupport</field>
+    <field name="description">Ticketing System.</field>
+    <field name="sequence">0</field>
+</record>
+    
+<record id="website_support.group_website_support_user" model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id" ref="website_support.module_category_website_support"/>
+    <field name="implied_ids" eval="[]"/>
+    <field name="comment">the User will have access to his own data in the application.</field>
+</record>
+
+<record id="website_support.group_website_support_manager" model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id" ref="website_support.module_category_website_support"/>
+    <field name="implied_ids" eval="[(4, ref('website_support.group_website_support_user'))]"/>
+    <field name="comment">the User will have access to all data in the application.</field>
+</record>
+
+<record id="group_asset_management_user" model="res.groups">
+    <field name="name">Asset Management User</field>
+    <field name="comment">the user will have access to his own data in the asset management.</field>
+</record>
+
+<record id="group_budget_management_user" model="res.groups">
+    <field name="name">Budget Management User</field>
+    <field name="comment">the user will have access to his own data in the Budget management.</field>
+</record>
+
+<record id="website_support_manager_rule" model="ir.rule">
+    <field name="name">See All Tickets</field>
+    <field ref="model_website_support_ticket" name="model_id"/>
+    <field name="domain_force">[(1,'=',1)]</field>
+    <field name="groups" eval="[(4, ref('website_support.group_website_support_manager'))]"/>
+</record>
+
+<record id="website_support_user_rule" model="ir.rule">
+    <field name="name">See Own Tickets</field>
+    <field name="global" eval="True"/>
+    <field ref="model_website_support_ticket" name="model_id"/>
+    <field name="domain_force">['|',('user_id','=',user.id),'|',('create_user_id','=',user.id),('closed_by_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('website_support.group_website_support_user'))]"/>
+</record>
+
+<!-- <record id="ticket_activity_log_manager_rule" model="ir.rule">
+    <field name="name">See All Logs</field>
+    <field ref="model_ticket_activity_log" name="model_id"/>
+    <field name="domain_force">[(1,'=',1)]</field>
+    <field name="groups" eval="[(4, ref('website_support.group_website_support_user'))]"/>
+</record> -->
+
+
+
+
+</odoo>

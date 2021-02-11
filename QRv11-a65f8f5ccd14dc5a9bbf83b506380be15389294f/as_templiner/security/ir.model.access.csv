@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_as_kardex_productos_wiz,as_latti_project.as_kardex_productos_wiz,model_as_kardex_productos_wiz,stock.group_stock_user,1,1,1,1
+access_as_modificador_factura,as_latti_project.as_modificador_factura,model_as_modificador_factura,account.group_account_manager,1,1,1,1

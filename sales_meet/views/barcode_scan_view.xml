@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+		
+
+
+  <record id="view_barcode_marketing_check_form_mobile" model="ir.ui.view">
+      <field name="name">barcode.marketing.check.form</field>
+      <field name="model">barcode.marketing.check</field>
+      <field name="arch" type="xml">
+          <form >
+              <header>
+                  <button name="update_records" string="Approve &amp; Update" type="object" class="btn-primary" 
+                          groups="sales_meet.group_barcode_marketing_manager"
+                          attrs="{'invisible': [('state', 'in', ('draft','update', 'cn_raised') )]}"/>
+                  <button name="refuse_records" string="Reject" type="object" class="btn-primary" 
+                          groups="sales_meet.group_barcode_marketing_manager"
+                          attrs="{'invisible': [('state', 'in', ('draft', 'reject', 'cn_raised') )]}"/>
+                  <button name="reject_records" string="Rollover" type="object" class="btn-primary" 
+                          groups="sales_meet.group_it_user"
+                          attrs="{'invisible': [('state', 'in', ('draft', 'cn_raised', 'create') )]}"/>
+                  <button name="set_to_draft" string="Set To Draft" type="object" class="btn-primary" 
+                          groups="sales_meet.group_barcode_marketing_manager"
+                          attrs="{'invisible': [('state', 'in', ('draft','update' ,'cn_raised') )]}"/>
+                  <field name="state" widget="statusbar" statusbar_visible="draft"/>
+              </header>
+            <sheet>
+              <h1><field name="name"  states='create' invisible="1" attrs="{'readonly':[('state','!=','draft')]}"/></h1>
+
+              <div class="oe_title">
+                <label for="partner_id"/>
+                <h3><field name="bp_code" readonly="1" 
+                           attrs="{'invisible': [('bp_code', '=', False )]}"  /></h3>
+                <h1><field name="partner_id" required="1" options='{"no_open": True}'
+                           attrs="{'readonly':[('state','!=','draft')]}"  /></h1>
+              </div>
+
+              <group>
+                    <group>
+                        <field name="export_file" colspan="4" invisible="1" style="font-size: 15px;"/>
+                        <field name="output_file" filename="export_file" colspan="4" attrs="{'readonly':[('state','!=','draft')]}"   />
+                        <button name="add_lines" string="Submit" type="object"  class="btn-primary col-xs-2"
+                               style="font-size: 16px; width: 325px; margin-top: 16px;" invisible="0" states='draft'/>
+                    </group>
+
+                    <group  attrs="{'invisible':[('state','=','draft')]}">
+                        <field name="accepted_count" />
+                        <field name="rejected_count" />                        
+                    </group>                    
+              </group>
+
+              <group>
+                <group attrs="{'invisible':[('state','=','draft')]}"  > 
+                      
+                      <field name="previously_scanned_count" />
+                      <field name="old_scanned_count" />
+                      <field name="duplicated_count" />
+                      <field name="net_amount"  widget="monetary" readonly="1"  />
+                      <field name="total_amount"  widget="monetary" readonly="1" attrs="{'invisible':[('state','=','draft')]}"/>
+                      <field name="date" readonly="1"/>
+                      <field name="user_id" readonly="1" options='{"no_open": True}'  />
+                      <field name="charge" invisible="0" groups="sales_meet.group_barcode_marketing_manager" />
+                    </group>
+
+                    <group  attrs="{'invisible':[('state','=','draft')]}" >
+                        <field name="previously_scanned"  attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                        <field name="old_scanned"  attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                        <field name="duplicated" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="rejected" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                        
+                        <field name="flag" invisible="0" groups='sales_meet.group_barcode_marketing_manager'/>
+                        <field name="accepted" id="output"  groups='sales_meet.group_barcode_marketing_manager'
+                          attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('flag', '=', False)]}"/>
+
+                    </group>
+              </group>
+
+                <group groups='sales_meet.group_barcode_marketing_manager' >
+                  <group>
+                      <field name="amount" invisible="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                      <field name="manual_count" invisible="1" />
+                      <field name="count_accepted" invisible="1"/>
+                      <field name="count_rejected" invisible="1" />
+                      <field name="count_duplicated" invisible="1" />
+                      <field name="count_previously_scanned"  invisible="1"/>
+                      <field name="count_old_scanned"  invisible="1"/>
+                      <field name="mobile_bool" invisible="1" />
+                    </group>
+                    <group invisible="1">
+                      <field name="barcode"  id="codes" class="qrcode-text" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                             placeholder="Tracking Code" size="16"/>
+                       <button string="Scan"  name="qr_code_check" type="object" class="fas fa-qrcode btn-primary" />
+                       <button name="clear_records" string="Clear" type="object" class="btn-primary"  states='draft'/>
+                    </group>
+                </group>
+            </sheet>
+            <div class="oe_chatter">
+              <field name="message_ids" widget="mail_thread"/>
+            </div>
+          </form>
+      </field>
+  </record>
+
+  <record id="view_barcode_marketing_check_mobile_tree" model="ir.ui.view">
+    <field name="name">barcode.marketing.check.mobile.tree</field>
+    <field name="model">barcode.marketing.check</field>
+    <field name="arch" type="xml">
+        <tree  colors="red:state=='draft';blue:state=='create';brown:state=='update';green:state=='cn_raised';gray:state=='reject';">
+            <field name="name" />
+            <field name="create_date" />
+            <field name="count_accepted" sum="Total A"/>
+            <field name="count_previously_scanned" sum="Total P" />
+            <field name="count_old_scanned" sum="Total O"/>
+            <field name="total_amount" sum="Total Amount"/>
+            <field name="partner_id" />
+            <field name="imported" />
+            <field name="user_id" />
+            <field name="state" />
+        </tree>
+    </field>
+  </record>
+
+
+  <record id="action_barcode_marketing_check_mobile" model="ir.actions.act_window">
+      <field name="name">QR Scan</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">barcode.marketing.check</field>
+      <field name="view_type">form</field>
+      <field name="domain">[('mobile_bool','=',True)]</field>
+      <field name="context">{'default_mobile_bool':True,}</field>
+      <field name="view_mode">tree,form</field>
+      <field name="search_view_id" ref="sales_meet.view_barcode_marketing_check_search"/>
+  </record>
+
+  <record model="ir.actions.act_window.view" id="action_barcode_marketing_check_mobile_tree">
+    <field name="sequence" eval="1"/>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="view_barcode_marketing_check_mobile_tree"/>
+    <field name="act_window_id" ref="action_barcode_marketing_check_mobile"/>
+  </record>
+
+  <record model="ir.actions.act_window.view" id="action_barcode_marketing_check_mobile_form">
+    <field name="sequence" eval="2"/>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_barcode_marketing_check_form_mobile"/>
+    <field name="act_window_id" ref="action_barcode_marketing_check_mobile"/>
+  </record> 
+   
+</odoo>

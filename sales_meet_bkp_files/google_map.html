@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Localisation de vehicule</title>
+        <style>
+            html, body { height: 100%;
+                margin: 0;
+                padding: 0; }
+            #map { height: 100%; }
+        </style>
+        <script>
+
+            function initMap() {
+
+                console.log('AAAAAAAAAAAAAA');
+
+                var querystring = window.location.querystring;
+                console.log('BBBBBBBBBBBBBBBB' + querystring)
+
+
+
+                var mylong = location.search.slice(11,location.search.indexOf("&"));
+                var mylati = location.search.slice(location.search.indexOf("latitude=")+9,location.search.indexOf("&key"))
+
+                var myLatLng = {lat: Number(mylong), lng: Number(mylati)};
+                var map = new google.maps.Map(document.getElementById('googleMap'), {
+                zoom: 8,
+                center: myLatLng
+                });
+                var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map
+              });
+            }
+        </script>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+           <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWGBUR56Byqip7RUel5-EeWzFQygna2Hg&callback=initMap">
+    </script>
+    </body>
+</html>

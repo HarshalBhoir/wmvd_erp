@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<record id="view_partner_form_extension" model="ir.ui.view">
+      <field name="name">res.partner.form</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+
+        <xpath expr="/form/sheet[1]" position="before" >
+           <header>
+             <button string="Confirm Partner" name="create_idempiere_partner"  type="object"  class="btn-primary" 
+              groups='sales_meet.group_it_user'  />
+            <!-- <button string="Update Partner" name="update_idempiere_partner"  type="object"  class="btn-primary" 
+              groups='sales_meet.group_employee_officer'  /> -->
+            <field name="state" widget="statusbar"/>
+          </header>
+        </xpath>
+
+          <field name="website" position='replace' />
+          <field name="user_id" position='replace' />
+
+          <field name="category_id" position="after"  >
+            <field name="partner_group_id" required="1" options='{"no_open": True}'/>
+             <field name="bp_code"/>
+             <field name="c_bpartner_id" />
+             <field name="c_location_id" groups="base.group_no_one"/>
+             <field name="c_bpartner_location_id" groups="base.group_no_one"/>
+             <field name="taxid" string="Tax ID"/>
+             <field name="pan_no"/>
+             <field name="vat_no"/>
+             <!-- <field name="birth_date"/> -->
+             <field name="website"/>
+             <field name="bulk_payment_bool"/>
+          </field>
+
+          <field name="lang" position="after"  >
+            <!-- <field name="display_name" invisible="0" /> -->
+             
+             <field name="cst_no"/>
+             <field name="tin_no"/>
+             <field name="gst_no"/>
+             <field name="creditstatus" required="1"/>
+             <field name="so_creditlimit" required="1"/>
+             <field name="user_id" required="0" options='{"no_open": True}'/>
+          </field>
+
+          <field name="phone" position="before"  >
+                  <field name="contact_name"/>
+          </field>
+
+          <field name="street2" position="after"  >
+                <field name="district_id" placeholder="District..." class="o_address_district" required="1"
+          attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+
+          </field>
+
+          <xpath expr="//page[3]" position="attributes">
+             <attribute name="groups">sales_team.group_sale_manager</attribute>
+          </xpath>
+
+          <field name="lang" position="attributes"  >
+            <attribute name="invisible">1</attribute>
+          </field>
+
+          <field name="category_id" position="attributes"  >
+            <attribute name="invisible">1</attribute>
+          </field>
+
+          <xpath expr="//page[1]" position="before">
+             <page name="bank_detail" string="Bank Details" autofocus="autofocus">
+              <group col="4">
+                  <field name="bank_name"/>
+                  <field name="account_no"/>
+                  <field name="ifsc_code"/>
+                  <field name="branch_name"/>
+                  <field name="cheque_no"/>
+                  <field name="address"/>
+                  <field name="bank_country"/>
+                  <field name="aadhar_no"/>
+              </group>
+              </page>
+          </xpath>
+
+          <div class="oe_button_box" name="button_box"  position="attributes">
+            <attribute name="groups">sales_team.group_sale_manager</attribute>
+          </div>
+
+          <field name="country_id" position="attributes"  >
+            <attribute name="required">1</attribute>
+          </field>
+          <field name="state_id" position="attributes"  >
+            <attribute name="required">1</attribute>
+          </field>
+
+
+        </field>
+    </record>
+
+
+  <record id="view_partner_form_extension" model="ir.ui.view">
+      <field name="name">res.partner.form</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="groups_id" eval="[(6, 0, [ref('sales_meet.group_sales_meet_executive')])]"/>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+
+
+          <field name="category_id" position="after"  >
+             <field name="bp_code"/>
+             <field name="c_bpartner_id"/>
+             <field name="partner_group_id"/>
+             <field name="pan_no"/>
+             <field name="tin_no"/>
+             <field name="gst_no"/>
+             <field name="creditstatus"/>
+             <field name="so_creditlimit"/>
+          </field>
+
+          <field name="lang" position="after"  >
+             <field name="vat_no"/>
+             <field name="cst_no"/>
+          </field>
+
+        </field>
+    </record>
+
+
+
+<record id="view_partner_group_form" model="ir.ui.view">
+    <field name="name">res.partner.group.form</field>
+    <field name="model">res.partner.group</field>
+    <field name="arch" type="xml">
+        <form>
+          <sheet>
+              <group>
+                <field name="name" />
+                <field name="value"/>
+                <field name="isactive"/>
+                <field name="c_bp_group_id"/>
+                <field name="company_id"/>
+              </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+
+<record id="view_partner_group_tree" model="ir.ui.view">
+    <field name="name">res.partner.group.tree</field>
+    <field name="model">res.partner.group</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name" />
+            <field name="value"/>
+            <field name="isactive"/>
+        </tree>
+    </field>
+</record>
+
+
+
+<record id="action_partner_group" model="ir.actions.act_window">
+    <field name="name">Partner Groups</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">res.partner.group</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<!-- <record id="view_ad_org_form" model="ir.ui.view">
+    <field name="name">ad.org.form</field>
+    <field name="model">ad.org</field>
+    <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name" />
+              <field name="ad_org_id"/>
+              <field name="isactive"/>
+            </group>
+          </sheet>
+        </form>
+    </field>
+</record>
+
+
+<record id="view_ad_org_tree" model="ir.ui.view">
+    <field name="name">ad.org.tree</field>
+    <field name="model">ad.org</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name" />
+            <field name="ad_org_id"/>
+            <field name="isactive"/>
+        </tree>
+    </field>
+</record>
+
+
+
+<record id="action_ad_org" model="ir.actions.act_window">
+    <field name="name">Organisations</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">ad.org</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record> -->
+
+
+<record id="re_res_country_form" model="ir.ui.view">
+  <field name="name">sales.meet.res.country.form</field>
+  <field name="model">res.country</field>
+  <field name="inherit_id" ref="base.view_country_form" />
+  <field name="arch" type="xml">
+    <xpath expr="//field[@name='code']" position="after">
+      <field name="active" />
+      <field name="c_country_id" />
+    </xpath>
+  </field>
+</record>
+
+<record id="re_res_company_form" model="ir.ui.view">
+  <field name="name">sales.meet.res.company.form</field>
+  <field name="model">res.company</field>
+  <field name="inherit_id" ref="base.view_company_form" />
+  <field name="arch" type="xml">
+    <xpath expr="//field[@name='website']" position="after">
+      <field name="ad_client_id" />
+      <field name="resource_calendar_id" required="0"/>
+    </xpath>
+  </field>
+</record>
+
+
+
+
+<record id="re_view_country_state_form" model="ir.ui.view">
+  <field name="name">sales.meet.res.country.state.form</field>
+  <field name="model">res.country.state</field>
+  <field name="inherit_id" ref="base.view_country_state_form" />
+  <field name="arch" type="xml">
+    <xpath expr="//field[@name='code']" position="after">
+      <field name="active" />
+      <field name="c_region_id"/>
+    </xpath>
+
+     <xpath expr="//form/group" position="after">
+
+      <label for="district_ids"/>
+      <field name="district_ids">
+          <tree editable="bottom">
+              <field name="name"/>
+              <field name="code"/>
+          </tree>
+      </field>
+    </xpath>
+
+  </field>
+</record>
+
+
+<record id="view_state_district_tree" model="ir.ui.view">
+    <field name="name">res.state.district.tree</field>
+    <field name="model">res.state.district</field>
+    <field name="arch" type="xml">
+        <tree string="Districts">
+            <field name="name"/>
+            <field name="code"/>
+            <field name="state_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_state_district_form" model="ir.ui.view">
+    <field name="name">res.state.district.form</field>
+    <field name="model">res.state.district</field>
+    <field name="arch" type="xml">
+        <form string="Districts">
+            <group>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="c_city_id"/>
+                <field name="active" />
+                <field name="state_id" options='{"no_open": True}'/>
+            </group>
+        </form>
+    </field>
+</record>
+
+<record id="action_state_district" model="ir.actions.act_window">
+    <field name="name">Districts</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">res.state.district</field>
+    <field name="view_type">form</field>
+    <field name="view_id" ref="view_state_district_tree"/>
+</record>
+
+
+    <record id="view_customer_erp_update_form" model="ir.ui.view">
+        <field name="name">customer.erp.update.form</field>
+        <field name="model">customer.erp.update</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" required="1"/>
+                </group>
+                
+                <footer >
+                    <button name="update_customer" string="Update" type="object" class="btn-primary"/>
+                    <button string="Close" class="btn-default" special="cancel" />
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+    <record model='ir.actions.act_window' id='action_customer_erp_update'>
+        <field name="name">Customer Update</field>
+        <field name="res_model">customer.erp.update</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_customer_erp_update_form"/>
+        <field name="target">new</field>
+    </record>
+
+
+
+
+	</data>
+</openerp>
+        
+        

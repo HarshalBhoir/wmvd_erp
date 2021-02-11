@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	
+		<record id="hr_attendance_view_form_extension" model="ir.ui.view">
+            <field name="name">hr.attendance.form</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form" />
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+
+                <field name="check_out" position="after"  >
+                  <field name="attendance_status" invisible="1"/>
+                  <field name="meeting_count"  invisible="1"/>
+                  <field name="hours_completed"  widget="float_time" sum="Total Attendance Hours"/>
+                  <field name="attendance_count"  invisible="1"/>
+                  <field name="attendance_date"/>
+                  <field name="checkout_type"/>
+                </field>
+
+                <field name="sheet_id" position='attributes' >
+                  <attribute name ="invisible">1</attribute>
+                </field>
+
+            </field>
+        </record>
+
+
+        <record id="view_attendance_tree_extension" model="ir.ui.view">
+            <field name="name">hr.attendance.tree</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_tree" />
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+
+                <field name="check_out" position="after"  >
+                  <field name="attendance_status" invisible="1"/>
+                  <field name="meeting_count" invisible="1"/>
+                  <field name="hours_completed" />
+                  <field name="attendance_count" invisible="1"/>
+                  <field name="attendance_date"/>
+                  <field name="checkout_type"/>
+                </field>
+
+                <field name="sheet_id" position='attributes' >
+                  <attribute name ="invisible">1</attribute>
+                </field>
+
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_hr_attendance_graph4">
+            <field name="name">hr.attendance.graph</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_graph" />
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+
+              <field name="employee_id" position="after"  >
+                    <field name="attendance_date"/>
+                    <field name="attendance_count"/>
+                    <field name="hours_completed" type="measure"/>
+              </field>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_hr_attendance_pivot4">
+            <field name="name">hr.attendance.pivot</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_pivot" />
+
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+
+               <field name="employee_id" position="after"  >
+                    <field name="attendance_date" type="col"/>
+                    <field name="attendance_count" string="Status" type="measure"/>
+                    <field name="hours_completed" type="measure"/>
+               </field>
+                
+            </field>
+        </record>
+
+
+        <record id="hr_attendance_view_filter_extension" model="ir.ui.view">
+            <field name="name">hr_attendance_view_filter_extension</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter" />
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+                <field name="department_id" position="after"  >
+                  <filter name="previous_month" string="Previous Month" domain="[('attendance_date', '&gt;=', (datetime.date.today() - relativedelta(months=1)).strftime('%Y-%m-01')), ('attendance_date', '&lt;', datetime.date.today().strftime('%Y-%m-01'))]" />
+                  <filter name="current_year" string="Current Year" 
+                    domain="[('attendance_date', '&gt;=', datetime.date.today().strftime('%Y-01-01'))]" />
+
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_attendance_action_graph2" model="ir.actions.act_window">
+            <field name="name">Attendance Analysis Report</field>
+            <field name="res_model">hr.attendance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">pivot,graph</field>
+            <field name="context">{'search_default_attendance_count': 1, 'search_default_current_month': 1}</field>
+            <field name="view_id"></field>
+        </record>
+     
+
+</odoo>
+        
+        

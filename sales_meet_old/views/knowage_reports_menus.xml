@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+	
+	
+<record id="action_website_report_sales_SRR" model="ir.actions.act_url">
+    <field name="name">Sales Register</field>
+    <field name="url">/salesregister</field>
+</record>
+
+<record id="action_website_report_sales_SIAR" model="ir.actions.act_url">
+    <field name="name">SO Audit Report</field>
+    <field name="url">/soauditreport</field>
+</record>
+
+<record id="action_website_report_purchase" model="ir.actions.act_url">
+    <field name="name">Purchase Register</field>
+    <field name="url">/purchaseregister</field>
+</record>
+
+
+
+<!-- Bank Payment Menus-->
+
+<menuitem name="ERP Reports" id="menu_website_report" 
+           sequence="2"  web_icon="sales_meet,static/description/erp_report.png" />
+
+
+<menuitem name="Customer Pricelist" id="menu_customer_pricelist2" action="product.product_pricelist_action2"
+          parent="menu_website_report" sequence="-1"   />
+           
+
+<menuitem name="Sales" id="menu_website_report_sales" sequence="3" parent='menu_website_report' />
+
+<menuitem name="Sales Register" id="menu_website_report_sales_SRR" action="action_website_report_sales_SRR"
+           sequence="3" parent='menu_website_report_sales' />
+
+<menuitem name="Sales Product Register" id="menu_website_report_sales_product_register" action="action_website_report_sales_SRR"
+           sequence="3" parent='menu_website_report_sales' />
+
+<menuitem name="SO Audit Report" id="menu_website_report_sales_SIAR" action="action_website_report_sales_SIAR"
+           sequence="4" parent='menu_website_report_sales' />
+
+<menuitem name="Purchase" id="menu_website_report_purchase" sequence="4" parent='menu_website_report' />
+
+<menuitem name="Purchase Register" id="menu_website_report_purchase_register" action="action_website_report_purchase"
+           sequence="5" parent='menu_website_report_purchase' />
+
+
+</odoo>

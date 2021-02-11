@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="DebugModeMenu">
+        <li class="o_mail_navbar_item">
+            <a aria-expanded="false" href="#">
+                <i id="debug_button" title="Developer Mode" class="fa fa-bug" aria-hidden="true"/>
+            </a>
+        </li>
+    </t>
+</templates>

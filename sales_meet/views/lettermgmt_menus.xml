@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+
+    <!--Travel Ticket Menus -->
+
+    <menuitem id="letter_log_menu" name="FrontDesk" web_icon="sales_meet,static/description/icon_lettermgmnt.png" sequence="1" 
+              groups='sales_meet.group_lettermgmt_user'/>
+
+    <menuitem id="ticket_booking_apply_menu" name="Ticket Apply" parent="letter_log_menu"
+              sequence="1" action="action_ticket_booking_apply_tree_view"/>
+
+
+    <menuitem id="ticket_booking_approve_menu" name="Ticket Approval" parent="letter_log_menu" sequence="2"
+              groups='sales_meet.group_lettermgmt_manager,sales_meet.group_lettermgmt_officer'
+              action="action_ticket_booking_tree_view" />
+
+
+    <!--Visitor Menus -->
+
+    <menuitem id="vistor_menu" name="VMS" web_icon="sales_meet,static/description/visitor.png" sequence="1" 
+              groups='sales_meet.group_vms_user'/>
+
+    <menuitem id="visitor_menu" name="Visitor" parent="vistor_menu" action="fo_visitor_action"
+               sequence="1"/>
+
+    <menuitem id="fo_visit_menu" name="Visits" parent="vistor_menu" action="fo_visit_action"
+              sequence="2"/>
+
+    <menuitem id="fo_today_visit_menu" name="Today's Visits" parent="vistor_menu" sequence="4" action="fo_today_visit_action"/>
+
+    <menuitem id="visitor_config_menu" name="Configuration" sequence="9" parent="vistor_menu" 
+              groups="sales_meet.group_vms_manager"/>
+
+    <menuitem id="fo_property_counter_menu" name="Property Counter" parent="vistor_menu" action="fo_property_counter_action"
+              sequence="4"/>
+
+    <menuitem id="fo_purpose_menu" name="Visitors Purpose" parent="visitor_config_menu"  action="fo_purpose_action"
+              sequence="4"/>
+
+    <menuitem id="fo_id_proof_menu" name="ID Proof" parent="visitor_config_menu"  action="fo_id_proof_action"
+              sequence="2"/>
+
+
+    <!-- Couriers Menus -->
+
+    <menuitem id="res_letter_menu" name="Couriers" sequence="7" parent="letter_log_menu"/>
+
+    <menuitem id="res_letter_out_menu" name="Outbound Couriers" parent="res_letter_menu"
+              sequence="2" action="action_res_letter_out_tree_view"/>
+
+    <menuitem id="res_letter_in_menu" name="Inbound Couriers" parent="res_letter_menu" sequence="3"
+              action="action_res_letter_in_tree_view"/>
+
+    <menuitem id="res_letter_intern_menu" name="Internal Letters" parent="res_letter_menu"
+              action="action_res_letter_intern_tree_view"/>
+
+    <menuitem id="letter_log_config_menu" name="Configuration" sequence="9" parent="letter_log_menu" 
+              groups="sales_meet.group_sales_meet_manager"/>
+
+    <menuitem id="letter_type_menu" name="Letter Type" parent="letter_log_menu" sequence="5"
+              action="action_letter_type_tree_view"/>
+
+    <menuitem id="letter_channel_menu" name="Letter Channel" parent="letter_log_config_menu"
+              action="action_letter_channel_tree_view"/>
+
+    <menuitem id="letter_class_menu" name="Letter Class" parent="letter_log_config_menu"
+              action="action_letter_class_tree_view"/>
+
+    <menuitem id="letter_folder_menu" name="Letter Folders" parent="letter_log_config_menu"
+              sequence="1" action="action_letter_folder_tree_view"/>
+
+
+
+</odoo>

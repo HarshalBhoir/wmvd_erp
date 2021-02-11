@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_expense_automation_line" model="ir.sequence">
+            <field name="name">expense_automation_line_sequence</field>
+            <field name="code">expense.automation.line</field>
+            <field name="prefix">EXP/HO/%(range_year)s/1</field>
+            <field name="padding">5</field>
+
+        </record>
+
+        <record id="seq_bank_invoice_lines" model="ir.sequence">
+            <field name="name">bank_invoice_lines_sequence</field>
+            <field name="code">bank.invoice.lines</field>
+            <field name="prefix"></field>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="seq_bank_payment_invoice" model="ir.sequence">
+            <field name="name">bank_payment_invoice_sequence</field>
+            <field name="code">bank.payment.invoice</field>
+            <field name="prefix"></field>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="seq_bank_payment_bank" model="ir.sequence">
+            <field name="name">bank_payment_bank_sequence</field>
+            <field name="code">bank.payment.bank</field>
+            <field name="prefix"></field>
+            <field name="padding">5</field>
+        </record>
+
+
+        <record id="seq_sample_requisition" model="ir.sequence">
+            <field name="name">sample_requisition_sequence</field>
+            <field name="code">sample.requisition</field>
+            <field name="prefix">SR/</field>
+            <field name="padding">7</field>
+        </record>
+
+
+        <record id="seq_sample_issuance" model="ir.sequence">
+            <field name="name">sample_issuance_sequence</field>
+            <field name="code">sample.issuance</field>
+            <field name="prefix">SI/</field>
+            <field name="padding">7</field>
+        </record>
+
+        <record id="seq_approval_management" model="ir.sequence">
+            <field name="name">approval_management_sequence</field>
+            <field name="code">approval.management</field>
+            <field name="prefix">AP/%(range_year)s/</field>
+            <field name="padding">7</field>
+            <field name="use_date_range">True</field>
+        </record>
+
+        <record id="seq_wp_retailer" model="ir.sequence">
+            <field name="name">wp_retailer_sequence</field>
+            <field name="code">wp.retailer</field>
+            <field name="prefix">RT/</field>
+            <field name="padding">7</field>
+            <!-- <field name="use_date_range">True</field> -->
+        </record>
+
+
+        <record id="seq_wp_retailer_scheme" model="ir.sequence">
+            <field name="name">wp_retailer_scheme_sequence</field>
+            <field name="code">wp.retailer.scheme</field>
+            <field name="prefix">SC/%(range_year)s/</field>
+            <field name="padding">7</field>
+            <field name="use_date_range">True</field>
+        </record>
+
+        <record id="seq_cir_extension" model="ir.sequence">
+            <field name="name">CIR</field>
+            <field name="code">cir.extension</field>
+            <field name="prefix">CIR/%(range_year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+            <field name="use_date_range">True</field>
+        </record>
+
+        <record id="seq_hr_applicant" model="ir.sequence">
+            <field name="name">Employee Recruitment</field>
+            <field name="code">hr.applicant</field>
+            <field name="prefix">RC-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record> 
+
+   </data>
+</odoo>

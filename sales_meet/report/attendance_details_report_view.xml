@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_attendance_details_report_form" model="ir.ui.view">
+            <field name="name">attendance.details.report.form</field>
+            <field name="model">attendance.details.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field invisible="1" name="state"/>
+                    <div states="choose">
+                        <group col="4" colspan="4">
+                            <field name="date_from" invisible="1"/>
+                            <field name="date_to" invisible="1"/>
+                            <field name="month" required="1"/>
+                            <field name="year" required="1"/>
+                        </group>
+                        <group invisible="0" >
+                            <field name="user_ids" widget="many2many_tags" invisible="1" />
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </div>
+                    <div states="get">
+                        <group>
+                            <field name="name" invisible="1"/>
+                            <field name="report" filename="name" colspan="4"/>
+                        </group>
+                     </div>
+
+                     <footer states="choose">
+                        <button name="update_attendance" string="Print" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-default" special="cancel" />
+                    </footer>
+                    
+<!--                     <footer states="choose">
+                        <button name="print_report" string="Print Report" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-default" special="cancel" />
+                    </footer> -->
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='action_attendance_details_report'>
+            <field name="name">Export Attendance in Excel</field>
+            <field name="res_model">attendance.details.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_attendance_details_report_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

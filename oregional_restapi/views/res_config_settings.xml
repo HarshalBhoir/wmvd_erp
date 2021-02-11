@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherited form view -->
+    <record id="oregional_res_config_settings_form_inherit" model="ir.ui.view">
+        <field name="inherit_id" ref="oregional_base.oregional_res_config_settings_form"/>
+        <field name="model">res.config.settings</field>
+        <field name="name">oregional.restapi.oregional.res.config.settings.form.inherit</field>
+        <field name="priority">36</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='oregional_base']" position="after">
+                <h2 name="oregional_rest_api">
+                    Oregional REST API
+                </h2>
+                <group name="oregional_rest_api">
+                    <label name="oregional_rest_api_is_debug_mode_label"
+                           for="oregional_rest_api_is_debug_mode"
+                           string="REST API debug mode"
+                    />
+                    <div name="oregional_rest_api_is_debug_mode">
+                        <field name="oregional_rest_api_is_debug_mode"/>
+                        <div class="text-muted">
+                            Log REST API debug information. Use wisely.
+                        </div>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

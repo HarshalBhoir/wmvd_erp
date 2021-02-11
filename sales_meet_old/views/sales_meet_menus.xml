@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+	
+	
+<menuitem name="Meetings" id="sales_meet_main_menu" sequence="2" web_icon="sales_meet,static/description/meeting_icon.png" />
+
+<menuitem name="Meetings" id="Meetings_menu" action="action_calendar_event_crm"
+          parent="sales_meet_main_menu" sequence="1" groups="sales_meet.group_sales_meet_executive"  />
+          <!-- ,sales_meet.group_sales_meet_saleshead,sales_meet.group_sales_meet_zsm,sales_meet.group_sales_meet_srmanager,sales_meet.group_sales_meet_manager,sales_meet.group_sales_meet_asstmanager,sales_meet.group_sales_meet_srexecutive -->
+
+<menuitem name="Expenses" id="hr_expense.menu_hr_expense_root" web_icon="sales_meet,static/description/expense_icon.png"  sequence="2"
+          groups='sales_meet.group_employee_user,sales_meet.group_employee_officer,sales_meet.group_employee_manager'/>
+
+<menuitem name="Expense Excel Report" id="expense_excel_report_child_menu"
+          parent="hr_expense.menu_hr_expense_reports" sequence="-1" action="action_view_hr_expense_xls"/>
+
+<menuitem name="Bulk Approve Expense" id="expense_automation_menu" groups="sales_meet.group_expense_manager_user"
+          parent="hr_expense.menu_hr_expense_root" sequence="3" action="action_expense_automation"/>
+
+
+<menuitem name="Leads" id="sales_meet_lead_menu" sequence="3" web_icon="sales_meet,static/description/leads_icon.png" 
+          groups="sales_meet.group_sales_meet_executive"/>
+
+<menuitem name="Leads" id="leads_menu" action="crm.crm_lead_all_leads"
+          parent="sales_meet_lead_menu" sequence="2" />
+
+<!-- <menuitem name="Leads" id="leads_menu" action="sales_meet_crm_lead_all_leads"
+          parent="sales_meet_lead_menu" sequence="2" /> -->
+
+          
+
+<menuitem name="Project Leads" id="ho_leads_menu" action="sales_meet.crm_lead_ho"
+          parent="sales_meet_lead_menu" sequence="3" />
+
+<menuitem name="Project Report" id="project_export_menu" action="action_project_details_report"
+          parent="sales_meet_lead_menu" sequence="4" />
+
+<menuitem name="Lead Detail" id="lead_export_menu" action="action_lead_details_report"
+          parent="sales_meet_lead_menu" sequence="5" />
+
+
+<menuitem name="Sampling" id="sales_sample_requisition_menu" sequence="4" web_icon="sales_meet,static/description/sampling_icon.png" 
+          groups="sales_meet.group_sampling_module_user"/>
+
+<menuitem name="Sample Requisition" id="sample_requisition_menu" action="action_sample_requisition_master"
+          parent="sales_sample_requisition_menu" sequence="2" />
+
+<menuitem name="Sample Update" id="sample_erp_update_menu" action="action_sample_erp_update"
+          parent="sales_sample_requisition_menu" sequence="3" groups='sales_meet.group_sampling_module_manager'  />
+
+<menuitem name="Sample Issuance" id="sample_issuance_menu" action="action_sample_issuance_master"
+          parent="sales_sample_requisition_menu" sequence="4" groups='sales_meet.group_sampling_module_manager' />
+
+<menuitem name="Reports" id="sales_meet_sample_reports_main_menu" sequence="5"  parent="sales_sample_requisition_menu"  groups='sales_meet.group_sampling_module_manager' />
+
+<menuitem name="Sample Stock Report" id="sales_meet_sample_reports_1main_menu" sequence="1" 
+          action="action_sampling_details_report"
+          parent="sales_meet_sample_reports_main_menu"/>
+
+
+<menuitem name="Executive Stock Consumption Report" id="sales_meet_sample_reports_2main_menu" sequence="2" 
+          action="action_exec_stock_report"
+          parent="sales_meet_sample_reports_main_menu"/>
+
+
+<menuitem name="Weekly Report" id="sample_automation_menu" action="action_sample_automation" groups='sales_meet.group_sampling_module_manager'
+          parent="sales_sample_requisition_menu" sequence="5" />
+
+
+<menuitem name="Sample Master Config" id="sales_meet_sample_master_config_menu" groups='sales_meet.group_sampling_module_manager'
+          parent="sales_sample_requisition_menu" sequence="7" action="action_sample_master_config"/>
+
+<menuitem id="menu_products" action="product.product_normal_action_sell" parent="sales_sample_requisition_menu" 
+          groups='sales_meet.group_sampling_module_manager' sequence="8"/>
+
+<menuitem name="Product Update" id="product_erp_update_menu" action="action_product_erp_update" groups='sales_meet.group_sampling_module_manager'
+          parent="sales_sample_requisition_menu" sequence="9" />
+
+
+<menuitem name="Customer Update" id="customer_erp_update_menu" action="action_customer_erp_update" groups='sales_meet.group_sampling_module_manager'
+          parent="sales_sample_requisition_menu" sequence="4" />
+          
+<!-- <menuitem name="Lead Detail" id="lead_export_menu" action="action_lead_details_report"
+          parent="sales_meet_lead_menu" sequence="5" /> -->
+
+<menuitem name="Opportunity" id="sales_meet_opportunity_menu" sequence="4" web_icon="sales_meet,static/description/opportunity_icon.png"
+          groups="sales_meet.group_sales_meet_srexecutive"/>
+
+
+<menuitem name="Opportunity" id="opportunities_menu" action="crm.crm_lead_opportunities_tree_view"
+          parent="sales_meet_opportunity_menu" sequence="3" />
+
+
+<menuitem name="Customer" id="sales_meet_customer_menu" sequence="4" groups='sales_meet.group_employee_officer' 
+          web_icon="sales_meet,static/description/customer_icon.png"/>
+
+<menuitem name="Customer" id="customer_menu" action="base.action_partner_form"
+          parent="sales_meet_customer_menu" sequence="3" />
+
+<menuitem name="Customer Update" id="customer_erp_update_menu" action="action_customer_erp_update"
+          parent="sales_meet_customer_menu" sequence="4" />
+
+<menuitem name="Partner Group" id="menu_partner_group" action="action_partner_group"
+          parent="sales_meet_customer_menu" sequence="5"   />
+
+<menuitem name="Quotation" id="sales_meet_quotation_menu" sequence="5" web_icon="sales_meet,static/description/quotation_icon.png"
+    	groups="sales_meet.group_sales_meet_hidden"/>
+
+
+<menuitem name="Quotation" id="quotation_menu" action="sales_meet.action_quotations_retailer"  parent="sales_meet_quotation_menu" sequence="1" />
+
+<menuitem name="Customer Pricelist" id="menu_customer_pricelist" action="product.product_pricelist_action2"
+          parent="sales_meet_quotation_menu" sequence="4"   />
+
+<menuitem name="Products" id="menu_sales_meet_products" action="product.product_template_action"
+          parent="sales_meet_quotation_menu" sequence="2"   />
+
+<menuitem name="Customer Pricelist" id="menu_customer_pricelist" action="product.product_pricelist_action2"
+          parent="sales_meet_quotation_menu" sequence="4"   />
+
+
+<menuitem name="Reports" id="sales_meet_reports_main_menu" sequence="7" web_icon="sales_meet,static/description/reporting_icon.png" 
+          groups="sales_meet.group_sales_meet_executive"/>
+
+
+<!-- Credit Note Menus -->
+
+<menuitem name="Credit Note" id="sales_meet_cn_menu" sequence="2" web_icon="sales_meet,static/description/cn_icon.png" 
+          groups='sales_meet.group_cn_user'/>
+
+<menuitem name="Credit Note" id="sales_meet_credit_note_menu"
+          parent="sales_meet_cn_menu" sequence="1" action="action_credit_note"/>
+
+<menuitem name="Coupon CN" id="sales_meet_coupon_credit_note_menu"
+          parent="sales_meet_cn_menu" sequence="2" action="action_credit_note_coupon"/>
+
+<menuitem name="CN Config" id="sales_meet_credit_note_config_menu"
+          parent="sales_meet_cn_menu" sequence="5" action="action_credit_note_config"/>
+
+<menuitem name="CN Charge" id="sales_meet_credit_note_charge_menu"
+          parent="sales_meet_cn_menu" sequence="6" action="action_cn_charge_master"/>
+
+<menuitem name="ERP Periods" id="sales_meet_erp_periods_menu"
+          parent="sales_meet_cn_menu" sequence="5" action="action_erp_period_master"/>
+
+<menuitem name="ERP ElementValue" id="sales_meet_erp_elementvalue_menu"
+          parent="sales_meet_cn_menu" sequence="5" action="action_erp_elementvalue"/>
+
+<!-- Report Menus -->
+
+<menuitem name="Employee Excel Report" id="sales_meet_employee_reports_menu" parent="hr.menu_hr_reporting_timesheet"
+          sequence="-1" action="action_view_hr_employee_xls"/>
+
+<menuitem name="Meetings Detail" id="meetings_export_menu" action="action_meetings_details_report"
+          parent="sales_meet_reports_main_menu" sequence="1" />
+
+<menuitem name="Sale Register" id="sales_meet_sale_register_report_menu" parent="sales_meet_reports_main_menu"
+          sequence="4" action="action_sale_register_report"/>
+
+<menuitem name="Partner Group" id="menu_partner_group" action="action_partner_group"
+          parent="crm.menu_crm_config_lead" sequence="1"   />
+
+<menuitem name="Enquiry Type" id="menu_enquiry_type_sub" action="action_enquiry_type"
+          parent="crm.menu_crm_config_lead" sequence="2"   />
+
+<menuitem name="Organisations" id="menu_org_master_sub" action="action_org_master"
+          parent="crm.menu_crm_config_lead" sequence="3"   />
+
+<menuitem name="Grade master" id="menu_grade_master_sub" action="action_grade_master"
+          parent="hr.menu_human_resources_configuration" sequence="1"   />
+
+<menuitem name="CUVLAV Policy" id="menu_hr_insurance_policy" action="hr_insurance_policy_act"
+          parent="hr.menu_human_resources_configuration" sequence="3"   />
+
+<menuitem name="Videocon Liberty Policy" id="menu_hr_videocon_policy" action="hr_videocon_policy_act"
+          parent="hr.menu_human_resources_configuration" sequence="4"   />
+
+<menuitem id="menu_config_bank_accounts_sm" name="Bank Accounts" parent="hr.menu_human_resources_configuration" sequence="6" 
+          groups="hr.group_hr_user,hr.group_hr_manager"/>
+
+<menuitem action="base.action_res_bank_form" id="menu_action_res_bank_form_sm" parent="menu_config_bank_accounts_sm" 
+          sequence="1" groups="hr.group_hr_user,hr.group_hr_manager"/>
+<menuitem action="base.action_res_partner_bank_account_form" id="menu_action_res_partner_bank_form_sm" 
+          parent="menu_config_bank_accounts_sm" groups="hr.group_hr_user,hr.group_hr_manager" sequence="2"/>
+
+<menuitem action="action_state_district" id="menu_state_district" parent="sales_team.menu_localisation" 
+          sequence="3" groups="sales_team.group_sale_manager"/>
+
+
+<!-- Bank Payment Menus-->
+
+<menuitem name="Bank Payment" id="menu_bank_payment_sub" 
+           groups='sales_meet.group_bank_payment_user,sales_meet.group_bank_payment_manager'
+           sequence="2"  web_icon="sales_meet,static/description/bank_logo.png" />
+           
+
+<menuitem name="Invoice-Payment Process" id="menu_invoice_payment_bank_sub" action="action_invoice_to_payment"
+           sequence="3" parent='menu_bank_payment_sub' />
+
+<menuitem name="Payment-Bank Process" id="menu_payment_bank_sub" action="action_payment_bank"
+           sequence="4" parent='menu_bank_payment_sub' />
+
+<menuitem name="Receipt-Bank Process" id="menu_receipt_bank_sub" action="action_receipt_bank"
+           sequence="5" parent='menu_bank_payment_sub' />
+
+<menuitem name="ERP Banks" id="menu_erp_bank_master_sub" action="action_erp_bank_master"
+           sequence="6" parent='menu_bank_payment_sub' />
+
+
+
+
+<!-- Logistic Menus-->
+
+<menuitem name="Logistic" id="sales_meet_logistic_trail_menu" sequence="53" 
+          web_icon="sales_meet,static/description/transport_icon.png" 
+          groups='sales_meet.group_wp_logistics'/>
+
+<menuitem name="Logistic Trail" id="sales_meet_logistic_trail_menu_sub"
+              parent="sales_meet_logistic_trail_menu" sequence="1" action="action_logistic_trail"/>
+
+<menuitem name="Daily Invoice Schedular" id="sales_meet_daily_invoice_schedular_menu_sub"
+              parent="sales_meet_logistic_trail_menu" sequence="2" action="action_daily_invoice_schedular"/>
+
+<menuitem name="Invoice Mail Status Report" id="sales_meet_invoice_delivery_report_main_menu" sequence="3" 
+          action="action_invoice_delivery_report"
+          parent="sales_meet_logistic_trail_menu"/>
+
+
+<!-- Employee Forms -->
+
+<menuitem id= "forms_hr_main_submenu" parent= "hr.menu_hr_root" sequence= "16" name= "Forms" /> 
+
+<menuitem id= "joining_forms_hr_main_submenu" parent= "forms_hr_main_submenu" sequence= "1" name= "Joining Form"
+      action="action_emp_wp_joining_details_list" /> 
+
+<menuitem id= "idcard_forms_hr_main_submenu" parent= "forms_hr_main_submenu" sequence= "2" name= "ID Card Form"
+      action="action_emp_wp_idcard_list" /> 
+          
+<menuitem id= "mediclaimrevised_forms_hr_main_submenu" parent= "forms_hr_main_submenu" sequence= "3" name= "Mediclaim Revised Form"
+      action="action_emp_wp_mediclaimrevised_list" /> 
+
+<menuitem id= "mediclaimreimbursement_forms_hr_main_submenu" parent= "forms_hr_main_submenu" sequence= "3" name= "Mediclaim Reimbursment &amp; LTA Form"
+      action="action_emp_wp_mediclaimreimbursement_list" /> 
+
+<!-- Employee Forms -->
+
+
+
+<menuitem id="menu_exec_attendance_report"
+          name="Sales Exec Attendance Report"
+          parent="hr_attendance.menu_hr_attendance_report"
+          sequence="-1"
+          action="action_exec_attendance_details_report"
+/>
+
+
+
+<menuitem name="Discuss" id="mail.mail_channel_menu_root_chat" sequence="1" web_icon="sales_meet,static/description/discuss_icon.png" />
+
+<menuitem name="Calendar" id="calendar.mail_menu_calendar" sequence="2" web_icon="sales_meet,static/description/calendar_icon.png" />
+
+<menuitem name="Timesheets" id="hr_timesheet.timesheet_menu_root" web_icon="sales_meet,static/description/timesheet_icon.png" 
+          groups='sales_meet.group_employee_user,sales_meet.group_employee_officer,sales_meet.group_employee_manager'/>
+
+<menuitem name="Leaves" id="hr_holidays.menu_hr_holidays_root" web_icon="sales_meet,static/description/leave_icon.png"
+          groups='sales_meet.group_sales_meet_hidden' />
+
+<menuitem name="Website" id="website.menu_website" web_icon="sales_meet,static/description/website_icon.png" />
+	
+<menuitem name="Attendance" id="hr_attendance.menu_hr_attendance_root" web_icon="sales_meet,static/description/attendance_icon.png" />
+
+<menuitem name="Employees" id="hr.menu_hr_root" groups="hr.group_hr_manager" web_icon="sales_meet,static/description/human_resource_icon.png" />
+
+<menuitem name="Payroll" id="hr_payroll.menu_hr_payroll_root" web_icon="sales_meet,static/description/payroll_icon.png" 
+          groups='sales_meet.group_sales_meet_hidden'/>
+
+<menuitem name="Accounting" id="account.menu_finance" web_icon="sales_meet,static/description/accounts_icon.png" />
+		
+<menuitem name="Purchases" id="purchase.menu_purchase_root" web_icon="sales_meet,static/description/purchase_icon.png" />
+
+<menuitem name="Sales" id="sales_team.menu_base_partner" web_icon="sales_meet,static/description/sales_icon.png" />
+
+<menuitem name="Inventory" id="stock.menu_stock_root" web_icon="sales_meet,static/description/inventory_icon.png" />
+
+<menuitem name="Project" id="project.menu_main_pm" web_icon="sales_meet,static/description/project_icon.png" />
+
+<menuitem name="Settings" id="base.menu_administration" web_icon="sales_meet,static/description/settings_icon.png" />
+
+<menuitem name="Recruitment" id="hr_recruitment.menu_hr_recruitment_root" web_icon="sales_meet,static/description/recruitment_icon.png" />
+
+<menuitem name="Apps" id="base.menu_management" web_icon="sales_meet,static/description/apps_icon.png" />
+
+
+</odoo>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_visitor_label">
+            <style type="text/css">
+                body{
+                    width: 302.362px!important;height: 415.748px!important;
+                }
+                p{
+                  margin-bottom: 0.2em;
+                }
+
+                .font-6{
+                  font-size: 0.4em;
+                }
+
+                .font-8{
+                  font-size: 0.9em;
+                }
+              </style>
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!-- <t> -->
+                    <t t-if="o.state=='check_in'">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <div class="row">
+                                <center>
+                                    <div class="container" >
+
+                                      <table style="width:100%"> 
+
+                                          <tr class="font-8" style="color:black;">
+                                            <td width="30%" style="padding-top:10px;" >
+                                              <img t-if="o.visitor.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.visitor.company_id.logo" height="60" border="1" width="60"/>
+                                            </td>
+                                            <td width="70%">
+                                              <strong>
+                                                <h1 style="font-size: 1.2em;" t-field="o.visitor.company_id.name"/>
+                                              </strong>
+                                            </td>
+                                          </tr>
+                                      </table>
+
+                                      <strong><h1 style="font-size: 1.2em;">Gate Pass</h1></strong>
+                                      <p style="text-align:center;">
+                                          <strong><span style="font-size: 1.2em;" t-field="o.check_in_date"/></strong>
+                                      </p>
+
+                                      <table class="table table-hover" style="width:100%">                                        
+                                        <tbody>
+                                          <tr>
+                                            <td width="20%" >
+
+                                              <img t-if="o.visitor.visitor_image" t-att-src="'data:image/png;base64,%s' % o.visitor.visitor_image" height="80" border="1" width="80"/>
+                                            </td>
+
+                                            <td width="25%">
+                                                <p style="padding-top:10px;"><strong>VisitorID : </strong></p>
+                                                <p ><strong>Name : </strong></p>
+                                                <p><strong>Phone : </strong></p>
+                                                <t t-if="o.visitor.id_proof_no"><p><strong>ID Proof: </strong></p></t>
+                                            </td>
+                                            <td width="55%">
+                                                <p style="padding-top:10px;" t-field="o.name"/>
+                                                <strong><p t-field="o.visitor"/></strong>
+                                                <p t-field="o.phone"/>
+                                                <t t-if="o.visitor.id_proof_no"><p t-field="o.visitor.id_proof"/><p t-field="o.visitor.id_proof_no"/></t>
+                                            </td>
+                                          </tr>
+                                          
+                                          
+                                        </tbody>
+                                      </table>
+
+                                      <table class="table table-hover" style="width:100%">
+                                        <tr>
+                                          <td width="30%" style="padding-left:10px;">
+                                              <p><strong>Meeting With: </strong></p>
+                                              <p><strong>Department: </strong></p>
+                                              <p><strong>Visit Purpose: </strong></p>
+                                          </td>
+                                          <td width="70%">
+                                              <p t-field="o.visiting_person"/>
+                                              <p t-field="o.department"/>
+                                              <p t-field="o.reason.name"/>
+                                          </td>
+                                        </tr>
+                                      </table>
+
+                                      <table > 
+
+                                          <tr class="font-8" style="color:black;">
+                                            <td style="padding-left:10px;padding-top:30px;">Visitor Sign</td>
+                                            <td style="padding-left:30px;">Attendee Sign</td>
+                                            <td style="padding-left:30px;">Security Sign</td>
+                                          </tr>
+                                      </table>
+                                    </div>
+                                    
+                                </center>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

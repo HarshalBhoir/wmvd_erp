@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_expense_automation_tree" model="ir.ui.view">
+	<field name="name">expense.automation.tree</field>
+	<field name="model">expense.automation</field>
+	<field name="arch" type="xml">
+		<tree>
+			<field name="name" />
+			<field name="user_id" />
+			<field name="start_date"/>
+			<field name="end_date"/>
+			<field name="state" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_expense_automation_form" model="ir.ui.view">
+	<field name="name">expense.automation.form</field>
+	<field name="model">expense.automation</field>
+	<field name="arch" type="xml">
+		<form>
+			<header>
+				<field name="state" widget="statusbar" statusbar_visible="draft,done,post"/>
+			</header>
+
+			<style>
+				.remove_sheet {
+					  min-width: 100%;
+					  max-width: 100%;
+					  margin: 0 auto;
+					}
+			</style>
+
+			
+			<sheet class="remove_sheet">
+				<!-- <h1><center>Expense Automation</center></h1><br/> -->
+				<div class="oe_title">
+					<h1><field name="name" states="done" readonly="1"/></h1>
+				</div>
+
+				<group col="12">
+					<label for="start_date" string="Date"/>
+					<div style="width: 307px;">
+						<field name="start_date" class="oe_inline"/> to <field name="end_date" class="oe_inline"/>
+					</div>
+					<field name="ad_org_id"  colspan="4" options="{'no_create': True, 'no_open': True}" 
+						required="1"  attrs="{'readonly':[('state','!=','draft')]}"/>
+					<field name="expense_state" required="1" colspan="4"  attrs="{'readonly':[('state','!=','draft')]}"/>
+				</group>
+
+				<group col="12">
+					<field name="user_id" options="{'no_create': True, 'no_open': True}"  required="1" 
+							colspan="4"  attrs="{'readonly':[('state','=','posted')]}"/>
+					<field name="user1_id" options="{'no_create': True, 'no_open': True}"  required="1" 
+							colspan="4"  attrs="{'readonly':[('state','=','posted')]}"/>
+					<field name="user2_id" options="{'no_create': True, 'no_open': True}"  required="1" 
+					 		colspan="4" attrs="{'readonly':[('state','=','posted')]}"/>
+				</group>
+				<group col="12">
+					<field name="dateacct"  colspan="4" invisible="0" />
+					<field name="dateordered2"  colspan="4" invisible="0" required="1"/>
+					<field name="dateordered3"  colspan="4" invisible="0" required="1" />
+				</group>
+				<field name="filter_rep_bool"  colspan="4" invisible="1" />
+				<field name="company_id"  colspan="4" invisible="1" />
+				<field name="c_elementvalue_id" options="{'no_create': True}"  colspan="4" 
+						 attrs="{'readonly':[('state','=','posted')]}"  invisible="1"/>
+				<field name="cnfromperiod"  colspan="4" invisible="1" required="0"/>
+				<field name="cntoperiod"  colspan="4" invisible="1" required="0" />
+
+			
+				<div  attrs="{'invisible':[('file_name','=',False)]}">
+					 <group>
+						<field name="hr_expense_data" colspan="4" invisible="1"/>
+						<field name="file_name" filename="hr_expense_data" colspan="4" readonly="1" attrs="{'invisible':[('file_name','=',False)]}"/>
+					</group>
+				</div>
+
+				<group col="4"  attrs="{'invisible':[('state','=','posted')]}">
+					<div attrs="{'invisible':[('state','=','posted')]}">
+						<center>
+							<!-- <div class="col-xs-1"/> -->
+							<button string="Search"  class="btn-primary col-xs-2"  name="action_expense_report" type="object" style="font-size: 16px;" />
+							<div class="col-xs-1"/>
+							<button name="select_all" type="object" string="Select All"   class="btn-primary col-xs-2"  style="font-size: 16px;" />
+							<div class="col-xs-1"/>
+							<button name="approve_all"  class="btn-primary col-xs-2"  string="Approve" type="object" style="font-size: 16px;" />
+							<!-- <div class="col-xs-1"/>
+							<button name="expense_automation_report" type="object" string="Generate Report"   class="btn-primary col-xs-2"   style="font-size: 16px;"/> -->
+							<div class="col-xs-1"/>
+							<button name="expense_automation_webservice" type="object" string="Push to ERP"   class="btn-primary col-xs-2"  style="font-size: 16px;" />
+						</center>
+					</div>
+				</group>
+		
+				<group  col="4" colspan="4" >
+					<field name="expense_automation_line_one2many"  nolabel="1" mode="tree"
+					attrs="{'readonly':[('state','=','posted')]}" />
+				</group>
+				
+			</sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" widget="mail_followers"/>
+				<field name="message_ids" widget="mail_thread"/>
+			</div>
+		</form>
+	</field>
+</record>
+
+
+
+
+<record id="view_expense_automation_line_tree" model="ir.ui.view">
+	<field name="name">expense.automation.line.tree</field>
+	<field name="model">expense.automation.line</field>
+	<field name="arch" type="xml">
+		<tree editable="bottom"  colors="green:approved_bool==True;blue:selection==True;brown:state=='post';red:total_amount&gt;grade_amount;">
+			<!-- create="false" -->
+			<button name="approve_expense" icon="fa fa-check" string="Approve" aria-hidden="true" type="object" style="color:green !important;" />
+			<field name="selection" string="" invisible="1"/>
+			<field name="documentno"  invisible="1"/>
+			<field name="id"  invisible="1"/>
+			<field name="employee_id" />
+			<field name="date" />
+			<field name="expense_name" />
+			<field name="meeting_date" />
+			<field name="expense_meeting_id" />
+			<field name="grade_amount" />
+			<field name="total_amount" sum="Total Amount" />
+			<field name="manager_id" />
+			<field name="grade_id" />
+			<field name="state" />
+			<field name="approved_bool" invisible="1" />
+			<field name="approval_status"  invisible="1" />
+			<field name="log" />
+		</tree>
+	</field>
+</record>
+
+<record id="view_expense_automation_line_form" model="ir.ui.view">
+	<field name="name">expense.automation.line.form</field>
+	<field name="model">expense.automation.line</field>
+	<field name="arch" type="xml">
+		<form string="Expense Lines">
+			<sheet>
+				<group>
+					<field name="expense_name"  options="{'no_create': True, 'no_open': True}"  />
+					<field name="expense_meeting_id"  options="{'no_create': True, 'no_open': True}" />
+					<field name="employee_id" string="Employee Name"  options="{'no_create': True, 'no_open': True}"  />
+					<field name="manager_id"  options="{'no_create': True, 'no_open': True}"  />
+					<field name="meeting_address" />
+				</group>
+				<group>
+					<group>
+						<field name="meeting_date" />
+						<field name="date" />
+						<field name="selection" string="" />
+						<field name="documentno" />
+						<button name="approve_expense" class="fa fa-check btn-primary" string="Approve" aria-hidden="true" type="object" style="color:green !important;" />
+					</group>
+					<group>
+						<field name="grade_amount" />
+						<field name="total_amount" />
+						<field name="grade_id" />
+						<field name="state" />
+						<field name="approved_bool" invisible="1" />
+						<field name="approval_status" />
+						<field name="log" />
+					</group>
+				</group>
+			</sheet>
+
+		</form>
+	</field>
+</record>
+
+
+
+<record id="action_expense_automation" model="ir.actions.act_window">
+	<field name="name">Expense Automation</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">expense.automation</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+</record>
+</odoo>

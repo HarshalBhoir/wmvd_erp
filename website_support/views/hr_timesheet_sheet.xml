@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_timesheet_sheet_extension_form" model="ir.ui.view">
+        <field name="name">hr.timesheet.sheet.form</field>
+        <field name="model">hr_timesheet_sheet.sheet</field>
+        <field name="inherit_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_form"/>
+        <field name="arch" type="xml">
+
+            <xpath
+               expr="//field[@name='timesheet_ids']/tree/field[@name='unit_amount']"
+               position="before">
+                <field name="status" required="1" />
+                <field name="time_start" widget="float_time"/>
+                <field name="time_stop" widget="float_time"/>
+            </xpath>
+            <xpath
+              expr="//field[@name='timesheet_ids']/form/group/field[@name='unit_amount']"
+              position="before">
+                <field name="status" required="1" />
+                <field name="time_start" widget="float_time"/>
+                <field name="time_stop" widget="float_time"/>
+            </xpath>
+
+            <xpath
+               expr="//field[@name='timesheet_ids']/tree/field[@name='project_id']"
+               position="after">
+                <field name="ticket_id" domain="[('user_id', '=', user_id),('status','!=','completed')]" />
+                <!-- <field name="kra_category_id" /> -->
+            </xpath>
+
+            <xpath
+              expr="//field[@name='timesheet_ids']/form/group/field[@name='project_id']"
+              position="after">
+                <field name="ticket_id" domain="[('user_id', '=', user_id),('status','!=','completed')]" />
+                <!-- <field name="kra_category_id" /> -->
+            </xpath>
+
+            <field name="company_id"  position="after"  >
+                <button string="Update Tickets" name="update_ticket" type="object"
+                 class="btn btn-sm oe_highlight fa fa-pencil-square"/>
+            </field>
+
+            <xpath
+               expr="//field[@name='timesheet_ids']/tree/field[@name='unit_amount']"
+               position="attributes">
+                <field name="ticket_id" domain="[('user_id', '=', user_id),('status','!=','completed')]" />
+                <!-- <field name="kra_category_id" /> -->
+            </xpath>
+
+            <field name="unit_amount" position="attributes">
+              <attribute name="required">1</attribute>
+            </field>
+
+        </field>
+    </record>
+</odoo>

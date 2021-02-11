@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_cir_report_form" model="ir.ui.view">
+            <field name="name">cir.report.form</field>
+            <field name="model">cir.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field invisible="1" name="state"/>
+                    <field name="name" invisible="1"/>
+                    <div states="choose">
+                        <group col="4" colspan="4">
+                            <field name="date_from" required="1"/>
+                            <field name="date_to" required="1"/>
+                        </group>
+                        <group>
+                            <field name="status" />
+                            <field name="user_ids" widget="many2many_tags"/>
+                        </group>
+                    </div>
+                    <div states="get">
+                        <group>
+                            <field name="export_file" invisible="1"/>
+                            <field name="report" filename="export_file" colspan="4"/>
+                        </group>
+                     </div>
+                    
+                    <footer states="choose">
+                        <button name="print_report" string="Print Report" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-default" special="cancel" />
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='action_cir_report'>
+            <field name="name">Export CIR Details in Excel</field>
+            <field name="res_model">cir.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_cir_report_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

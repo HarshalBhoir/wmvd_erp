@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <data>
+            <record id="retailer_action_dashboard" model="ir.actions.client">
+                <field name="name">Dashboard</field>
+                <field name="tag">retailer_dashboard</field>
+            </record>
+
+            <record id="meeting_action_dashboard" model="ir.actions.client">
+                <field name="name">Dashboard</field>
+                <field name="tag">meetings_dashboard</field>
+            </record>
+
+            <record id="mdm_action_dashboard" model="ir.actions.client">
+                <field name="name">MDM Dashboard</field>
+                <field name="tag">mdm_dashboard</field>
+            </record>
+
+            <record id="masters_action_dashboard" model="ir.actions.client">
+                <field name="name">Masters Dashboard</field>
+                <field name="tag">masters_dashboard</field>
+            </record>
+
+            <record id="scan_action_dashboard" model="ir.actions.client">
+                <field name="name">Dashboard</field>
+                <field name="tag">scan_dashboard</field>
+            </record>
+
+        </data>
+
+
+        <template id="assets_backend" name="sales_meet assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+        		<link rel="stylesheet" href="/sales_meet/static/src/css/cssfile.css"/>
+
+                <!-- <link rel="stylesheet" type="text/css" href="/sales_meet/static/src/css/fx_side_bar.css"/> -->
+                <!-- <link rel="stylesheet" href="/sales_meet/static/src/css/meetings_dashboard.css"/> -->
+
+                <script type="text/javascript" src="/sales_meet/static/src/js/geolocation.js"></script>
+                <script type="text/javascript" src="/sales_meet/static/src/js/retailer_dashboard.js"/>
+                <script type="text/javascript" src="/sales_meet/static/src/js/meetings_dashboard.js"/>
+                <script type="text/javascript" src="/sales_meet/static/src/js/mdm_dashboard.js"/>
+                <script type="text/javascript" src="/sales_meet/static/src/js/masters_dashboard.js"/>
+                <script type="text/javascript" src="/sales_meet/static/src/js/scan_dashboard.js"/>
+
+                <!-- <script type="application/javascript" src="/sales_meet/static/src/js/fx_user_systray_menu.js"/> 
+                <script type="application/javascript" src="/sales_meet/static/src/js/stock_mobile_barcode.js"/> -->
+
+                <!-- <script type="text/javascript" src="/sales_meet/static/src/js/header.js"></script> -->
+                <script type="text/javascript" src="/sales_meet/static/src/js/service_worker_initiate.js"></script>
+
+
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>
+
+
+                <!-- <script type="text/javascript" src="/sales_meet/static/src/js/meetings_dashboard.js"/> -->
+
+                <link rel="apple-touch-icon" sizes="57x57" href="/sales_meet/static/src/img/icon/apple-icon-57x57.png"/>
+                <link rel="apple-touch-icon" sizes="60x60" href="/sales_meet/static/src/img/icon/apple-icon-60x60.png"/>
+                <link rel="apple-touch-icon" sizes="72x72" href="/sales_meet/static/src/img/icon/apple-icon-72x72.png"/>
+                <link rel="apple-touch-icon" sizes="76x76" href="/sales_meet/static/src/img/icon/apple-icon-76x76.png"/>
+                <link rel="apple-touch-icon" sizes="114x114" href="/sales_meet/static/src/img/icon/apple-icon-114x114.png"/>
+                <link rel="apple-touch-icon" sizes="120x120" href="/sales_meet/static/src/img/icon/apple-icon-120x120.png"/>
+                <link rel="apple-touch-icon" sizes="144x144" href="/sales_meet/static/src/img/icon/apple-icon-144x144.png"/>
+                <link rel="apple-touch-icon" sizes="152x152" href="/sales_meet/static/src/img/icon/apple-icon-152x152.png"/>
+                <link rel="apple-touch-icon" sizes="180x180" href="/sales_meet/static/src/img/icon/apple-icon-180x180.png"/>
+                <link rel="icon" type="image/png" sizes="512x512" href="/sales_meet/static/src/img/icon/android-chrome-512x512.png"/>
+                <link rel="icon" type="image/png" sizes="192x192"  href="/sales_meet/static/src/img/icon/android-icon-192x192.png"/>
+                <link rel="icon" type="image/png" sizes="32x32" href="/sales_meet/static/src/img/icon/favicon-32x32.png"/>
+                <link rel="icon" type="image/png" sizes="96x96" href="/sales_meet/static/src/img/icon/favicon-96x96.png"/>
+                <link rel="icon" type="image/png" sizes="16x16" href="/sales_meet/static/src/img/icon/favicon-16x16.png"/>
+                <link rel="manifest" href="/sales_meet/static/src/img/icon/manifest.json"/>
+                <meta name="msapplication-TileColor" content="#ffffff"/>
+                <meta name="msapplication-TileImage" content="/ms-icon-144x144.png"/>
+                <meta name="theme-color" content="#ffffff"/>
+
+
+            </xpath>
+        </template>
+		
+</odoo>

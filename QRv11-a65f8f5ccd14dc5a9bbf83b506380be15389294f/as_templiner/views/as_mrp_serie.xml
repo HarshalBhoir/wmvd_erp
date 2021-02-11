@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!-- <record id="as_mrp_production_form" model="ir.ui.view">
+            <field name="name">as_mrp.production_form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                    <field name="final_product_lot" />
+                </xpath>
+
+            </field>
+        </record> -->
+        <record id="view_move_form_serie" model="ir.ui.view">
+            <field name="name">stock.production.lot.inherit.form</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="origin" />
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <report 
+        id="as_materia_series_qweb_pdf" 
+        model="stock.production.lot" 
+        string="Etiqueta QR"
+        name="as_templiner.label_series_qr_view_pdf" 
+        file="as_templiner.label_series_qr_view_pdf"
+        report_type="qweb-pdf" 
+        menu="True" 
+        />
+        <record id="as_materia_prima_package" model="report.paperformat">
+                <field name="name">Impresion Eqtiquetas Series</field>
+                <field name="default" eval="True" />
+                <field name="format">custom</field>
+                <field name="page_height">50</field>  
+                <field name="page_width">100</field>
+                <field name="margin_top">2</field>
+                <field name="margin_bottom">2</field>
+                <field name="margin_left">2</field>
+                <field name="margin_right">2</field>
+                <field name="orientation">Landscape</field>
+                <field name="header_spacing">2</field>
+                <field name="header_line" eval="False" />
+                <field name="report_ids" eval="[(4, ref('as_templiner.as_materia_series_qweb_pdf'))]" />
+        </record>
+
+
+
+</odoo>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+
+       
+<record id="view_bank_payment_icici_form" model="ir.ui.view">
+    <field name="name">bank.payment.form</field>
+    <field name="model">bank.payment</field>
+    <field name="arch" type="xml">
+        <form>
+            <header><field name="state" widget="statusbar"/></header>
+            <sheet>
+                <h2><field name="name" attrs="{'invisible':[('state','=','draft')],'readonly':[('state','!=','draft')]}"/></h2>
+                <group>
+                    <group>
+                        <field name="transaction_type" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="date"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="delegate_user_id" invisible="0"  widget="many2many_tags"  attrs="{'invisible':[('state','=','draft')]}"/>
+                    </group>
+                    <group>
+                        <field name="user_id"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="company_id"  attrs="{'readonly':[('state','!=','draft')]}" />
+                        <button name="delegate_user" string="Delegate" type="object" class="btn-primary col-xs-2" style="font-size: 16px;width: 100px;"  
+                            attrs="{'invisible':[('state','=','draft')]}" />
+                    </group>
+                </group>
+                
+          
+                <group col="4" colspan="2"  >
+                    <div class="col-xs-12" style="margin-top:5%;">
+                        <center>
+                            <div class="col-xs-1"/>
+                            <button name="sync_invoices" string="Sync Due Invoice" type="object" class="btn-primary col-xs-2" 
+                                style="font-size: 16px;" attrs="{'invisible':[('state','in',('generated_invoice','submitted_to_manager'))]}" />
+
+                            <div class="col-xs-1"/>
+                            <button name="submit_manager" string="Submit to Manager" type="object"  class="btn-primary col-xs-2"
+                             style="font-size: 16px;" states='generated_invoice' />
+
+                            <div class="col-xs-1"/>
+                            <button name="sync_payments" string="Sync Payments" type="object" class="btn-primary col-xs-2"
+                             style="font-size: 16px;" attrs="{'invisible':[('state','in',('generated_payment','submitted_to_bank'))]}"/>
+
+                            <div class="col-xs-1"/>
+                            <button name="update_to_bank" string="Update To Bank" type="object" class="btn-primary col-xs-2"
+                              style="font-size: 16px;" states='generated_payment'/>
+                        </center>
+                    </div>
+                </group>
+
+
+
+                 <notebook>
+                        <page string="Due Invoices" name="components" attrs="{'invisible':[('state','not in',('generated_invoice','submitted_to_manager'))]}" >
+                           <group col="4" colspan="4" >
+                                <field name="invoice_lines_one2many" 
+                                       string="Invoices" nolabel="1" >
+                                    <tree create="false" editable='bottom' colors="red:state=='rejected';green:state=='approved';purple:state=='hold';">
+                                        <field name="check_invoice" invisible="1"/>
+                                         <button name="approve_invoice" icon="fa fa-check" string="Approve" aria-hidden="true" type="object" style="color:green !important;"
+                                             attrs="{'invisible':[('state','=','generated_payment')]}"/>
+                                         <!-- <button name="reject_invoice" icon="fa fa-remove" string="Reject" aria-hidden="true" type="object" style="color:red !important;"/> -->
+
+
+                                         <button name="%(sales_meet.wizard_reject_act)d"  icon="fa fa-pause" string="Hold" type="action" 
+                                            aria-hidden="true" />
+
+
+                                        <field name="name"  invisible="1"/>
+                                        <field name="invoice_id" invisible="1"/>
+                                        <field name="documentno"/>
+                                        <field name="beneficiary_name"/>
+                                        <field name="transaction_amount"/>
+                                        <field name="description"/>
+                                        <field name="payment_term"  invisible="1"/>
+                                        <field name="transaction_type" invisible="1"/>
+                                        <field name="beneficiary_code"  invisible="1"/>
+                                        <field name="beneficiary_account_number"  invisible="1"/>                                    
+                                        <field name="customer_reference_number"  invisible="1"/>
+                                        <field name="value_date"/>
+                                        <field name="owner"  invisible="0"/>
+                                        <field name="ifsc_code"  invisible="1"/>
+                                        <field name="beneficiary_email_id"  invisible="1"/>
+                                        <field name="owner_email" invisible="0"/>
+                                        <field name="user_id"/>
+                                        <field name="create_uid"  invisible="1"/>
+                                        <field name="state"  invisible="1"/>
+                                        <field name="delegate_user_id" invisible="0"  widget="many2many_tags" />
+                                        <field name="delay_date"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+
+                        <page string="Payment Details" name="components"  attrs="{'invisible':[('state','not in',('generated_payment','submitted_to_bank'))]}">
+                           <group col="4" colspan="4" >
+                                <field name="payment_lines_one2many" 
+                                       string="Payments" nolabel="1"  >
+                                    <tree create="false" editable='bottom'>
+                                        <field name="check_invoice"/>
+                                        <field name="transaction_type"  invisible="0"/>
+                                        <field name="beneficiary_code"  invisible="1"/>
+                                        <field name="beneficiary_account_number"/>
+                                        <field name="transaction_amount"/>
+                                        <field name="beneficiary_name"/>
+                                        <field name="customer_reference_number" invisible="1"/>
+                                        <field name="value_date"/>
+                                        <field name="ifsc_code"/>
+                                        <field name="beneficiary_email_id"/>
+                                        <!-- <field name="documentno"/> -->
+                                        <field name="description"/>
+                                        <field name="bank_name"/>
+                                        <field name="name"  invisible="1"/>
+                                        <field name="payment_id" invisible="1"/>
+                                        <field name="owner" invisible="1"/>
+                                        <field name="owner_email"  invisible="1" />
+                                        <field name="payment_term"  invisible="1"/>
+                                        <field name="user_id" invisible="1"/>
+
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook> 
+
+                <field name="note" placeholder="Note .." />
+
+             </sheet>
+
+             <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+              </div>
+        </form>
+    </field>
+</record>
+
+
+    <record id="action_payment_bank_icici" model="ir.actions.act_window">
+        <field name="name">Payment to ICICI</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bank.payment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.actions.act_window.view" id="action_payment_bank_icici_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_bank_payment_tree"/>
+        <field name="act_window_id" ref="action_payment_bank_icici"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_payment_bank_icici_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_bank_payment_icici_form"/>
+        <field name="act_window_id" ref="action_payment_bank_icici"/>
+    </record>
+           
+  </data>
+</openerp>

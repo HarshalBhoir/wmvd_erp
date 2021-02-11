@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for asset move -->
+        <record id="seq_sale_order" model="ir.sequence">
+            <field name="name">Asset Move</field>
+            <field name="code">bt.asset.move</field>
+            <field name="prefix">MOV </field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_wp_asset_payment" model="ir.sequence">
+            <field name="name">Asset Payment</field>
+            <field name="code">wp.asset.payment</field>
+            <field name="prefix">PMT/%(range_year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+            <field name="use_date_range">True</field>
+        </record>
+
+        <record id="seq_bt_asset_surveillance" model="ir.sequence">
+            <field name="name">Surveillance Asset</field>
+            <field name="code">bt.asset.surveillance</field>
+            <field name="prefix">SRV/%(range_year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+            <field name="use_date_range">True</field>
+        </record>
+
+        <record id="seq_bt_asset_allocation" model="ir.sequence">
+            <field name="name">Allocation Asset</field>
+            <field name="code">bt.asset.allocation</field>
+            <field name="prefix">ALO/%(range_year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+            <field name="use_date_range">True</field>
+        </record>
+
+    </data>
+</odoo>

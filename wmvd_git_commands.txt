@@ -1,0 +1,8 @@
+git init
+git add .
+git commit -m "adding files". -m
+git commit -m "adding files"
+git remote add origin https://github.com/HarshalBhoir/siddhivinayak_erp.git
+git push -u origin master
+history > history_git_3feb2021.txt
+

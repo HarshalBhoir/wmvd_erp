@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+
+{
+    'name': 'HR Holidays Usability',
+    'version': '10.0.1.0.0',
+    'category': 'Human Resources',
+    'sequence': 1,
+    'license': 'AGPL-3',
+    'summary': 'Better usability for the management of holidays',
+    'author': 'Harshal Bhoir (Walplast)',
+    'website': 'https://harshalbhoir.github.io/',
+    'depends': ['hr_holidays'],
+    'data': [
+        'security/holiday_security.xml',
+        'security/ir.model.access.csv',
+        'report/hr_holidays_employee_counter_view.xml',
+        'views/hr_holidays_view.xml',
+        'views/hr_holidays_mail.xml',
+        'views/base_config_settings_view.xml',
+        'views/hr_employee_view.xml',
+        'views/hr_holidays_cancel_view.xml',
+        'views/hr_policies_view.xml',
+        'views/hr_public_holidays_view.xml',
+        # 'wizards/public_holidays_next_year_wizard.xml',
+        'wizard/hr_holidays_mass_allocation_view.xml',
+        'wizard/scheduler_data.xml',
+        'wizard/hr_holidays_to_payslip_view.xml',
+        ],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+}

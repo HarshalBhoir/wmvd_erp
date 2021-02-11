@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<odoo>
+	<record id="view_partner_form_inherit_website_module" model="ir.ui.view">
+		<field name="name">res.partner.support.ticket.buttons</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="purchase.view_partner_property_form"/>
+		<field name="priority" eval="60"/>
+		<field name="arch" type="xml">
+			<xpath expr="//div[@name='button_box']" position="inside">
+				<button class="oe_inline oe_stat_button" type="action" name="%(website_support_ticket_action_partner)d" 
+					context="{'search_default_partner_id': active_id}"
+					icon="fa-ticket">
+					<field name="support_ticket_string" string="Support Tickets" widget="statinfo"/>
+				</button>
+			</xpath>
+			<notebook position="inside">
+				<page string="Support Ticket" groups="base.group_no_one" >
+					<group>
+						<field name="stp_ids"/>
+					</group>
+				</page>
+				<page name='vendor_evaluation' string="Vendor Evaluation"
+					attrs="{'invisible': [('it_supplier','=',False)]}">
+				   <group col='12'>
+						<group  colspan='6'>
+							
+							<br/><br/><br/><br/>
+							 <h3>RATING SYSTEM </h3>		
+							 <ul style='padding-left: 0px;'>
+							  <li>1 = POOR</li>
+							  <li>2 = SATISFACTORY</li>
+							  <li>3 = GOOD</li>
+							  <li>4  = EXCELLENT</li>
+							</ul>
+							<br/><br/><br/><br/>
+
+							<field name="total_eval" sum='Total'/>
+						</group>
+					   <group  colspan='6'>
+							<field name="quality_factor" string='Quality Of The Product / Workmanship'/>
+							<field name="competetive_factor" string='Price Competetiveness'/>
+							<field name="time_factor" string='Timly Delivery Of Product'/>
+							<field name="service_factor" string='After Sales Service'/>
+						</group>
+						
+					</group>
+
+				</page>
+			</notebook>
+			<field name="property_purchase_currency_id" position='after'>
+				<field name="it_supplier"/>
+				<field name="partner_type"/>
+			</field>
+
+			<button name="toggle_active"  position="after"  >
+				<button name="get_attached_assets" class="oe_stat_button"
+						type="object" icon="fa-cogs" invisible="0">
+						<field string="Assets" name="attach_asset_count" widget="statinfo" />
+				</button>
+			</button>
+			
+		</field>
+   </record>
+
+
+	<record id="wp_partner_type_tree" model="ir.ui.view">
+		<field name="name">partner.type.tree</field>
+		<field name="model">partner.type</field>
+		<field name="arch" type="xml">
+			<tree string="Type">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>  
+
+	<record id="wp_partner_type_form" model="ir.ui.view">
+		<field name="name">partner.type.form</field>
+		<field name="model">partner.type</field>
+		<field name="arch" type="xml">
+			<form string="Type">
+				<field name="name"/>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_wp_partner_type" model="ir.actions.act_window">
+		<field name="name">Vendor Type</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">partner.type</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+
+	<record id="res_partner_kanban_extension_view" model="ir.ui.view">
+		<field name="name">res.partner.kanban</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.res_partner_kanban_view"/>
+		<field name="priority" eval="60"/>
+		<field name="arch" type="xml">
+			<xpath expr="//div[3]" position="inside">
+				<div class="o_kanban_record_bottom" attrs="{'invisible': [('it_supplier','=',False)]}">
+					<div class="oe_kanban_bottom_left">Type:</div>
+					<div ><b style="padding-left: 10px;">
+						<field name="partner_type"/>
+						<field name="it_supplier" invisible="1"/>
+					</b></div>
+				</div>
+			</xpath>
+			
+			
+		</field>
+   </record>
+
+   	<record id="action_partner_supplier_form_extension" model="ir.actions.act_window">
+		<field name="name">Vendors</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('it_supplier', '=', 1)]</field>
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="filter" eval="True"/>
+	</record>
+
+</odoo>

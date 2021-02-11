@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_visitor_label">
+            <style type="text/css">
+                body{
+                    width: 302.362px!important;height: 415.748px!important;
+                }
+                p{
+                  margin-bottom: 0.2em;
+                }
+
+                .font-6{
+                  font-size: 0.4em;
+                }
+
+                .font-8{
+                  font-size: 0.9em;
+                }
+              </style>
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t>
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <div class="row">
+                                <!-- <div class="col-xs-2" style="margin:auto;">
+                                </div> -->
+                                <center>
+                                    <div class="container" >
+                                      <!-- style="width: 302.362px!important;height: 415.748px!important;display: block;overflow: hidden;max-height: 415.748px!important;" -->
+                                      <table style="width:100%"> 
+
+                                          <tr class="font-8" style="color:black;">
+                                            <td width="30%" >
+                                              <!-- <img style="display: inline;width:70px;margin-top: 10px;" src="/sales_meet/static/description/drychem_logo.png" alt="logo" /> -->
+                                              <img t-if="o.visitor.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.visitor.company_id.logo" height="80" border="1" width="80"/>
+                                            </td>
+                                            <td width="70%"><p t-field="o.visitor.company_id.name"/></td>
+                                            <!-- <td >Security Sign</td> -->
+                                          </tr>
+                                      </table>
+                                      <!-- <img style="display: inline;width:70px;margin-top: 10px;" src="/sales_meet/static/description/drychem_logo.png" alt="logo" /> -->
+                                          <!-- <h2 style="display: inline;vertical-align: 5px;font-size: 1.0em;font-weight: bolder;">Drychem Solutions Pvt. Ltd.</h2>
+                                          <h2 style="margin-top: -30px;font-size: 1.0em;font-weight: bolder;">Mahape</h2>  -->
+                                          <strong><h1 style="font-size: 1.5em;">Gate Pass</h1></strong>
+                                          <p style="text-align:center;">
+                                              <strong><span style="font-size: 1.2em;" t-field="o.check_in_date"/></strong>
+                                          </p>
+                                      <table class="table table-hover" style="width:100%">                                        
+                                        <tbody>
+                                          <tr>
+                                            <td width="30%" >
+                                              <!-- <img class="card-img-top" src="/sales_meet/static/description/img_avatar3.png" alt="Card image" style="width:100%"/> -->
+                                              <img t-if="o.visitor.visitor_image" t-att-src="'data:image/png;base64,%s' % o.visitor.visitor_image" height="80" border="1" width="80"/>
+                                            </td>
+
+                                            <td width="30%">
+                                                <p style="padding-top:10px;"><strong>Visitor ID : </strong></p>
+                                                <p ><strong>Name : </strong></p>
+                                                <p><strong>Phone : </strong></p>
+                                                <t t-if="o.email"><p><strong>Email : </strong></p></t>
+                                            </td>
+                                            <td width="40%">
+                                                <p style="padding-top:10px;" t-field="o.name"/>
+                                                <strong><p t-field="o.visitor"/></strong>
+                                                <p t-field="o.phone"/>
+                                                <t t-if="o.email"><p t-field="o.email"/></t>
+                                            </td>
+                                          </tr>
+                                          
+                                          
+                                        </tbody>
+                                      </table>
+
+                                      <table class="table table-hover" style="width:100%">
+                                        <tr>
+                                          <td width="30%" style="padding-left:10px;">
+                                              <p><strong>Meeting With: </strong></p>
+                                              <p><strong>Department: </strong></p>
+                                              <p><strong>Visit Purpose: </strong></p>
+                                          </td>
+                                          <td width="70%">
+                                              <p t-field="o.visiting_person"/>
+                                              <p t-field="o.department"/>
+                                              <p t-field="o.reason.name"/>
+                                          </td>
+                                        </tr>
+                                      </table>
+
+                                      <table > 
+
+                                          <tr class="font-8" style="color:black;">
+                                            <td style="padding-left:10px;padding-top:30px;">Visitor Sign</td>
+                                            <td style="padding-left:30px;">Attendee Sign</td>
+                                            <td style="padding-left:30px;">Security Sign</td>
+                                          </tr>
+                                      </table>
+                                    </div>
+                                    
+                                </center>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

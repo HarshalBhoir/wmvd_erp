@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	
+		<record id="hr_attendance_view_form_extension" model="ir.ui.view">
+            <field name="name">hr.attendance.form</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form" />
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+
+                <field name="check_out" position="after"  >
+                   <field name="attendance_status"/>
+                   <field name="meeting_count"/>
+                   <field name="hours_completed"/>
+                </field>
+
+            </field>
+        </record>
+
+
+        <record id="view_attendance_tree_extension" model="ir.ui.view">
+            <field name="name">hr.attendance.tree</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_tree" />
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+
+                <field name="check_out" position="after"  >
+                   <field name="attendance_status"/>
+                   <field name="meeting_count"/>
+                   <field name="hours_completed"/>
+                </field>
+
+            </field>
+        </record>
+
+</odoo>
+        
+        

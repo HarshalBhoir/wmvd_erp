@@ -1,0 +1,461 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    This module uses OpenERP, Open Source Management Solution Framework.
+#    Copyright (C) 2014-Today BrowseInfo (<http://www.browseinfo.in>)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>
+#
+##############################################################################
+from odoo.tools.translate import _
+from datetime import datetime, timedelta, date , time
+from dateutil.relativedelta import relativedelta
+from odoo import tools, api
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT , DEFAULT_SERVER_DATETIME_FORMAT
+from odoo import api, fields, models, _
+import logging
+from odoo.osv import  osv
+from odoo import SUPERUSER_ID
+from time import gmtime, strftime
+from openerp.exceptions import UserError , ValidationError
+import requests
+import urllib
+import simplejson
+
+import shutil
+import os
+import time
+import psycopg2
+import urllib
+import tarfile
+
+
+
+class res_partner_extension(models.Model):
+    _inherit = "res.partner"
+
+    @api.depends('is_company')
+    def _compute_company_type(self):
+        for partner in self:
+            partner.company_type = 'company' if partner.is_company else 'person'
+
+    bp_code = fields.Char('Partner Code')
+    c_bpartner_id = fields.Char('Idempiere ID')
+    c_location_id = fields.Char('Location ID')
+    c_bpartner_location_id = fields.Char('Address ID')
+    partner_group_id = fields.Many2one("res.partner.group", string="Partner Group")
+    pan_no = fields.Char('Pan No')
+    taxid = fields.Char('Tax ID')
+    aadhar_no = fields.Char('Aadhar No')
+    tin_no = fields.Char('Tin No')
+    vat_no = fields.Char('Vat No')
+    cst_no = fields.Char('Cst No')
+    gst_no = fields.Char('Gst No')
+    state =fields.Selection([('draft', 'Draft'),
+                               ('created', 'Created'),
+                               ('updated', 'Updated')],
+                              'State', default='draft',
+                              track_visibility='onchange')
+
+    creditstatus=fields.Selection([
+        ('H', 'Credit Hold'),
+        ('O', 'Credit OK'),
+        ('S', 'Credit Stop'),
+        ('W', 'Credit Watch'),
+        ('X', 'No Credit Check')],'Credit Status', track_visibility='onchange')
+    so_creditlimit=fields.Float(string="Credit limit" )
+    totalopenbalance=fields.Float(string="Open Balance" )
+    contact_name = fields.Char('Contact Name')
+
+    bank_name = fields.Char('Bank Name')
+    account_no = fields.Char('Account No')
+    ifsc_code = fields.Char('IFSC Code')
+    branch_name = fields.Char('Branch Name')
+    cheque_no = fields.Char('Blank Cheque No')
+    contact_name = fields.Char('Contact Name')
+    address = fields.Char('Bank Address')
+    bank_country = fields.Many2one("res.country", string='Country')
+    district_id = fields.Many2one("res.state.district", string='District')
+
+    @api.multi
+    def create_idempiere_partner(self):        
+        conn_pg = None
+        config_id = self.env['external.db.configuration'].sudo().search([('id','=',1)])
+        if config_id:
+            try:
+
+
+                print "#-------------Select --TRY----------------------#"
+                conn_pg = psycopg2.connect(dbname= config_id.database_name, user=config_id.username, password=config_id.password, host= config_id.ip_address)
+                pg_cursor = conn_pg.cursor()
+
+                state_code = self.state_id.code
+
+                pg_cursor.execute("select value FROM c_bpartner where value ilike '"+state_code+"%' order by value desc limit 1")
+                bp_code_check2 = pg_cursor.fetchall()
+                bp_code_check3 = str(bp_code_check2[0][0])
+                self.bp_code = state_code + str(int(([x.strip() for x in bp_code_check3.split('.')][0]).strip(state_code)) + 1)
+
+
+                print " --------------------------- Customer ----------------------------------------------"
+                if self.bp_code:
+
+                    pg_cursor.execute("select c_bpartner_id FROM c_bpartner where value = '%s'" %(self.bp_code.encode("utf-8")))
+                    bp_code_check = pg_cursor.fetchall()
+
+                    if  len(bp_code_check) != 0:
+                        raise UserError("Partner Code already exists. Kindly change the partner code and update")
+
+                pg_cursor.execute("select MAX(c_bpartner_id)+1 FROM c_bpartner ")
+                c_bpartner_id2 = pg_cursor.fetchall()
+                c_bpartner_id3 = str(c_bpartner_id2[0][0])
+                c_bpartner_id = int([x.strip() for x in c_bpartner_id3.split('.')][0])
+
+                pg_cursor.execute("Insert INTO c_bpartner(c_bpartner_id,name,name2,ad_client_id,ad_org_id,value,c_bp_group_id,IsCustomer,socreditstatus,\
+                                so_creditlimit,taxid,Cst_Tax_No,TinNo,GST_Tax,Pan_No,createdby,updatedby,SalesRep_ID,C_PaymentTerm_ID)\
+                                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",\
+                                (c_bpartner_id,self.name,
+                                self.name,int(self.company_id.ad_client_id),0,self.bp_code,
+                                int(self.partner_group_id.c_bp_group_id),'Y',self.creditstatus,self.so_creditlimit,
+                                self.taxid or '', self.cst_no or '',self.tin_no or '',
+                                self.gst_no, self.pan_no,int(self.env.user.ad_user_id),int(self.env.user.ad_user_id),int(self.user_id.ad_user_id)
+                                ,int(self.property_payment_term_id.c_paymentterm_id)))
+                 # commit the changes to the database
+                conn_pg.commit()
+                self.c_bpartner_id = c_bpartner_id
+
+
+                print " --------------------------- Location ----------------------------------------------"
+
+                pg_cursor.execute("Select MAX(c_location_id)+1 FROM c_location")
+                c_bpartneraddress_id2 = pg_cursor.fetchall()
+                c_bpartneraddress_id3 = str(c_bpartneraddress_id2[0][0])
+                c_bpartneraddress_id = int([x.strip() for x in c_bpartneraddress_id3.split('.')][0])
+
+                pg_cursor.execute('Insert into c_location(c_location_id,ad_client_id,ad_org_id,isactive,createdby,updatedby,address1,address2,address3,\
+                 postal,c_country_id,c_region_id,regionname,isvalid,c_city_id,city)  VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',\
+                 (c_bpartneraddress_id,int(self.company_id.ad_client_id),0,'Y',int(self.user_id.ad_user_id),int(self.user_id.ad_user_id), 
+                    self.street or '', self.street2 or '', self.city or '', self.zip or '',
+                    int(self.country_id.c_country_id),int(self.state_id.c_region_id), self.state_id.name,'N' ,int(self.district_id.c_city_id),self.district_id.name))
+                 # commit the changes to the database
+                conn_pg.commit()
+                self.c_location_id = c_bpartneraddress_id
+
+                print " --------------------------- Adresss ---------------------------------------------- "
+
+
+                pg_cursor.execute("Select MAX(c_bpartner_location_id)+1 FROM c_bpartner_location")
+                c_bpartnerlocation_id2 = pg_cursor.fetchall()
+                c_bpartnerlocation_id3 = str(c_bpartnerlocation_id2[0][0])
+                c_bpartnerlocation_id = int([x.strip() for x in c_bpartnerlocation_id3.split('.')][0])
+
+                pg_cursor.execute('Insert into C_BPartner_Location(c_bpartner_location_id,c_location_id,c_bpartner_id,ad_client_id,ad_org_id,createdby,\
+                    updatedby,isbillto,isactive,isshipto,ispayfrom,isremitto,phone,phone2,email,name) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',\
+                    (c_bpartnerlocation_id,c_bpartneraddress_id,c_bpartner_id,int(self.company_id.ad_client_id),0,int(self.user_id.ad_user_id),
+                        int(self.user_id.ad_user_id),'Y','Y','Y','Y','Y',self.phone or '',self.mobile or '', self.email or '',
+                         self.city or ''))
+                 # commit the changes to the database
+                conn_pg.commit()
+                self.c_bpartner_location_id = c_bpartnerlocation_id
+
+                print "ooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+
+                if self.contact_name:
+                    pg_cursor.execute("Select MAX(AD_User_ID)+1 FROM AD_User")
+                    AD_User_ID2 = pg_cursor.fetchall()
+                    AD_User_ID3 = str(AD_User_ID2[0][0])
+                    ad_user_id = int([x.strip() for x in AD_User_ID3.split('.')][0])
+
+                    contact_value = ((self.contact_name)[0] + self.contact_name.split(' ')[1]).lower()
+                    print "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , contact_value
+
+                    pg_cursor.execute('Insert into AD_User(ad_user_id,ad_client_id,ad_org_id,isactive,createdby,updatedby,name,c_bpartner_id,processing,\
+                        notificationtype,isfullbpaccess,isinpayroll,islocked,isnopasswordreset,isexpired,issaleslead,issmssubscription,iserpuser,iscrm,\
+                        isaddmailtextautomatically,salesrep_id,value) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',\
+                        (ad_user_id,int(self.company_id.ad_client_id),0,'Y',int(self.user_id.ad_user_id),int(self.user_id.ad_user_id),
+                            self.contact_name,c_bpartner_id,'N','E','Y','N','N','N','N','N','N','N','N','N',int(self.user_id.ad_user_id),contact_value))
+                     # commit the changes to the database
+                    conn_pg.commit()
+                    # self.c_bpartner_location_id = c_bpartnerlocation_id
+
+                # if self.account_no:
+                #     pg_cursor.execute("Select MAX(C_BP_BankAccount_ID)+1 FROM C_BP_BankAccount")
+                #     C_BP_BankAccount_ID2 = pg_cursor.fetchall()
+                #     C_BP_BankAccount_ID3 = str(C_BP_BankAccount_ID2[0][0])
+                #     c_bp_bankaccount_id = int([x.strip() for x in C_BP_BankAccount_ID3.split('.')][0])
+
+                #     pg_cursor.execute('Insert into C_BPartner_Location(c_bp_bankaccount_id,ad_client_id,ad_org_id,isactive,createdby,updatedby,\
+                #         c_bpartner_id,isach,bankaccounttype,a_name,a_street,a_city,a_state,a_ident_dl,a_ident_ssn,a_country,ad_user_id,bpbankacctuse,a_zip)\
+                #          VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',\
+                #         (c_bp_bankaccount_id,int(self.company_id.ad_client_id),0,'Y',int(self.user_id.ad_user_id),int(self.user_id.ad_user_id),
+                #             c_bpartner_id,'N','C',self.bank_name,self.address,self.account_no,self.ifsc_code,self.branch_name,self.aadhar_no,
+                #             self.bank_country.name,int(self.user_id.ad_user_id),'B',self.cheque_no))
+
+                #      # commit the changes to the database
+                #     conn_pg.commit()
+
+
+                self.state = 'created'
+                
+                # close communication with the database
+                pg_cursor.close()
+
+
+
+            except psycopg2.DatabaseError, e:
+                if conn_pg:
+                    print "#-------------------Except----------------------#"
+                    conn_pg.rollback()
+
+                print 'Error %s' % e    
+
+            finally:
+                if conn_pg:
+                    print "#--------------Select ----Finally----------------------#"
+                    conn_pg.close()
+
+        else:
+            raise UserError("DB Configuration not found.")
+    
+    # @api.multi
+    # def update_idempiere_partner(self):
+    #     print "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        
+    #     conn_pg = None
+    #     print "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[["
+    #     config_id = self.env['external.db.configuration'].sudo().search([('id','=',2)])
+    #     if config_id:
+    #         print "#-------------Select --TRY----------------------#"
+    #         try:
+    #             conn_pg = psycopg2.connect(dbname= config_id.database_name, user=config_id.username, password=config_id.password, host= config_id.ip_address)
+    #             pg_cursor = conn_pg.cursor()
+
+    #             if self.c_bpartner_id:
+
+    #                 if self.c_bpartner_id or self.name,
+    #                             self.name,int(self.company_id.ad_client_id),0,self.bp_code,
+    #                             int(self.partner_group_id.c_bp_group_id),'Y',self.creditstatus,self.so_creditlimit,
+    #                             self.taxid or '', self.cst_no or '',self.tin_no or '',
+    #                             self.gst_no, self.pan_no,int(self.env.user.ad_user_id),int(self.env.user.ad_user_id),int(self.user_id.ad_user_id)
+    #                             ,int(self.property_payment_term_id.c_paymentterm_id)
+
+
+
+
+
+    #                 pg_cursor.execute("update vendors SET vendor_name = %s WHERE vendor_id = %s")
+    #                 updated_rows = pg_cursor.rowcount
+    #                 # Commit the changes to the database
+    #                 conn_pg.commit()
+
+
+                
+                
+                
+
+    #             print "ooooooooooooooooooooooooooooooooooooooooooooooooooooooo" , records
+
+
+
+    #             self.state = 'updated'
+    #             self.c_bpartner_id = c_bpartner_id
+    #             # close communication with the database
+    #             pg_cursor.close()
+
+
+
+    #         except psycopg2.DatabaseError, e:
+    #             if conn_pg:
+    #                 print "#-------------------Except----------------------#"
+    #                 conn_pg.rollback()
+
+    #             print 'Error %s' % e    
+
+    #         finally:
+    #             if conn_pg:
+    #                 print "#--------------Select ----Finally----------------------#"
+    #                 conn_pg.close()
+
+    #     else:
+    #         raise UserError("DB Configuration not found.")
+
+
+    @api.model
+    @api.multi
+    def process_update_customer_scheduler_queue(self):
+
+
+        conn_pg = None
+        config_id = self.env['external.db.configuration'].sudo().search([('id','=',1)])
+
+
+        if config_id:
+
+            print "#-------------Select --TRY----------------------#"
+            try:
+                conn_pg = psycopg2.connect(dbname= config_id.database_name, user=config_id.username, password=config_id.password, host= config_id.ip_address)
+                pg_cursor = conn_pg.cursor()
+
+                today = datetime.now()
+                daymonth = today.strftime( "%Y-%m-%d 00:00:00")
+
+                pg_cursor.execute("select \
+                    cb.c_bpartner_id,cb.name,cb.name2,cb.value,cb.c_bp_group_id,cb.socreditstatus, \
+                    cb.so_creditlimit,cb.taxid,cb.Cst_Tax_No,cb.TinNo,cb.GST_Tax,cb.Pan_No,cb.SalesRep_ID,cb.C_PaymentTerm_ID, \
+                    cbl.c_bpartner_location_id,cbl.c_location_id,cbl.phone,cbl.phone2,cbl.email, \
+                    cl.address1,cl.address2,cl.address3,cl.postal,cl.c_country_id,cl.c_region_id,cl.city \
+                    from c_bpartner cb  \
+                    JOIN C_BPartner_Location cbl ON cbl.c_bpartner_id = cb.c_bpartner_id \
+                    JOIN c_location cl ON cl.c_location_id = cbl.c_location_id \
+                    where cb.created >= '2017-03-31 00:00:00' and cb.ad_client_id = 1000000 and cb.iscustomer = 'Y' and cl.c_country_id = 208 ")
+                # where cb.created >= '%s' and cb.ad_client_id = 1000000 and cb.iscustomer = 'Y' and cl.c_country_id = 208 " %(daymonth))
+
+                
+                records = pg_cursor.fetchall()
+
+                # print "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , records
+
+                
+                if len(records) == 0:
+                    raise UserError("No records Found")
+
+                for record in records:
+
+                    # print "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj" , record[20].encode('utf8') , record[20].encode('utf8') , record[3].encode('utf8')
+                    c_bp_group_id = str(record[4]).encode('utf8')
+                    ad_user_id = str(record[12]).encode('utf8')
+                    bp_code = str(record[3]).encode('utf8')
+                    c_paymentterm_id = str(record[13]).encode('utf8')
+                    c_country_id = str(record[23]).encode('utf8')
+                    c_region_id = str(record[24]).encode('utf8')
+                    c_bpartner_id = str(record[0]).encode('utf8')
+                    name = str(record[1]).encode('utf8')
+                    creditstatus = str(record[5]).encode('utf8')
+                    so_creditlimit = str(record[6]).encode('utf8')
+
+                    partner_group_id = self.env['res.partner.group'].sudo().search([('c_bp_group_id','=',c_bp_group_id)]).id
+                    if ad_user_id:
+                        user_id = self.env['res.users'].sudo().search([('ad_user_id','=',ad_user_id)]).id
+                    
+                    else:
+                        user_id = 1
+                    print  "#####################################   Customer Code ##################################" , bp_code
+                    property_payment_term_id = self.env['account.payment.term'].sudo().search([('c_paymentterm_id','=',c_paymentterm_id)]).id
+                    country_id = self.env['res.country'].sudo().search([('c_country_id','=',c_country_id)]).id
+                    state_id = self.env['res.country.state'].sudo().search([('c_region_id','=',c_region_id)]).id
+
+                    street2 = (str(record[20].encode('utf8') )  ) if record[20] else ''  +  (',' +  str(record[21].encode('utf8')) ) if record[20] else ''
+
+                    vals_line = {
+                        'c_bpartner_id':c_bpartner_id,
+                        'name':name,
+                        'bp_code':bp_code,
+                        'partner_group_id': partner_group_id,
+                        'creditstatus':creditstatus,
+                        'so_creditlimit':so_creditlimit,
+                        'taxid':str(record[7]).encode('utf8'),
+                        'cst_no':str(record[8]).encode('utf8'),
+                        'tin_no':str(record[9]).encode('utf8'),
+                        'gst_no':str(record[10]).encode('utf8'),
+                        'pan_no':str(record[11]).encode('utf8'),
+                        'user_id':user_id,
+                        'property_payment_term_id':property_payment_term_id,
+                        'c_bpartner_location_id':str(record[14]).encode('utf8'),
+                        'c_location_id':str(record[15]).encode('utf8'),
+                        'phone':str(record[16]).encode('utf8'),
+                        'mobile':str(record[17]).encode('utf8'),
+                        'email':str(record[18]).encode('utf8'),
+                        'street':str(record[19]).encode('utf8'),
+                        'street2': street2,
+                        'zip':str(record[22]).encode('utf8'),
+                        'country_id':country_id,
+                        'state_id':state_id,
+                        'city':str(record[25]).encode('utf8'),
+                        'state':'created',
+                        'customer':True,
+                        'supplier':False,
+
+                    }
+                    if bp_code not in [ x.bp_code for x in self.env['res.partner'].search([('active','!=',False)])]:
+                        print "#####################################   Customer Created ##################################"
+
+                        self.env['res.partner'].create(vals_line)
+
+            except psycopg2.DatabaseError, e:
+                if conn_pg:
+                    print "#-------------------Except----------------------#"
+                    conn_pg.rollback()
+                 
+                print 'Error %s' % e        
+
+            finally:
+                if conn_pg:
+                    print "#--------------Select ----Finally----------------------#"
+                    conn_pg.close()
+
+
+class res_partner_group(models.Model):
+    _name = "res.partner.group"
+
+    name = fields.Char('Partner Group', required=False)
+    value = fields.Char('Value')
+    isactive = fields.Boolean("Active")
+    c_bp_group_id = fields.Char('Business Partner Group')
+    company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env['res.company']._company_default_get('res.partner.group'))
+
+
+
+class res_company_extension(models.Model):
+    _inherit = 'res.company'
+    
+    ad_client_id = fields.Char(string="Client ID")
+
+
+
+class ad_org(models.Model):
+    _name = "ad.org"
+    _description="Organisations"
+
+    name = fields.Char('Organisation', required=False)
+    ad_org_id = fields.Char('ad_org_id')
+    isactive = fields.Boolean("Active")
+
+
+
+class res_country_extension(models.Model):
+    _inherit = 'res.country'
+    
+    active = fields.Boolean(string="Active", default=True)
+    c_country_id = fields.Char(string='Country ID' )
+
+
+
+class res_country_state_extension(models.Model):
+    _inherit = 'res.country.state'
+    
+    active = fields.Boolean(string="Active", default=True)
+    district_ids = fields.One2many('res.state.district', 'state_id', string='Districts')
+    c_region_id = fields.Char(string='State ID' )
+
+
+class StateDistrict(models.Model):
+    _description = "State District"
+    _name = 'res.state.district'
+    _order = 'code'
+
+    state_id = fields.Many2one('res.country.state', string='State', required=True)
+    active = fields.Boolean(string="Active", default=True)
+    name = fields.Char(string='District Name', required=True )
+    code = fields.Char(string='District Code', help='The district code.')
+    c_city_id = fields.Char(string='City ID' )

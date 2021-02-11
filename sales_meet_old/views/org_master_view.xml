@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+<record id="view_org_master_form" model="ir.ui.view">
+    <field name="name">org.master.form</field>
+    <field name="model">org.master</field>
+    <field name="arch" type="xml">
+        <form>
+          <group>
+            <group>
+                <field name="name" />
+                <field name="value" />
+                <field name="isactive"/>
+            </group>
+            <group>
+            
+                <field name="ad_org_id"/>
+                <field name="company_id"/>
+                <field name="prefix" />
+                <field name="default" />
+            </group>
+          </group>
+          <group>
+             <field name="warehouse_master_ids" string="Warehouse" >
+               <tree editable="bottom" >
+                  <field name="name" />
+                  <field name="value" />
+                  <field name="isactive"/>
+                  <field name="m_warehouse_id"/>
+                  <field name="org_master_id" invisible="1"/>
+               </tree>
+             </field>
+             </group>
+        </form>
+    </field>
+</record>
+
+
+<record id="view_org_master_tree" model="ir.ui.view">
+    <field name="name">org.master.tree</field>
+    <field name="model">org.master</field>
+    <field name="arch" type="xml">
+        <tree >
+            <field name="name" />
+            <field name="value" />
+            <field name="isactive"/>
+            <field name="ad_org_id"/>
+            <field name="company_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="action_org_master" model="ir.actions.act_window">
+    <field name="name">Org Master</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">org.master</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+           
+	</data>
+</openerp>

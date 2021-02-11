@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+<record id="view_posting_error_form" model="ir.ui.view">
+    <field name="name">posting.error.form</field>
+    <field name="model">posting.error</field>
+    <field name="arch" type="xml">
+        <form>
+            <header>
+
+                <field name="state" widget="statusbar"/>
+            </header>
+            <sheet>
+                <h2><field name="name" attrs="{'invisible':[('state','=','draft')],'readonly':[('state','!=','draft')]}" /></h2>
+               
+                <group>
+                    <group>
+                        <field name="config_id"  options="{'no_open': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="idempiere_id"  
+                            attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name="documentno" attrs="{'readonly':[('state','!=','draft')]}" />
+                    </group>
+                     <group>
+                        <field name="m_product_id"  readonly="1"/>
+                        <field name="requester"  invisible="1"/>
+                        <field name="productionqty"  readonly="1" />
+                        <field name="date"  readonly="1"/>
+                        <field name="employee_id"  invisible="1"/>
+                        <field name="completed" invisible="1"/>
+                     
+                    </group>
+                </group>
+
+
+                <group col="4" colspan="2"  >
+                    <div class="col-xs-12" style="margin-top:5%;">
+                        <center>
+                            <div class="col-xs-2"/>
+                            <button name="get_data_from_database" string="Sync" type="object" class="btn-primary col-xs-2" 
+                                style="font-size: 16px;" states='draft' />
+                            <div class="col-xs-1"/>
+                            <button name="update_data_to_database" string="Update" type="object"  class="btn-primary col-xs-2"
+                             style="font-size: 16px;" attrs="{'invisible':[('state','=','draft')]}"/>
+                        </center>
+                    </div>
+                </group>
+
+                <group string="Line Details" col="4" colspan="4" >
+                    <field name="posting_error_one2many" 
+                           string="Lines" nolabel="1"  >
+                        <tree delete="false"  editable="bottom" colors="red: qtypresent &lt; qtyused "  create="false">
+                           <field name="name" invisible="1" />
+                           <field name="client_id" invisible="1" />
+                           <field name="client_name"  readonly="1"  />
+                           <field name="posting_error_id" invisible="1"  />
+                           <field name="m_costelement_id" invisible="1" />
+                            <field name="m_product_id"  invisible="1"/>
+                            <field name="product_name"  readonly="1" />
+                            <field name="description"   readonly="1"/>
+                            <field name="updated"   invisible="0"/>
+                            <field name="synced"   invisible="1"/>
+                            <field name="m_attributesetinstance_id" invisible="1" />
+                            <field name="qtyused" readonly="1" />
+                            <field name="qtypresent" readonly="1" />
+                            <field name="qtyadded" required="0" />
+                        </tree>
+                    </field>
+                </group>
+
+                <field name="note" placeholder="Note .." />
+
+             </sheet>
+
+             <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+              </div>
+        </form>
+    </field>
+</record>
+
+<record id="view_posting_error_tree" model="ir.ui.view">
+    <field name="name">posting.error.tree</field>
+    <field name="model">posting.error</field>
+    <field name="arch" type="xml">
+        <tree colors="red:state=='draft'">
+            <field name="name" />
+            <field name="m_product_id"/>
+            <field name="productionqty"/>
+            <field name="date"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+
+<record id="action_posting_error" model="ir.actions.act_window">
+    <field name="name">Posting Error</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">posting.error</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+
+
+           
+  </data>
+</openerp>

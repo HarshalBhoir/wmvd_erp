@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="sales_meet.MastersDashboardMain">
+        <div class="o_dashboards">
+            <div class="container-fluid o_masters_dashboard"></div>
+        </div>
+    </t>
+
+
+    <t t-name="MastersManagerDashboard">
+
+            <style type="text/css" t-if="! widget.isFirefox">
+                .o_web_client > .o_main .o_main_content .o_control_panel {
+                    display: none;
+                }
+
+                /* Optional theme */
+                @import url('//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css');
+
+                div.imagetiles div.col-lg-3.col-md-3.col-sm-3.col-xs-6{
+                  padding: 10px;
+                }
+            </style>
+
+            <div class="col-md-12" style="margin-top: 40px;">
+                <div class="row imagetiles">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <div class="col-md-3 go_to_wp_customer" >
+                            <div class="dash-box card  dash-box-color-2 hh-card-style" >
+                                <div class="card-body">
+                                    <div class="stat-widget-one">
+                                        <h2><div style="color: #fff;" class="stat-icon-wp dib">
+                                          <i class="fa fa-fw fa-calendar-plus-o"/>
+                                        </div></h2>
+
+                                        <div class="stat-content dib">
+                                            <h3><span style="color: #fff;" class="dash-box-title">Create Customer</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <div class="col-md-3 partner_count">
+                            <div class="dash-box card  dash-box-color-1 hh-card-style">
+                                <div class="card-body">
+                                    <div class="stat-widget-one">
+                                        <h2><div style="color: #fff;" class="stat-icon-wp dib"><i class="fa fa-fw fa-calendar-plus-o"/></div></h2>
+
+                                        <div class="stat-content dib" >
+                                            <div class="stat-title" style="font-size: 23px; color: white;">Distributor List</div>
+                                            <div class="stat-count" style="font-size: 23px; color: white;"><t t-esc="widget.login_user.partner_count"/></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <div class="col-md-3 go_to_supplier">
+                            <div class="dash-box card  dash-box-color-4 hh-card-style">
+                                <div class="card-body">
+                                    <div class="stat-widget-one">
+                                        <h2><div style="color: #fff;" class="stat-icon-wp dib"><i class="fa fa-fw fa-calendar-plus-o"/></div></h2>
+
+                                        <div class="stat-content dib">
+                                            <h3><span style="color: #fff;" class="dash-box-title">Create Vendor</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <div class="col-md-3 go_to_product">
+                            <div class="dash-box card  dash-box-color-3 hh-card-style">
+                                <div class="card-body">
+                                    <div class="stat-widget-one"> 
+                                        <h2><div style="color: #fff;" class="stat-icon-wp dib"><i class="fa fa-fw fa-calendar-plus-o"/></div></h2>
+
+                                        <div class="stat-content dib">
+                                            <h3><span style="color: #fff;" class="dash-box-title">Create Product</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <img src=https://i.scdn.co/image/2fd8fa0f7ef2f83691a0fb9628ee369b8e3b688e class="img-responsive"/>
+                    </div> -->
+                </div>
+            </div>
+
+           <!--  <div class="col-md-12">
+                <div >
+                    <div class="row">
+
+                        <div class="col-md-3 go_to_customer">
+                            <div class="dash-box card  dash-box-color-2" style="margin-top: 29px;">
+                                <div class="card-body">
+                                    <div class="stat-widget-one">
+                                        <h2><div style="color: #fff;" class="stat-icon-wp dib">
+                                          <i class="fa fa-fw fa-calendar-plus-o"/>
+                                        </div></h2>
+
+                                        <div class="stat-content dib">
+                                            <h3><span style="color: #fff;" class="dash-box-title">Create Customer</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-md-3 go_to_supplier">
+                            <div class="dash-box card  dash-box-color-1" style="margin-top: 29px;">
+                                <div class="card-body">
+                                    <div class="stat-widget-one">
+                                        <h2><div style="color: #fff;" class="stat-icon-wp dib"><i class="fa fa-fw fa-calendar-plus-o"/></div></h2>
+
+                                        <div class="stat-content dib">
+                                            <h3><span style="color: #fff;" class="dash-box-title">Create Vendor</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 go_to_product">
+                            <div class="dash-box card  dash-box-color-3" style="margin-top: 29px;">
+                                <div class="card-body">
+                                    <div class="stat-widget-one">
+                                        <h2><div style="color: #fff;" class="stat-icon-wp dib"><i class="fa fa-fw fa-calendar-plus-o"/></div></h2>
+
+                                        <div class="stat-content dib">
+                                            <h3><span style="color: #fff;" class="dash-box-title">Create Product</span></h3>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                       
+                    </div>
+
+                </div>
+               
+            </div>  -->
+
+
+   </t>
+
+</templates>

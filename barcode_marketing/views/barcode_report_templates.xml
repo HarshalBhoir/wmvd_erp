@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="report_simple_label_marketing">
+    <div class="col-xs-4" style="padding:0;">
+        <table style="border-spacing:0;margin-bottom:0;height:122px;" class="table">
+            <thead>
+                <tr style="width: 3in;">
+                    <td style="border: 2px solid black;width: 2.63in;" colspan="2" class="col-xs-8 danger">
+                        <t t-if="barcode_marketing.date">
+                            [<strong t-field="barcode_marketing.date"/>]
+                        </t>
+                        <strong t-field="barcode_marketing.name"/>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="width: 1in;">
+                    <td style="border: 2px solid black;text-align: center; vertical-align: middle;" class="col-xs-5">
+                        <img t-if="barcode_marketing.barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', barcode_marketing.barcode, 600, 150)" style="width:100%;height:20%;"/>
+                        <span t-field="barcode_marketing.barcode"/>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<template id="report_marketinglabel">
+    <t t-call="report.html_container">
+        <div class="page">
+            <t t-foreach="docs" t-as="barcode_marketing">
+                <t t-call="barcode_marketing.report_simple_label_marketing">
+                    <t t-set="barcode_marketing" t-value="barcode_marketing"/>
+                </t>
+            </t>
+        </div>
+    </t>
+</template>
+
+
+<report
+            id="report_marketing_label"
+            string="Marketing Barcodes"
+            model="barcode.marketing"
+            report_type="qweb-pdf"
+            name="barcode_marketing.report_marketinglabel"
+            file="barcode_marketing.report_marketinglabel"/>
+            
+</data>
+</odoo>

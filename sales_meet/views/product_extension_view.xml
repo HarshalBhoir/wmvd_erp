@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		
+        <record id="product_pricelist_item_tree_view_extension" model="ir.ui.view">
+            <field name="name">product.pricelist.item.tree</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_tree_view" />
+            <field name="arch" type="xml">
+
+                <field name="product_tmpl_id" position="after"  >
+                       <field name="tax_id" widget="many2many_tags" />
+                </field>
+
+            </field>
+        </record>
+
+
+        <record id="product_pricelist_item_form_view_extension" model="ir.ui.view">
+            <field name="name">product.pricelist.item.form</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view" />
+            <field name="arch" type="xml">
+
+                <field name="product_tmpl_id" position="after"  >
+                       <field name="tax_id" widget="many2many_tags" />
+                </field>
+
+                <!-- <xpath expr="//form/group[3]" position="before">
+                    <group>
+                        <field name="tax_id" widget="many2many_tags" />
+                   </group>
+                </xpath> -->
+
+            </field>
+        </record>
+
+
+        <record id="product_pricelist_view_extension" model="ir.ui.view">
+            <field name="name">product.pricelist.form</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view" />
+            <field name="arch" type="xml">
+
+                <field name="name" position="before"  >
+                    <field name="pricelist_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
+                       <field name="partner_id" options="{'no_open': True}"   attrs="{'invisible': [('pricelist_type', '=','other')],
+                        'required': [('pricelist_type', '=','customer')]}" />
+                </field>
+
+                <field name="country_group_ids" position="attributes">
+                   <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="name" position="attributes">
+                   <attribute name="invisible">0</attribute>
+                </field>
+
+                <field name="price" position="after"  >
+                       <field name="tax_id" widget="many2many_tags" />
+                </field>
+
+                <field name="currency_id" position="after"  >
+                       <field name="m_pricelist_id" />
+                </field>
+
+            </field>
+        </record>
+
+
+        <record id="product_normal_form_view_extension" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="hr_expense.product_product_expense_form_view" />
+            <field name="arch" type="xml">
+
+                <field name="supplier_taxes_id" position="after"  >
+                       <field name="transport_mode"  attrs="{'invisible': [('can_be_expensed', '=',False)]}" />
+                       <field name="charge_name"  attrs="{'invisible': [('can_be_expensed', '=',False)]}" />
+                </field>
+
+                <xpath expr="/form/sheet/group" position="after" >
+                    <notebook >
+                    <page string="ERP Charge">
+                        <field name="erp_charge_one2many" 
+                                       string="ERP Charge" >
+                            <tree  editable='bottom' >
+
+                                    <field name="product_charge_id" invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="c_charge_id"/>
+                                    <field name="name"/>
+<!--                                     <field name="erp_pass"/>
+                                    <field name="erp_roleid"/> -->
+                                    <field name="company_id"/>
+                                </tree>
+                            </field>
+                    </page>
+                </notebook>
+            </xpath>
+
+            </field>
+        </record>
+
+
+
+        <record id="product_uom_form_view_extension" model="ir.ui.view">
+            <field name="name">product.uom.form</field>
+            <field name="model">product.uom</field>
+            <field name="inherit_id" ref="product.product_uom_form_view" />
+            <field name="arch" type="xml">
+
+                <field name="name" position="after"  >
+                   <field name="c_uom_id" />
+                </field>
+
+                <field name="rounding" position="after"  >
+                   <field name="uom_code" />
+                </field>
+
+            </field>
+        </record>
+
+
+        
+
+
+        <record id="product_normal_form_view_extension2" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+
+                <field name="categ_id" position="after"  >
+                       <field name="m_product_id" />
+                       <field name="value" />
+                       <field name="hsn_code" />
+                       <field name="u_productcategory_id" />
+                       <field name="sku" />
+                </field>
+
+            </field>
+        </record>
+
+
+        <!-- Category Form -->
+        <record id="product_category_form_extension_view" model="ir.ui.view">
+            <field name="name">productcategory_form.extension</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <field name="parent_id" position="after"  >
+                       <field name="active" />
+                </field>
+            </field>
+        </record>
+
+        <record id="view_product_erp_update_form" model="ir.ui.view">
+            <field name="name">product.erp.update.form</field>
+            <field name="model">product.erp.update</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" required="1"/>
+                    </group>
+                    
+                    <footer >
+                        <button name="update_product" string="Update" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-default" special="cancel" />
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='action_product_erp_update'>
+            <field name="name">Product Update</field>
+            <field name="res_model">product.erp.update</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_product_erp_update_form"/>
+            <field name="target">new</field>
+        </record>
+        
+
+
+	</data>
+</odoo>
+        
+        

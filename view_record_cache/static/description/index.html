@@ -1,0 +1,212 @@
+<section class="oe_container" style="background-image:url(banner-home-index-odoo.png);font-family: Arial, Helvetica, sans-serif;background-repeat:no-repeat;background-size:100%;padding: 4% 0% 2% 15%;background-position-y: -107px;">
+    <div class="oe_row oe_spaced">
+        <div class=" oe_span9">
+        <h3 style="font-size: 25px;color: #62495B;font-weight: 900;text-transform: uppercase;text-align: left;margin: 0;margin-bottom: 16px;">
+            load performance of the ir.ui.view object
+        </h3>
+        <h4  style="font-size: 15px;color: #62495B;font-weight: 600;text-align: left;margin: 0 !important;">
+Accelerates the loading of ir.ui.view object records by improving the performance of the database layer        
+        </h4>
+        <h5 class="oe_slogan" style="text-align: left;width: 293px;padding: 10px;color: #282F33 !important;opacity: 1 !important;font-weight: 600;font-size: 20px;">
+            <a style="color: #282F33 !important;" href="https://juventudproductivabicentenaria.blogspot.com">Juventud Productiva</a>
+        </h5>
+        <a style="color: #080808 !important;" href="https://juventudproductivabicentenaria.blogspot.com" target="_blank">
+            <div style="width: 215px;margin-left: 57%;text-align: center;background: #ffffff;height: 215px;border-radius: 100%;display: flex;justify-content: center;align-items: center;box-shadow: 0 0 12px 4px #00000059;">
+                <img src="jpv-logo.png" alt="" style="width: 180px;"/>
+            </div>
+        </a>
+    
+    </div>
+    </div>
+</section>
+<section class="oe_container" style="padding: 3% 0% 3% 15%; font-family: Arial, Helvetica, sans-serif;">
+    <div class="oe_row oe_spaced">
+    <div class=" oe_span10">
+        <h2 class="oe_slogan" style="text-align: left;font-size: 28px;font-weight: 600;margin: 0px !important;">
+            Overview
+        </h2>
+        <h3 class="oe_slogan" style="text-align: left;font-size: 16px;width: 90%;margin: 0;margin-top: 14px;color: #000 !important;opacity: 1 !important;line-height: 24px;">
+This module to cache the records of the ir.ui.view object, so that part of the content of the view is only requested once to postgresql (Disk) and the rest of the requests are returned from the RAM.
+                
+         </h3>
+         <br/>
+         <div style="width:70%;height:50%;background:#fff; border-radius:100%;margin: auto;">
+                            <a href="https://www.youtube.com/watch?v=Ny81UfPPv_Q&feature=youtu.be" target="_blank">
+                            <img src="cache_view.png" style="width: 100%"/>
+                            </a>
+            <br/>
+         <a class="btn btn-primary btn-lg btn-block" href="https://www.youtube.com/watch?v=Ny81UfPPv_Q&feature=youtu.be" target="_blank">
+            <b>See how does it work</b>
+        </a>
+            </div>
+    </div>
+    </div>
+</section>
+
+<section class="oe_container" style="background-image:url(banner-body-index-odoo.png); font-family: Arial, Helvetica, sans-serif; background-repeat:no-repeat; background-size:cover;padding: 19% 0% 30% 15%;">
+    <div class="oe_row oe_spaced">
+        
+        <h2 class="oe_slogan" style="text-align: left;font-size: 28px;font-weight: 600;margin: 0px !important;">
+             Features
+        </h2>
+        <div class="oe_span10">
+        <h3 class="oe_slogan" style="text-align: left;font-size: 16px;width: 90%;margin: 0;margin-top: 14px;color: #000 !important;opacity: 1 !important;line-height: 18px;">
+            <img src="check.png">
+            Improve application performance.
+         </h3>
+        <h3 class="oe_slogan" style="text-align: left;font-size: 16px;width: 90%;margin: 0;margin-top: 14px;color: #000 !important;opacity: 1 !important;line-height: 18px;">
+            <img src="check.png">
+            Increase reading performance (IOPS).
+         </h3>
+        <h3 class="oe_slogan" style="text-align: left;font-size: 16px;width: 90%;margin: 0;margin-top: 14px;color: #000 !important;opacity: 1 !important;line-height: 18px;">
+            <img src="check.png">
+            Increase the number of business operations to the database.
+         </h3>
+        <h3 class="oe_slogan" style="text-align: left;font-size: 16px;width: 90%;margin: 0;margin-top: 14px;color: #000 !important;opacity: 1 !important;line-height: 18px;">
+            <img src="check.png">
+            It caches more than <b>30 requests</b> to the database for each load of any web view, per user, which translates, according to the modules installed, a cache of more than <b>2000 requests</b> that are not made to postgresql per user.
+         </h3>
+        <h3 class="oe_slogan" style="text-align: left;font-size: 16px;width: 90%;margin: 0;margin-top: 14px;color: #000 !important;opacity: 1 !important;line-height: 18px;">
+            <img src="check.png">
+            It only requires the installation of this module to work, since it only uses the python cache technique.
+        </h3>
+        <h3 class="oe_slogan" style="text-align: left;font-size: 16px;width: 90%;margin: 0;margin-top: 14px;color: #000 !important;opacity: 1 !important;line-height: 18px;">
+            <img src="check.png">
+            This version only supports cache for single language instances, if you require a module with cache for multiple languages press.<a style="color: #3386FF !important;" href="https://apps.odoo.com/apps/modules/10.0/web_base_cache/"> Web base cache</a>
+        </h3>
+        </div>
+    </div>
+</section>
+<section class="oe_container oe_dark">
+    <div class="oe_row">
+        <h2 class="oe_slogan">How does caching work?</h2>
+        <div class="oe_span6">
+            <p class='oe_mt32'>
+Data in a cache is usually stored in fast-access hardware, such as random access memory (RAM) and can also be used in conjunction with a software component. The main objective of the cache is to increase data recovery performance to avoid having to access the underlying storage layer, which is slower.
+
+When exchanging capacity for speed, a cache typically stores a subset of data transiently, unlike databases whose elements are usually complete and durable.
+            </p>
+            <p>If we compare accesses, we have to latency, that is, the time we wait to receive the first data from a memory. The hard drive, this time, is milliseconds (DISK) and in nanosecond (RAM) memories. In this case there are differences of 100,000 times.</p>
+        </div>
+        <div class="oe_span6">
+            <div class="oe_bg_img">
+                <img src="cache.jpeg" class="oe_picture oe_screenshot">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row">
+    <div class="oe_span10">
+        <h2 class="oe_slogan">Reference</h2>
+        <div class="oe_span12">
+            <h4><a href="https://aws.amazon.com/es/caching/"> Advantages of caching Amazon</a></h4>
+            <h4><a href="https://www.ibm.com/support/knowledgecenter/en/ssw_aix_72/devicemanagement/caching_advantages.html">Advantages of caching IBM</a></h4>
+            
+        </div>
+    </div>
+    </div>
+</section>
+
+<section class="oe_container" style="padding: 7px 0% 0% 3%; font-family: Arial, Helvetica, sans-serif;">
+     <div class="oe_row oe_spaced">
+         <div class="oe_span10">
+         <a style="color: #080808 !important;" href="https://apps.odoo.com/apps/modules/browse?author=JUVENTUD%20PRODUCTIVA%20VENEZOLANA" target="_blank"><img src="https://1.bp.blogspot.com/-RCYofXUdZ8w/XWWyVf8SIxI/AAAAAAAAJz0/oHnafmznCGMyReKCU-0cZFIpq-Va4HVXwCLcBGAs/s1600/more-apps.png" alt="Juventud Productiva Venezolana" style="width: 100%;margin-bottom: 50px;"/></a>
+     </div>
+     </div>
+</section>
+<section class="oe_container" style="padding: 1% 0% 0% 3%; font-family: Arial, Helvetica, sans-serif;">
+    <div class="oe_row oe_spaced">
+    <div class="oe_span10">
+        <h2 class="oe_slogan" style="text-align: left;font-size: 28px;font-weight: 600;margin: 0px !important;">
+            Our Services
+        </h2>
+        <div style="display:flex;padding-top: 20px;justify-content: space-between;">
+            <div style="flex-basis: 18%;">
+
+                    <div style="width:75px;height:75px;background:#fff; border-radius:100%;margin: auto;">
+                            <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank">
+                            <img src="odoo-customization.png" style="width: 100%;border-radius: 100%;"/>
+                            </a>
+                    </div>
+                     <h3 class="oe_slogan" style="font-weight: 800;text-align: center;font-size: 14px;width: 100%;margin: 0;margin-top: 14px;color: #000 !important;margin-top: 5px;opacity: 1 !important;line-height: 17px;">
+                         <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank">
+                            Odoo Customization
+                         </a>
+                     </h3>
+
+            </div>
+             <div style="flex-basis: 18%;">
+
+                <div style="width:75px;height:75px;background:#fff; border-radius:100%;margin: auto;">
+                        <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank">
+                            <img src="odoo-implementation.png" style="width: 100%;border-radius: 100%;"/>
+                        </a>
+                </div>
+                 <h3 class="oe_slogan" style="font-weight: 800;text-align: center;font-size: 14px;width: 100%;margin: 0;margin-top: 14px;color: #000 !important;margin-top: 5px;opacity: 1 !important;line-height: 17px;">
+                    <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank">
+                        Odoo Implementation </a>
+                 </h3>
+
+            </div>
+             <div style="flex-basis: 18%;">
+
+                <div style="width:75px;height:75px;background:#fff; border-radius:100%;margin: auto;">
+                    <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank">
+                        <img src="odoo-integration.png" style="width: 100%;border-radius: 100%;"/>
+                    </a>
+                </div>
+                 <h3 class="oe_slogan" style="font-weight: 800;text-align: center;font-size: 14px;width: 100%;margin: 0;margin-top: 14px;color: #000 !important;margin-top: 5px;opacity: 1 !important;line-height: 17px;">
+                    <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank">
+                        Odoo Integration
+                    </a>
+                 </h3>
+
+            </div>
+             <div style="flex-basis: 18%;">
+
+                <div style="width:75px;height:75px;background:#fff; border-radius:100%;margin: auto;">
+                        <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank">
+                            <img src="odoo-training.png" style="width: 100%;border-radius: 100%;"/>
+                        </a>
+                </div>
+                 <h3 class="oe_slogan" style="font-weight: 800;text-align: center;font-size: 14px;width: 100%;margin: 0;margin-top: 14px;color: #000 !important;margin-top: 5px;opacity: 1 !important;line-height: 17px;">
+                    <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank">
+                        Odoo Training</a>
+                 </h3>
+
+            </div>
+             <div style="flex-basis: 18%;">
+
+                <div style="width:75px;height:75px;background:#fff; border-radius:100%;margin: auto;">
+                        <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank">
+                            <img src="odoo-contract-developer.png" style="width: 100%;border-radius: 100%;"/>
+                        </a>
+                </div>
+                 <h3 class="oe_slogan" style="font-weight: 800;text-align: center;font-size: 14px;width: 100%;margin: 0;margin-top: 14px;color: #000 !important;margin-top: 5px;opacity: 1 !important;line-height: 17px;">
+                    <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank">
+                        Contract Odoo Developers</a>
+                 </h3>
+                     </a>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<section class="oe_container" style="background-image:url(jpv-odoo-footer.png); background-repeat:no-repeat; background-size:100%;padding: 13% 0% 6% 0%; font-family: Arial, Helvetica, sans-serif;">
+    <div class="oe_slogan" style="margin-top:10px !important;margin-bottom: 5px;">
+        <div>
+            <a style="color: #6B6D70 !important;border-radius: 0;background: none;border: none;background: #fff;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62, 57, 107, 0.05);border-radius: 30px;font-size: 12px;padding: 9px 26px;margin-right: 9px;width: 200px;text-transform: capitalize;" class="btn btn-primary btn-lg mt8" href="mailto:juventudproductivabicentenaria@gmail.com.com"><i class="fa fa-envelope"></i> Email us </a>
+            <a style="color: #6B6D70 !important;border-radius: 0;background: none;border: none;background: #fff;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62, 57, 107, 0.05);border-radius: 30px;font-size: 12px;padding: 9px 26px;margin-right: 9px;width: 200px;text-transform: capitalize;" class="btn btn-primary btn-lg mt8" href="https://juventudproductivabicentenaria.blogspot.com/p/desarrollo-en-odoo-en-venezuela.html"><i class="fa fa-phone"></i> Contact Us </a>
+            <a style="color: #6B6D70 !important;border-radius: 0;background: none;border: none;background: #fff;box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62, 57, 107, 0.05);border-radius: 30px;font-size: 12px;padding: 9px 26px;margin-right: 9px;width: 200px;text-transform: capitalize;" class="btn btn-primary btn-lg mt8" href="https://juventudproductivabicentenaria.blogspot.com/p/desarrollo-en-odoo-en-venezuela.html"><i class="fa fa-check-square"></i> Request Customization </a>
+        </div>
+        <br>
+        <img src="jpv-logo.png" style="width: 190px; margin-bottom: 25px;margin-top: 30px;" class="center-block">
+        <div>
+          <a href="https://twitter.com/Oficial_JPV" target="_blank"><i class="fa fa-2x fa-twitter" style="color:white;background: #00a0d1;width:35px;height: 35px;padding-top: 7px;font-size: 21px;margin-right: 6px;border-radius: 100%;"></i></a></td>
+          <a href="https://www.youtube.com/c/JuventudProductivaVenezolana?sub_confirmation=1" target="_blank"><i class="fa fa-2x fa-youtube" style="color:white;background: #c53c2c;width:35px;padding-left: 3px;height: 35px;padding-top: 7px;font-size: 21px;margin-right: 6px;border-radius: 100%;"></i></a></td>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+         <!--Tree view vehicule-->
+    <record model="ir.ui.view" id="vehicle_list_view">
+        <field name="name">vehicle.tree</field>
+        <field name="model">tt.vehicle</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="matriculate"/>
+                <field name="longitude"/>
+                <field name="latitude"/>
+            </tree>
+        </field>
+    </record>
+        <!--From view vehicule-->
+        <record model="ir.ui.view" id="vehicle_form_view">
+            <field name="name">vehicle.form</field>
+            <field name="model">tt.vehicle</field>
+            <field name="arch" type="xml">
+                <form string="vehicle_form">
+                    <sheet>
+                        <group string="Information sur vehicule" colspan="4">
+                            <field name="name"/>
+                            <field name="matriculate"/>
+                            <field name="longitude"/>
+                            <button name="tt_locate_vehicle" string="Localiser" type="object" class="oe_highlight"/>
+                            <button name="tt_show_popup" string="popup" type="object" />
+                        </group>
+                            <div>
+                                <object type="text/html" data="https://www.google.com/" width="800px" height="600px" style="overflow:auto;border:5px ridge blue"><object>
+                            </div>
+
+                    </sheet>
+
+                </form>
+
+            </field>
+        </record>
+
+
+        <menuitem id="main_geolocation_menu" name="Géolocalisation"/>
+        <menuitem id="geolocation_menu" name="Géolocalisation" parent="main_geolocation_menu"/>
+        <menuitem id="geolocation_vehicle_menu" name="Géolocalisation des vehicules" parent="geolocation_menu" action="vehicle_action_view"/>
+
+    </data>
+</openerp>

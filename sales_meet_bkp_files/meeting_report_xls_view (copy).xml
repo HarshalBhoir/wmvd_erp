@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="view_meetings_details_report_form" model="ir.ui.view">
+            <field name="name">meetings.details.report.form</field>
+            <field name="model">meetings.details.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field invisible="1" name="state"/>
+                    <div states="choose">
+                        <group col="4" colspan="4">
+                            <field name="date_from" required="1"/>
+                            <field name="date_to" required="1"/>
+                        </group>
+                        <group><field name="user_ids" widget="many2many_tags"/></group>
+                    </div>
+                    <div states="get">
+                        <group>
+                            <field name="name" invisible="1"/>
+                            <field name="report" filename="name" colspan="4"/>
+                        </group>
+                     </div>
+                    
+                    
+                    <footer states="choose">
+                        <button name="print_report" string="Print Report" type="object" class="btn-primary"/>
+<!-- icon="fa-download" -->
+                        <!-- <button name="export_xls" string="Print Report" type="object" default_focus="1" class="btn-primary oe_highlight" context="{'xls_export':1}"/> -->
+                        <button string="Close" class="btn-default" special="cancel" />
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='action_meetings_details_report'>
+            <field name="name">Export Meetings in Excel</field>
+            <field name="res_model">meetings.details.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_meetings_details_report_form"/>
+            <field name="target">new</field>
+        </record>
+        <!-- <report
+            id="meeting_xlsx"
+            model="calendar.event"
+            string=" "
+            report_type="xlsx"
+            name="sales_meet.meeting_report_xls.xlsx"
+            file="sales_meet.meeting_report_xls.xlsx"
+            attachment_use="False"
+        /> -->
+
+    </data>
+</odoo>

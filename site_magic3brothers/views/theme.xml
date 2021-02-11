@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<!--
+     All Default Themes
+-->
+    <template id="homepage_inherit" inherit_id="website.homepage" name="Homepage"  active="True" customize_show="True">
+      <xpath expr="//div[@id='wrap']" position="replace">
+        <div id="wrap" class="oe_structure oe_empty">
+      <section class="mb4 oe_custom_bg oe_img_bg s_text_block_image_fw" style="background-image: url(/site_magic3brothers/static/src/img/walplast_img.png);background-position: 50% 100%;">
+        <div class="container"> 
+            <div class="bg-black-25 mb64 mt64 col-md-12" style="color: #000000;">
+              <p>
+                <font style="font-size: 40px;">Disclaimer</font>
+              </p>
+              <p>&amp;nbsp;
+                
+</p>
+              <p>If you require any more information or have any questions about our site’s disclaimer, please feel free to contact us by email at&amp;nbsp;<a href="mailto:sales@walplast.com">sales@walplast.com</a></p>
+              <p> 
+					</p>
+              <p>All the information on this website is published in good faith 
+and for general information purpose only.&amp;nbsp;It&amp;nbsp;does not make any 
+warranties about the completeness, reliability and accuracy of this 
+information. Any action you take upon the information you find on this 
+website (www.walplast.com), is strictly at your own risk.&amp;nbsp;&amp;nbsp;will not be 
+liable for any losses and/or damages in connection with the use of our 
+website.</p>
+              <p>
+					</p>
+              <p>From our website, you can visit other websites by following 
+hyperlinks to such external sites. While we strive to provide only 
+quality links to useful and ethical websites, we have no control over 
+the content and nature of these sites. These links to other websites do 
+not imply a recommendation for all the content found on these sites. 
+Site owners and content may change without notice and may occur before 
+we have the opportunity to remove a link which may have gone ‘bad’.</p>
+              <p>
+					</p>
+              <p>Please be also aware that when you leave&amp;nbsp;www.walplast.com, other
+ sites may have different privacy policies and terms which are beyond 
+our control. Please be sure to check the Privacy Policies of these sites
+ as well as their “Terms of Service” before engaging in any business or 
+uploading any information.</p>
+              <p>
+					</p>
+              <h3>Consent</h3>
+              <p>
+					</p>
+              <p>By using our website, you hereby consent to our disclaimer and agree to its terms.</p>
+              <p>
+					</p>
+              <h3>Update</h3>
+              <p>
+					</p>
+              <p>Should we update, amend or make any changes to this document, those changes will be prominently posted here.</p>
+            </div>
+          </div>
+      </section>
+      <section class="s_features">
+        <div class="container">
+          <div class="row mt16 mb16">
+
+            <div class="col-md-3 text-center" style="bottom:40px">
+            	<a><img src="/site_magic3brothers/static/src/img/crm_icon_modul.png" style="height:103px;"/></a>
+              <h3 class="mt8 mb0 o_default_snippet_text"><a href="/web?&amp;#menu_id=226&amp;action=">CRM</a></h3>
+            </div>
+
+
+            <!-- http://127.0.0.43:3000/web#min=1&limit=80&view_type=list&model=calendar.event&menu_id=227&action=330 -->
+
+
+            
+            <div class="col-md-3 text-center" style="bottom:40px">
+            	<a><img src="/site_magic3brothers/static/src/img/sales_icon.png" style="height:103px;"/></a>
+              <h3 class="mt8 mb0 o_default_snippet_text"><a href="">SALES</a></h3>
+              
+            </div>
+            <div class="col-md-3 text-center" style="bottom:40px">
+            	<a><img src="/site_magic3brothers/static/src/img/calendar_img.png" style="height:103px;"/></a>
+              <h3 class="mt8 mb0 o_default_snippet_text"><a href="">EMPLOYEE LEAVES</a></h3>
+              
+            </div>
+            <div class="col-md-3 text-center" style="bottom:40px">
+            	<a><img src="/site_magic3brothers/static/src/img/customer_care.png" style="height:103px;"/></a>
+              <h3 class="mt8 mb0 o_default_snippet_text"><a href="">TICKET SYSTEM</a></h3>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+    </div> 
+</xpath>
+    </template>
+
+    <template id="footer_inherit" inherit_id="website.footer_custom" name="Automatic Footer"  active="True" customize_show="True">
+
+
+    <xpath expr="//div[@id='footer']" position="replace">
+        <div id="footer" class="container hidden-print">
+            <div class="row">
+                <div class="col-md-4 col-lg-3">
+                    <h4 style="color:#337ab7">Our Products &amp; Services :</h4>
+                         <p>
+                            Our Products Walplast deals in various products for Repair and Renovation Solutions
+                         </p>
+                    <ul class="list-unstyled" id="products">
+                        <li><a href="http://www.walplast.com/homesure" target="_blank">HomeSure</a></li>
+                        <li><a href="http://www.walplast.com/buildwell" target="_blank">Buildwell</a></li>
+                    </ul>
+                
+                </div>
+                <div class="col-md-4  col-lg-3" id="info">
+                    <ul class="list-unstyled">
+                        <h4><a href="/page/website.contactus">Connect with us :</a></h4>
+                        <h5>Address :</h5>
+                        <li>Rainbow Building, Plot No. 13,Sector-24, Mumbai Pune Highway Service Road, Turbhe, Navi Mumbai – 400 705, Maharashtra, India</li>
+                    </ul>
+                    <ul class="list-unstyled">
+                        <li t-ignore="true"><i class="fa fa-phone"/>656565656565</li>
+                        <li t-ignore="true"><i class="fa fa-envelope"/>test@walplast.com</li>
+                    </ul>
+                    <h2>
+                        <a t-att-href="website.social_facebook" t-if="website.social_facebook"><i class="fa fa-facebook-square"/></a>
+                        <a t-att-href="website.social_twitter" t-if="website.social_twitter"><i class="fa fa-twitter"/></a>
+                        <a t-att-href="website.social_linkedin" t-if="website.social_linkedin"><i class="fa fa-linkedin"/></a>
+                        <a t-att-href="website.social_youtube" t-if="website.social_youtube"><i class="fa fa-youtube-play"/></a>
+                        <a t-att-href="website.social_googleplus" t-if="website.social_googleplus" rel="publisher"><i class="fa fa-google-plus-square"/></a>
+                        <a t-att-href="website.social_github" t-if="website.social_github"><i class="fa fa-github"/></a>
+                    </h2>
+                </div>
+                <div class="col-md-4 col-lg-5 col-lg-offset-1">
+                    <h4>
+                         <h4><a href="/page/website.aboutus">About us:</a></h4>
+                    </h4>
+                    <div>
+                        <p>
+                           Walplast Products Pvt. Ltd, an ISO 9001:2008 certified Indian multinational company and one of the largest and leading manufacturers of building construction material products in India.
+                        </p>
+                        <p>
+                            Walplast was established in year 2004 having six manufacturing facilities strategically located in all the four corners of India along with well-equipped R and D laboratories comparable to the world International standards with full equipment and high end technology machines for its testing process.
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </xpath>
+
+    </template>
+</data>
+</openerp>
+
+
+

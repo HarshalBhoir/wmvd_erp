@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <openerp>
+  <data noupdate="1"> -->
+  <odoo>
+
+    <!-- Sequences for Inbound Letter -->
+
+    <record id="seq_in_letter" model="ir.sequence">
+      <field name="name">Inbound Letter</field>
+      <field name="code">in.letter</field>
+      <field name="prefix">IN/%(year)s/%(month)s/%(day)s/</field>
+      <field name="padding">5</field>
+      <field eval="1" name="number_next"/>
+      <field eval="1" name="number_increment"/>
+      <field eval="True" name="use_date_range"/>
+    </record>
+
+    <!-- Sequences for Outbound Letter -->
+
+    <record id="seq_out_letter" model="ir.sequence">
+      <field name="name">Outbound Letter</field>
+      <field name="code">out.letter</field>
+      <field name="prefix">OUT/%(year)s/%(month)s/%(day)s/</field>
+      <field name="padding">5</field>
+      <field eval="1" name="number_next"/>
+      <field eval="1" name="number_increment"/>
+      <field eval="True" name="use_date_range"/>
+    </record>
+
+    <record id="seq_ticket_booking3" model="ir.sequence">
+      <field name="name">Ticket Booking</field>
+      <field name="code">ticket.booking3</field>
+      <!-- <field name="prefix">Ticket/</field> -->
+      <field name="prefix">/</field>
+      <field name="padding">5</field>
+      <field eval="1" name="number_next"/>
+      <field eval="1" name="number_increment"/>
+      <field eval="True" name="use_date_range"/>
+    </record>
+
+<!--         <record id="seq_bank_invoice_lines" model="ir.sequence">
+            <field name="name">bank_invoice_lines_sequence</field>
+            <field name="code">bank.invoice.lines</field>
+            <field name="prefix"></field>
+            <field name="padding">5</field>
+
+        </record> -->
+
+      </odoo>
+
+
+<!--   </data>
+</openerp> -->

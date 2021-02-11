@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+<record id="view_db_connect_form" model="ir.ui.view">
+    <field name="name">db.connect.form</field>
+    <field name="model">db.connect</field>
+    <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="name" />
+            </group>
+             <button name="get_data_from_database" string="Sync" type="object" />
+        </form>
+    </field>
+</record>
+
+<record id="view_db_connect_tree" model="ir.ui.view">
+    <field name="name">db.connect.tree</field>
+    <field name="model">db.connect</field>
+    <field name="arch" type="xml">
+        <tree >
+            <field name="name" />
+        </tree>
+    </field>
+</record>
+
+
+<record id="action_db_connect" model="ir.actions.act_window">
+    <field name="name">DB Connect</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">db.connect</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+           
+  </data>
+</openerp>

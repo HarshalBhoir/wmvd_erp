@@ -1,0 +1,578 @@
+/* Real Estate by Aqua-Giraffe */
+// Bootstrap by AQUAGiraffe
+
+@odoo-sidebar-width: 70px;
+
+@font-face{
+	font-family:"Helvetica Neue";
+	src:url("/sales_meet/static/src/font/Helvetica/Helvetica.ttf");
+}
+.o_web_client .odoo.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content .oe-view-manager-view-form .oe_formview .oe_form_sheetbg .oe_form_sheet_width .oe_button_box .oe_stat_button{
+	width: 180px !important;
+}
+
+@aqua-giraffe-orange:   #F26D35;
+//@brand-secondary:       #FFFFFF;
+@brand-font-color:      #000000;
+@brand-font-family:     "Helvetica Neue", Helvetica, sans-serif, "Lato", "Roboto", Arial;
+						//Helvetica, "Helvetica Neue", Arial, sans-serif, "Roboto";*/
+						//'Segoe UI', 'Lucida Grande','Ubuntu','sans-serif';
+
+.navbar-inverse .navbar-nav > li > a {
+	color: #FFF !important;
+}
+
+.inline_dates > span {
+	width: auto !important;
+	max-width: 45% !important;
+}
+
+.inline_dates > span .o_datepicker_input {
+	width: 90px !important;
+}
+
+
+/*.app-sidebar span{
+    display: none !important;
+}
+
+*/
+
+.o_web_client ul.ui-autocomplete.ui-front.ui-menu.ui-widget.ui-widget-content.odoo {
+	max-width: 350px !important;
+	list-style: none !important;
+}
+
+.o_form_view .o_form_field .o_list_view > tfoot > tr > td {
+    padding: 3px;
+    color: #f5f5f5;
+}
+
+
+.table caption + thead tr:first-child th, .table caption + thead tr:first-child td, .table colgroup + thead tr:first-child th, .table colgroup + thead tr:first-child td, .table thead:first-child tr:first-child th, .table thead:first-child tr:first-child td {
+    border-top: 1px solid #CCCCCC;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    line-height: 21px;
+    /* padding: 0 4px; */
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.bold-wp-label {
+	color:black !important;
+	font-weight:bold !important;
+	font-size: 20px !important;
+	width: 100% !important;
+	border-bottom: 1px solid !important;
+	padding-bottom: 5px !important;
+
+}
+
+
+.wp-table-border{
+
+        width: 100%;
+        border-right: 1px solid;
+        padding-top: 16px;
+        padding-bottom: 15px;
+        height: 260px;
+
+}
+
+.wp-table-boolean{
+	padding: 10px !important;
+}
+
+
+
+.o_form_view .o_group.o_inner_group > tbody > tr > td span.o_form_field, .o_form_view .o_group.o_inner_group > tbody > tr > td .o_form_field_boolean.o_form_field, .o_form_view .o_group.o_inner_group > tbody > tr > td .oe_avatar.o_form_field, .o_form_view .o_group.o_inner_group > tbody > tr > td .o_form_uri.o_form_field {
+    width: -webkit-fill-available;
+}
+
+.app-drawer-nav .oe_logo {
+
+        margin-top: -11px;
+        position: relative;
+        display: none;
+
+}
+
+
+/* Test */
+
+.o_form_view .o_form_field_radio .o_radio_item > label {
+    margin: 0;
+    margin-right: 10px;
+}
+
+.o_form_view .o_form_field_radio .o_radio_item > input {
+    -ms-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    flex: 0 0 auto;
+    margin: -19px 5px 0 0;
+}
+
+
+.o_form_view .o_form_field_many2manytags .badge > .o_badge_text {
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    max-width: 200px;
+    font-size: 16px;
+}
+
+
+@media (max-width: 768px){
+
+
+    .o_form_input_dropdown input{
+       // width: 100%!important;
+        height: 40px;
+
+    }
+
+    .o_form_view .o_form_input_dropdown .o_dropdown_button {
+        position: absolute;
+        top: 2px;
+        left: 120%!important;
+        bottom: auto;
+        right: 4px;
+    }
+
+    .o_form_view .o_form_field .o_form_input {
+        display: inline-block;
+        width: 330px;
+    }
+
+    .o_form_view .o_form_field_many2manytags .badge > .o_badge_text {
+        display: inline-block;
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: top;
+        /* max-width: 200px; */
+        font-size: 16px;
+    }
+
+    //.o_main {
+    //   filter: invert(100%) !important;
+    //}
+
+    // .o_form_field, .o_form_view, .o_list_view {
+    //     filter: invert(100%) !important;
+    // }
+		//
+    // .o_form_sheet button {
+    //     filter: invert(100%) !important;
+    // }
+
+
+}
+
+
+@media (max-width: 768px){
+
+    .harshal-crm{
+        width: 100%!important;
+        height: 40px;
+    }
+
+    .ui-autocomplete{
+        font-size: 16px!important;
+
+    }
+
+    .list-unstyled{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+
+
+    .list-unstyled li{
+        width: 33%;
+        margin: 2px auto;
+        text-align: center;
+    }
+
+    .app-drawer-nav .panel-body {
+        margin: auto;
+        max-width: 768px;
+        padding-top: 60px !important;
+        width: 100%;
+    }
+
+    #appDrawerAppPanelHead{
+        transform:none!important;
+    }
+
+
+    .o_main_navbar .open .dropdown-menu {
+        display: flex!important;
+        flex-wrap: wrap!important;
+    }
+
+
+
+}
+
+
+
+/*    Widget One
+---------------------------*/
+.dib {
+  display: inline-block; }
+
+.stat-widget-one .stat-icon {
+    vertical-align: top;
+    margin: auto;
+    width: 100%;
+    color: #01c490;
+}
+.stat-widget-one {
+    text-align: center;
+}
+
+.stat-widget-one .stat-icon i {
+  font-size: 30px;
+  font-weight: 900;
+  display: inline-block;
+  color: #01c490;}
+
+.stat-widget-one .stat-icon-wp i {
+  font-size: 30px;
+  font-weight: 900;
+  display: inline-block;
+ }
+
+.stat-widget-one .stat-text {
+  font-size: 14px;
+  color: #868e96; }
+
+.stat-widget-one .stat-digit {
+  font-size: 24px;
+  color: #02448b; }
+
+.stat-count {
+  font-size: 20px;
+  color: #00438b;
+  font-weight: bold;
+  }
+
+.stat-title {
+  font-size: 17px;
+  text-align: center;
+  color: #00438b;
+  font-weight: bold;
+  }
+
+.bg-flat-color-1 {
+  background: #20a8d8; }
+
+.bg-flat-color-2 {
+  background: #63c2de; }
+
+.bg-flat-color-3 {
+  background: #ffc107; }
+
+.bg-flat-color-4 {
+  background: #f86c6b; }
+
+.bg-flat-color-5 {
+  background: #4dbd74; }
+
+.mb-0{
+    font-size: 20px;
+    position: relative;
+    text-align: center;
+}
+.mb-0 .dash-title {
+    font-size: 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.81);
+}
+.hr_birthday {
+    font-size: 28px;
+    text-align: center;
+    padding: 20px 0;
+    color: #00438b;
+    font-weight: 600;
+}
+body .text-color {
+    color: #00438b;
+    font-size: 16px;
+
+}
+
+.oh-card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.oh-card {
+
+    padding-top: 0px;
+    padding: 0px;
+    margin-bottom: 1.5rem;
+    border-radius: 0px;
+    box-shadow: none;
+    background: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    will-change: transform, box-shadow;
+
+}
+.oh-card:hover {
+
+    transform: translateY(-2px) translateZ(0) !important;
+    box-shadow: 0 10px 10px 0 rgba(62, 57, 107, 0.12), 0 0 0 transparent !important;
+
+}
+
+
+
+.fa-external-link .fa-pencil .fa-trash-o .fa-arrows .fa-ticket .fa-file-text-o .fa-long-arrow-right {
+        position:relative;
+    }
+
+.fa-sign-out .fa-sign-in .fa-arrows-v {
+        position:relative;
+    }
+
+.fa-star-and-crescent .fa-star-half .fa-star-half-alt .fa-star .fa-star-of-david .fa-star-of-life{
+        position:relative;
+    }
+
+
+.fa-star:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f005"; }
+
+.fa-star-and-crescent:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f699"; }
+
+.fa-star-half:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f089"; }
+
+.fa-star-half-alt:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f5c0"; }
+
+.fa-star-of-david:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f69a"; }
+
+.fa-star-of-life:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f621"; }
+
+
+
+
+.fa-arrows-v:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f07d";
+}
+
+.fa-sign-out:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f08b";
+}
+
+.fa-sign-in:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f090";
+}
+
+.fa-external-link:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+    content: "\f08e";
+}
+
+.fa-ticket:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+    content: "\f145";
+}
+
+.fa-pencil:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f040";
+}
+
+.fa-trash-o:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f014";
+}
+
+.fa-arrows:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f047";
+}
+
+.fa-file-text-o:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+    content: "\f0f6";
+}
+
+.fa-long-arrow-right:before {
+    font-family: FontAwesome;
+    top:0;
+    left:-5px;
+    padding-right:10px;
+  content: "\f178";
+}
+
+
+@media (max-width: 768px){
+    .hh-card-style {
+        margin-top: 17px;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+  .hh-card-style {
+        // margin-top: 29px;
+        margin-top: -30px; height: 182px;
+    }
+
+   .o_select_file_button {
+        font-size: 15px;
+   }
+
+   .hh-card-style2 {
+
+       margin-top: 15px !important;;
+        height: 150px;
+        // width: 210%;
+    }
+}
+
+@media (min-width: 1000px){
+    .hh-card-style {
+        margin-top: 29px;
+        width: 243px;
+
+    }
+}
+// ssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+
+
+// @supports (backdrop-filter: invert(100%)) {
+//     #mybpwaycfxccmnp-dblt-backdrop-filter {
+//         display: block !important;
+//         position: fixed !important;
+//         top: 0 !important;
+//         bottom: 0 !important;
+//         left: 0 !important;
+//         right: 0 !important;
+//         margin: 0 !important;
+//         pointer-events: none !important;
+//         z-index: 2147483647 !important;
+//         backdrop-filter: invert(100%) hue-rotate(180deg) !important;
+//     }
+//     img:not(.mwe-math-fallback-image-inline):not([alt="inline_formula"]),
+//     video {
+//         filter: invert(100%) hue-rotate(180deg) !important;
+//     }
+// }
+// @supports not (backdrop-filter: invert(100%)) {
+//     html,
+//     img:not(.mwe-math-fallback-image-inline):not([alt="inline_formula"]),    /* TODO: "black on transparent" mark */
+//     embed[type="application/x-shockwave-flash"],
+//     object[type="application/x-shockwave-flash"],
+//     video,
+//     div#viewer.pdfViewer div.page
+//     {
+//         filter: invert(100%) hue-rotate(180deg) !important;
+//     }
+//     /* #28 */
+//     :fullscreen video,
+//     video:fullscreen
+//     {
+//         filter: none !important;
+//     }
+
+//     html {
+//         background-color: black !important;
+//     }
+// }
+
+// @supports not (backdrop-filter: invert(100%)) {
+// div.dash-box
+//     {
+//         filter: invert(100%) hue-rotate(180deg) !important;
+//     }
+// }
+
+// button,
+// input,
+// optgroup,
+// select,
+// textarea {
+//     background-color: white;
+//     color: black;
+// }
+
+// ssssssss
+
+
+
+

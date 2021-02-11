@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+		
+
+
+<record id="view_barcode_marketing_check_form_mobile" model="ir.ui.view">
+    <field name="name">barcode.marketing.check.form</field>
+    <field name="model">barcode.marketing.check</field>
+    <field name="arch" type="xml">
+        <form >
+            <header>
+             <button name="update_records" string="Update" type="object" class="btn-primary" />
+              <field name="state" widget="statusbar" statusbar_visible="draft"/>
+             </header>
+          <sheet>
+            <h1><field name="name"  states='create' /></h1>
+
+
+            <group>
+                  <group>
+                      <field name="partner_id" />
+                      <field name="date" invisible="0"/>
+                      <field name="amount" />
+                  </group>
+                  <group  >
+                      <field name="export_file" colspan="4" invisible="1"/>
+                      <field name="output_file" filename="export_file" colspan="4" attrs="{'readonly':[('state','!=','draft')]}"   />
+                  </group>
+
+                   <button name="add_lines" string="Add Qrcodes" type="object"  class="btn-primary col-xs-2"
+                           style="font-size: 16px;" invisible="0" states='draft'/>
+
+                  <group>
+                    <field name="flag" invisible="0"/>
+                      <field name="accepted_count" />
+                      <field name="rejected_count" />
+                      
+                      <field name="accepted" id="output"  
+                        attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('flag', '=', False)]}"/>
+                     
+                      <field name="rejected" id="rejected_output" 
+                        attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('flag', '=', False)]}" />
+
+                      <field name="manual_count" invisible="1" />
+                      <field name="count_accepted" invisible="1"/>
+                      <field name="count_rejected" invisible="1" />
+                  </group>
+                  
+              </group>
+
+
+              <group invisible="1">
+                <field name="barcode"  id="codes" class="qrcode-text" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                       placeholder="Tracking Code" size="16"/>
+                 <button string="Scan"  name="qr_code_check" type="object" class="fas fa-qrcode btn-primary" />
+                  <button name="clear_records" string="Clear" type="object" class="btn-primary"  states='draft'/>
+              </group>
+
+
+              <group>
+                <group><field name="charge" invisible="0" /></group>
+                <group   name="sale_total">
+                  <field name="total_amount"  widget="monetary" />
+                </group>
+              </group>
+
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+    </field>
+</record>
+
+
+<record id="action_barcode_marketing_check_mobile" model="ir.actions.act_window">
+    <field name="name">QR Scan</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">barcode.marketing.check</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<record model="ir.actions.act_window.view" id="action_barcode_marketing_check_mobile_tree">
+  <field name="sequence" eval="2"/>
+  <field name="view_mode">tree</field>
+  <field name="view_id" ref="view_barcode_marketing_check_tree"/>
+  <field name="act_window_id" ref="action_barcode_marketing_check_mobile"/>
+</record>
+
+<record model="ir.actions.act_window.view" id="action_barcode_marketing_check_mobile_form">
+  <field name="sequence" eval="3"/>
+  <field name="view_mode">form</field>
+  <field name="view_id" ref="view_barcode_marketing_check_form_mobile"/>
+  <field name="act_window_id" ref="action_barcode_marketing_check_mobile"/>
+</record> 
+
+
+
+<menuitem name="QR Scan" id="menu_barcode_marketing_check_mobile" action="action_barcode_marketing_check_mobile"
+          parent="barcode_marketing.menu_barcode_marketing" sequence="-1"   />
+
+           
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		
+<record id="view_grade_master_form" model="ir.ui.view">
+    <field name="name">grade.master.form</field>
+    <field name="model">grade.master</field>
+    <field name="arch" type="xml">
+        <form>
+            <group>
+              <field name="name" />
+              <field name="isactive"/>
+            </group>
+             <field name="grade_line_ids" string="Grade Lines" >
+               <tree editable="bottom" nolabel="1">
+                  <field name="name" />
+                  <field name="value"/>
+                  <field name="fixed_asset"/>
+                  <field name="once_only"/>
+                  <field name="place"/>
+               </tree>
+             </field>
+        </form>
+    </field>
+</record>
+
+
+<record id="view_grade_master_tree" model="ir.ui.view">
+    <field name="name">grade.master.tree</field>
+    <field name="model">grade.master</field>
+    <field name="arch" type="xml">
+        <tree >
+            <field name="name" />
+            <field name="isactive"/>
+        </tree>
+    </field>
+</record>
+
+<record id="action_grade_master" model="ir.actions.act_window">
+    <field name="name">Grade master</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">grade.master</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+         
+	</data>
+</odoo>

@@ -1,0 +1,784 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+    <record model='ir.ui.view' id='wizard_employee_form'>
+        <field name="name">wizard.employee.form</field>
+        <field name="model">wizard.employee.stage</field>
+        <field name="arch" type="xml">
+            <form string="Set as Employee">
+                <group>
+                    <field name="related_user"/>
+                </group>
+                <footer>
+                    <button name="set_as_employee" string="Set as Employee" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model='ir.actions.act_window' id='wizard_employee_act'>
+        <field name="name">Set as Employee</field>
+        <field name="res_model">wizard.employee.stage</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_employee_form"/>
+        <field name="target">new</field>
+    </record>
+
+
+        <record model="ir.ui.view" id="view_hr_employee_joining_details_form">
+            <field name="name">view.wp.employee.joining.details.form</field>
+            <field name="model">wp.employee.joining.details</field>
+            <field name="arch" type="xml">
+                <form string="Joining Screening">
+                  <header>
+                    <button name="update_employee" class="btn-primary" string="Update" type="object" groups="hr.group_hr_user,hr.group_hr_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft" />
+                  </header>
+                    <sheet>
+                        <group col="4" colspan="4" >
+                            <field name="name_related"  required="1"/>
+                            <field name="father_name"  required="1"/>
+                            <field name="mother_name"  required="1"/>
+                            <field name="employee_id" readonly="1" options="{'no_create': True, 'no_edit': True , 'no_open': True}"/>
+                        </group>
+                        <group col="4" colspan="4" string="Address">
+                            <field name="current_address"  required="1"/>
+                            <field name="permanent_address"  required="1"/>
+                        </group>
+
+                        <group col="4" colspan="4" string="Bank Details">
+
+                            <field name="bank_name"  />
+                            <field name="account_bank_id" />
+                            <field name="ifsc_code" />
+                            <field name="bank_address" />
+                            <field name="pan_no"  required="1" />
+                            <field name="passport_id" />
+                            <field name="aadhar_no"  required="1" />
+                            <field name="uan_no" />
+                            <field name="esic_no" />
+
+                        </group>
+                        <group col="4" colspan="4" string="New Joinee Information">
+                            <field name="date_of_joining"  required="1" />
+                            <field name="department_id" options="{'no_create': True, 'no_edit': True , 'no_open': True}"
+                             />
+                            <field name="job_id"  required="1" options="{'no_create': True, 'no_edit': True , 'no_open': True}" 
+                                />
+                            <field name="work_location"  required="1" />
+                            <field name="parent_id"  required="1"  
+                                options="{'no_create': True, 'no_edit': True , 'no_open': True}" />
+                                <!-- attrs="{'readonly': [('parent_id', '!=', False)]}" -->
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_employee_joining_details_tree">
+            <field name="name">view.wp.employee.joining.details.tree</field>
+            <field name="model">wp.employee.joining.details</field>
+            <field name="arch" type="xml">
+                <tree string="Joining Screening">
+                    <field name="employee_id" invisible="0" />
+                    <field name="name_related" />
+                    <field name="date" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_emp_wp_joining_details_list" model="ir.actions.act_window">
+            <field name="name">Joining Details</field>
+            <field name="res_model">wp.employee.joining.details</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_hr_employee_joining_details_tree" />
+        </record>
+
+
+
+    <record model="ir.ui.view" id="view_hr_employee_idcard_form">
+            <field name="name">view.wp.employee.id.card.form</field>
+            <field name="model">wp.employee.id.card</field>
+            <field name="arch" type="xml">
+                <form string="ID Card Details">
+                  <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft" />
+                  </header>
+
+                    <sheet>
+                        <group col="4" colspan="4" >
+                            <field name="name" required="1" />
+                            <field name="department_id" required="1" />
+                            <field name="job_id" required="1"  />
+                            <field name="employee_id" invisible="0" readonly="1" options="{'no_create': True, 'no_edit': True , 'no_open': True}" />
+                        </group>
+                        <group col="4" colspan="4" string="Address">
+                            <field name="emergency_contact" required="1" />
+                            <field name="emergency_number" required="1" />
+                        </group>
+
+                        <group col="4" colspan="4" string="Bank Details">
+
+                            <field name="emp_id" attrs="{'readonly': [('can_edit_name', '=', False)]}"/>
+                            <field name="blood_group" required="1" />
+                            <field name="birthday" required="1" />
+                            <field name="date_of_joining" required="1" />
+                            
+                        </group>
+                        <field name="can_edit_name" invisible="1"/>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_employee_idcard_tree">
+            <field name="name">view.wp.employee.id.card.tree</field>
+            <field name="model">wp.employee.id.card</field>
+            <field name="arch" type="xml">
+                <tree string="ID Card Details">
+                    <field name="employee_id" invisible="0" />
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_emp_wp_idcard_list" model="ir.actions.act_window">
+            <field name="name">ID Card</field>
+            <field name="res_model">wp.employee.id.card</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_hr_employee_idcard_tree" />
+        </record>
+
+
+
+      <record model="ir.ui.view" id="view_hr_employee_mediclaimrevised_form">
+            <field name="name">view.wp.employee.mediclaim.revised.form</field>
+            <field name="model">wp.employee.mediclaim.revised</field>
+            <field name="arch" type="xml">
+                <form string="Mediclaim Revised Details">
+                  <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft" />
+                  </header>
+
+                    <sheet>
+                      <h2 style="color:black;font-weight:bold !important;"><center>Mediclaim Details Form</center></h2>
+                      <br/>
+
+                      <h4><ul class="context-menu" style="padding-left: 167px;">
+                          <li>Spouse (provided he/she is not covered under any other group mediclaim policy)</li>
+                          <li>Dependent Children (i.e. legitimate or legally adopted children). Only Two Children can be covered.</li>
+                          <li>Given below are the details of Self and dependents:</li>
+                      </ul></h4>
+                      <br/>
+
+                        <group col="4" colspan="2" style="border: 1px solid;">
+
+                            <div class="col-xs-12 wp-table-border"  >
+                                <label string="Name" class='bold-wp-label' />
+                                <field name="self_name" class="col-xs-2" placeholder="Self"  style="padding-top: 17px;"  required="1"/>
+                                <field name="spouse_name" class="col-xs-2" placeholder="Spouse Name"/>
+                                <field name="first_child" class="col-xs-2" placeholder="1st Child Name"/>
+                                <field name="second_child" class="col-xs-2" placeholder="2nd Child Name"/>
+                            </div>
+                            <div class="col-xs-12 wp-table-border"  >
+                                <label string="Gender" class='bold-wp-label'/>
+                                <field name="self_gender" class="col-xs-2"  style="padding-top: 17px;"  required="1"/>
+                                <field name="spouse_gender" class="col-xs-2"  />
+                                <field name="first_gender" class="col-xs-2"/>
+                                <field name="second_gender" class="col-xs-2"/>
+                            </div>
+                            <div class="col-xs-12 wp-table-border"  >
+                                <label string="Date of Birth (DD/MM/YY)" class='bold-wp-label'/>
+                                <field name="self_birthday" class="col-xs-2"   required="1"/>
+                                <field name="spouse_birthday" class="col-xs-2" style="padding-top: 17px;"/>
+                                <field name="first_birthday" class="col-xs-2"/>
+                                <field name="second_birthday" class="col-xs-2"/>
+                            </div>
+                            <div class="col-xs-12 wp-table-border"  >
+                                <label string="Age" class='bold-wp-label'/>
+                                <field name="self_age" class="col-xs-2"  style=" padding-top: 17px;"/>
+                                <field name="spouse_age" class="col-xs-2"/>
+                                <field name="first_age" class="col-xs-2"/>
+                                <field name="second_age" class="col-xs-2"/>
+                            </div>
+                        </group>
+                        <br/><br/>
+
+                        <group col="12">
+                          <field name="mobile" string="Mobile Number (This will be your Mediclaim Policy Number)" colspan="4"  required="1"/>
+                          <field name="date" invisible="0" colspan="4"  required="1"/>
+                            <field name="employee_id" readonly="1"  colspan="4" options="{'no_create': True, 'no_edit': True , 'no_open': True}" />
+                        </group>
+                        <field name="name" invisible="1" />
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_employee_mediclaimrevised_tree">
+            <field name="name">view.wp.employee.mediclaim.revised.tree</field>
+            <field name="model">wp.employee.mediclaim.revised</field>
+            <field name="arch" type="xml">
+                <tree string="Mediclaim Revised Details">
+                    <field name="employee_id" invisible="0" />
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_emp_wp_mediclaimrevised_list" model="ir.actions.act_window">
+            <field name="name">Mediclaim Revised</field>
+            <field name="res_model">wp.employee.mediclaim.revised</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_hr_employee_mediclaimrevised_tree" />
+        </record>
+
+
+
+        <record model="ir.ui.view" id="view_hr_employee_mediclaimreimbursement_form">
+            <field name="name">view.wp.employee.mediclaim.reimbursement.form</field>
+            <field name="model">wp.employee.mediclaim.reimbursement</field>
+            <field name="arch" type="xml">
+                <form string="Mediclaim Reimbursement Details">
+                  <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft" />
+                  </header>
+
+                    <sheet>
+                      <h2 style="color:black;font-weight:bold !important;"><center>Medical Reimbursement &amp; LTA Form</center></h2>
+                      <br/><br/>
+
+                      <h4><ul class="context-menu" style="padding-left: 167px;">
+                          <li>Medical reimbursement and LTA are a part of your fixed CTC. These components are included to help the employee to save tax.</li>
+                          <li>Please select the appropriate column as per the eligible nominees you will be requested to submit appropriate bill against the same.</li>
+                      </ul><br/>
+
+                      <p style="padding-left: 150px;">Note - This form is to be filled by those employees whose salary is taxable. </p></h4>
+
+                        <br/>
+
+                        <group col="4" colspan="2" style="border: 1px solid;">
+
+                            <div class="col-xs-12 wp-table-border"  >
+                                <label string="Name" class='bold-wp-label' />
+                                <field name="self_name" class="col-xs-2" placeholder="Self"  style="padding-top: 17px;"  required="1"/>
+                                <field name="spouse_name" class="col-xs-2" placeholder="Spouse Name"/>
+                                <field name="first_child" class="col-xs-2" placeholder="1st Child Name"/>
+                                <field name="father_name" class="col-xs-2" placeholder="Father’s Name"/>
+                                <field name="mother_name" class="col-xs-2" placeholder="Mother’s Name"/>
+                            </div>
+                            <div class="col-xs-12 wp-table-border"  >
+                                <label string="Gender" class='bold-wp-label'/>
+                                <field name="self_gender" class="col-xs-2"  style="padding-top: 17px;"  required="1"/>
+                                <field name="spouse_gender" class="col-xs-2"  />
+                                <field name="first_gender" class="col-xs-2"/>
+                                <field name="father_gender" class="col-xs-2"/>
+                                <field name="mother_gender" class="col-xs-2"/>
+                            </div>
+                            <div class="col-xs-12 wp-table-border"  >
+                                <label string="Medical Reimburse Nominee" class='bold-wp-label'/>
+                                <field name="self_nominee" class="wp-table-boolean" /><br/>
+                                <field name="spouse_nominee"  class="wp-table-boolean"  /><br/>
+                                <field name="first_nominee" class="wp-table-boolean"  /><br/>
+                                <field name="father_nominee" class="wp-table-boolean"  /><br/>
+                                <field name="mother_nominee" class="wp-table-boolean"  /><br/>
+                            </div>
+                            <div class="col-xs-12 wp-table-border"  >
+                                <label string="LTA Nominee" class='bold-wp-label'/>
+                                <field name="self_lta_nominee" class="wp-table-boolean"  /><br/>
+                                <field name="spouse_lta_nominee" class="wp-table-boolean"  /><br/>
+                                <field name="first_lta_nominee" class="wp-table-boolean"  /><br/>
+                                <field name="father_lta_nominee" class="wp-table-boolean"  /><br/>
+                                <field name="mother_lta_nominee" class="wp-table-boolean"  /><br/>
+                            </div>
+                        </group>
+                        <br/><br/>
+
+                        <group  col="12" >
+                            <field name="date" invisible="0" colspan="6" required="1"/>
+                            <field name="employee_id" readonly="1" colspan="6" options="{'no_create': True, 'no_edit': True , 'no_open': True}" />
+                        </group>
+                        <field name="name" invisible="1" />
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_employee_mediclaimreimbursement_tree">
+            <field name="name">view.wp.employee.mediclaim.reimbursement.tree</field>
+            <field name="model">wp.employee.mediclaim.reimbursement</field>
+            <field name="arch" type="xml">
+                <tree string="Mediclaim Reimbursement Details">
+                    <field name="employee_id" invisible="0" />
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_emp_wp_mediclaimreimbursement_list" model="ir.actions.act_window">
+            <field name="name">Mediclaim Reimbursement</field>
+            <field name="res_model">wp.employee.mediclaim.reimbursement</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_hr_employee_mediclaimreimbursement_tree" />
+        </record>
+
+
+		
+	<record id="view_employee_form_extension" model="ir.ui.view">
+        <field name="name">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+
+            <field name="work_email" position="after">
+                <field name="user_check_tick" invisible="1"/>
+            </field>
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button name="create_user" string="Create User" type="object" class="oe_highlight"
+                            attrs="{'invisible':[('user_check_tick','=',True)]}"/>
+
+                    <button name="send_joining_details" string="Send joining Details" type="object" class="oe_highlight"
+                            />
+                </header>
+            </xpath>
+            <field name="work_email" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+
+            <xpath expr="/form/sheet" position="before">
+              <header groups="hr.group_hr_manager">
+                  <button name="start_grounding" string="Start Grounding" type="object" states="joined" groups="hr.group_hr_user,hr.group_hr_manager"/>
+                  <button name="start_test_period" string="Start Test Period" type="object" states="grounding" groups="hr.group_hr_user,hr.group_hr_manager"/>
+                  <button name="%(sales_meet.wizard_employee_act)d" string="Set as Employee" type="action"
+                          states="joined,test_period" context="{'employee_id':id}" groups="hr.group_hr_user,hr.group_hr_manager"/>
+                  <button name="start_notice_period" string="Start Notice Period" type="object" states="employment" groups="hr.group_hr_user,hr.group_hr_manager"/>
+                  <button name="relived" string="Relieved" type="object" states="notice_period" groups="hr.group_hr_user,hr.group_hr_manager"/>
+                  <button name="terminate" string="Terminate" type="object" states="grounding,employment" groups="hr.group_hr_user,hr.group_hr_manager"/>
+                  <field name="state" widget="statusbar" statusbar_visible="joined,grounding,employment"/>
+              </header>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(action_emp_wp_joining_details_list)d" type="action" class="oe_inline oe_stat_button" icon="fa-file-text" help="Add/Edit/Review Joining details of employee">
+                    <field name="no_of_joining" widget="statinfo" string="Joining Info" />
+                </button>
+                <button name="%(action_emp_wp_idcard_list)d" type="action" class="oe_inline oe_stat_button" icon="fa-indent" help="Add/Edit/Review ID Card Details">
+                    <field name="no_of_idcard" widget="statinfo" string="ID Card" />
+                </button>
+                <button name="%(action_emp_wp_mediclaimrevised_list)d" type="action" class="oe_inline oe_stat_button" icon="fa-user" help="Add/Edit/Review Joining Mediclaim Revised employee">
+                    <field name="no_of_medrev" widget="statinfo" string="Mediclaim Revised" />
+                </button>
+                <button name="%(action_emp_wp_mediclaimreimbursement_list)d" type="action" class="oe_inline oe_stat_button" icon="fa-list-alt" help="Add/Edit/Review Mediclaim Reimbursement of employee">
+                    <field name="no_of_reimb" widget="statinfo" string="Reimbursement" />
+                </button>
+            </xpath>
+
+            <page name="hr_settings" position="after">
+              <page name="stage_history" string="Status History">
+                  <field name="stages_history">
+                      <tree>
+                          <field name="state"/>
+                          <field name="start_date"/>
+                          <field name="end_date"/>
+                          <field name="duration" sum="Total"/>
+                      </tree>
+                  </field>
+              </page>
+            </page>
+
+            <page name="hr_settings" position="after">
+              <page name="legal_info" string="Company Details">
+                <group>
+                    <group>
+                      <field name="pf_no_with_company"/>
+                      <field name="pf_no"/>
+                      <field name="pf_ceiling"/>
+                      <field name="uan_no"/>
+                      <field name="company_esic_no"/>
+                      <field name="esic_no"/>
+                    </group>
+                    <group>
+                      <field name="insurance_id"/>
+                      <field name="uvl_no"/>
+                      <field name="cuvlap"/>
+                      <field name="videocon_insurance_id"/>
+                      <field name="vlc_no"/>
+                      <field name="card_status"/>
+                    </group>
+                </group>
+                  
+              </page>
+              
+            </page>
+
+            <field name="category_ids" position="after"  >
+              <group col="12">
+                 <field name="grade_id" colspan="6"/>
+                  <field name="emp_id"  colspan="6"/>
+              </group>
+              <group col="12">
+                  <field name="status"  colspan="6"/>
+                  <field name="c_bpartner_id"  colspan="6"/>
+              </group>
+            </field>
+
+            <field name="category_ids" position='attributes' >
+                <attribute name ="invisible">1</attribute>
+            </field>
+
+            <field name="birthday" position="after">
+                  <field name="age"/>
+            </field>
+
+            <field name="work_location" position="after">
+                  <field name="work_state"/>
+            </field>
+
+            <field name="passport_id" position="after">
+                  <field name="bank_name"/>
+                  <field name="account_bank_id"/>
+                  <field name="ifsc_code"/>
+                  <field name="blood_group"/>
+                  <field name="pan_no" invisible="0"/>
+                  <field name="aadhar_no" invisible="0"/>
+            </field>
+
+            <field name="calendar_id" position="after"  >
+                   <field name="roll" invisible="0"/>
+                   <field name="zone" invisible="0"/>
+                   <field name="resource_calendar_id" required="0"/>
+            </field>
+
+            <field name="work_phone" position="after"  >
+                   <field name="category_ids_many2one" invisible="0"/>
+                   <field name="category_id" invisible="0"/>
+                   <field name="state_id" invisible="0"/>
+                   <field name="district_many2many"  widget="many2many_tags" invisible="0"/>
+            </field>
+
+            <field name="address_home_id" position="after"  >
+               <field name="father_name" />
+               <field name="mother_name" />
+               <field name="personal_email" widget="email"/>
+               <field name="date_of_joining" invisible="0"/>
+               <field name="experience" invisible="0"/>
+               <field name="other_experience" invisible="0"/>
+               <field name="qualification" invisible="0"/>
+               <field name="further_addition" invisible="0"/>
+               <field name="date_of_resignation"  attrs="{'invisible': [('state', 'not in', ['notice_period','relieved','terminate'])]}"/>
+               <field name="last_date"  attrs="{'invisible': [('state', 'not in', ['notice_period','relieved','terminate'])]}"/>
+               <field name="fnf"   attrs="{'invisible': [('state', 'not in', ['notice_period','relieved','terminate'])]}"/>
+            </field>
+
+            <field name="bank_account_id" position='attributes' >
+                <attribute name ="groups">base.group_no_one</attribute>
+            </field>
+
+        </field>
+    </record>
+
+      <record model="ir.ui.view" id="hr_employee_stages_inherit_tree_view">
+        <field name="name">hr.employee.tree.view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <field name="message_needaction" position="after">
+                <field name="state"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_employee_stages_inherit_search_view">
+        <field name="name">hr.employee.search.view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <field name="job_id" position="after">
+                <field name="state"/>
+                <filter string="Employees" name="employee" domain="[('state','=','employment')]"/>
+            </field>
+            <xpath expr="//group" position="inside">
+                <filter string="State" domain="[]" context="{'group_by':'state'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_employee_stages_inherit_kanban_view">
+        <field name="name">hr.employee.kanban.view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <field name="last_login" position="after">
+                <field name="state"/>
+            </field>
+            <xpath expr="//li[3]" position="after">
+                <li t-if="record.state.raw_value"><field name="state"/></li>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr.open_view_employee_list_my" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{"search_default_employee":1}</field>
+        <field name="view_id" eval="False"/>
+        <field name="search_view_id" ref="hr.view_employee_filter"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a new employee.
+          </p><p>
+            With just a quick glance on the Odoo employee screen, you
+            can easily find all the information you need for each person;
+            contact data, job position, availability, etc.
+          </p>
+        </field>
+    </record>
+
+
+    <record id="view_hr_payslip_form_extension" model="ir.ui.view">
+            <field name="name">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form" />
+            <field name="model">hr.payslip</field>
+            <field name="arch" type="xml">
+
+          <field name="credit_note" position="after"  >
+                 <field name="unpaid_id" invisible="1"/>
+                 <field name="month_days" invisible="1"/>
+          </field>
+        
+        </field>
+    </record>
+
+    <record id="view_hr_employee_category_form" model="ir.ui.view">
+        <field name="name">hr.employee.category</field>
+        <field name="model">hr.employee.category</field>
+        <field name="inherit_id" ref="hr.view_employee_category_form"/>
+        <field name="arch" type="xml">
+              <field name="name" position="after"  >
+                <field name="category_id" required="1"/>
+              </field>
+        </field>
+    </record>
+
+
+    <record model='ir.ui.view' id='hr_insurance_policy_form'>
+        <field name="name">hr.insurance.policy.form</field>
+        <field name="model">hr.insurance.policy</field>
+        <field name="arch" type="xml">
+            <form >
+                <group>
+                  <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model='ir.ui.view' id='hr_insurance_policy_tree'>
+        <field name="name">hr.insurance.policy.tree</field>
+        <field name="model">hr.insurance.policy</field>
+        <field name="arch" type="xml">
+            <tree >
+                  <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model='ir.actions.act_window' id='hr_insurance_policy_act'>
+        <field name="name">CUVLAV Insurance Policy</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.insurance.policy</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model='ir.ui.view' id='hr_videocon_policy_form'>
+        <field name="name">hr.videocon.policy.form</field>
+        <field name="model">hr.videocon.policy</field>
+        <field name="arch" type="xml">
+            <form >
+                <group>
+                  <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model='ir.ui.view' id='hr_videocon_policy_tree'>
+        <field name="name">hr.videocon.policy.tree</field>
+        <field name="model">hr.videocon.policy</field>
+        <field name="arch" type="xml">
+            <tree >
+                  <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model='ir.actions.act_window' id='hr_videocon_policy_act'>
+        <field name="name">CUVLAV Insurance Policy</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.videocon.policy</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model='ir.ui.view' id='wizard_employee_form'>
+        <field name="name">wizard.employee.form</field>
+        <field name="model">wizard.employee.stage</field>
+        <field name="arch" type="xml">
+            <form string="Set as Employee">
+                <group>
+                    <field name="related_user"/>
+                </group>
+                <footer>
+                    <button name="set_as_employee" string="Set as Employee" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model='ir.actions.act_window' id='wizard_employee_act'>
+        <field name="name">Set as Employee</field>
+        <field name="res_model">wizard.employee.stage</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_employee_form"/>
+        <field name="target">new</field>
+    </record>
+
+
+        <record id="view_employee_form_extension_user" model="ir.ui.view">
+            <field name="name">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="groups_id" eval="[(6, 0, [ref('sales_meet.group_employee_user')])]"/>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+
+              <xpath expr="/form/sheet/div[1]" position="attributes">
+                  <attribute name ="groups">!sales_meet.group_employee_user</attribute>
+              </xpath>
+
+              <xpath expr='//form[1]' position='attributes'>
+                  <attribute name="create">false</attribute>
+              </xpath>
+              <xpath expr='//form[1]' position='attributes'>
+                  <attribute name="edit">false</attribute>
+              </xpath>
+
+              <page name="hr_settings" position='attributes' >
+                  <attribute name ="groups">!sales_meet.group_employee_user</attribute>
+              </page>
+
+              <page name="stage_history" position='attributes' >
+                  <attribute name ="groups">!sales_meet.group_employee_user</attribute>
+              </page>
+
+              <field name="grade_id" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+
+              <field name="department_id" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+
+              <field name="job_id" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+
+              <field name="parent_id" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+
+              <field name="coach_id" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+
+              <field name="address_home_id" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+              <field name="address_id" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+
+              <field name="videocon_insurance_id" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+
+              <field name="insurance_id" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+
+              <field name="bank_account_id" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+
+              <field name="category_ids_many2one" position='attributes' >
+                  <attribute name="options">{'no_open': True}</attribute>
+              </field>
+
+
+            </field>
+        </record>
+
+        <record id="view_hr_payslip_form_extension_user" model="ir.ui.view">
+            <field name="name">hr.payslip</field>
+            <field name="groups_id" eval="[(6, 0, [ref('sales_meet.group_employee_user')])]"/>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form" />
+            <field name="model">hr.payslip</field>
+            <field name="arch" type="xml">
+
+              <xpath expr='//form[1]' position='attributes'>
+                  <attribute name="create">false</attribute>
+              </xpath>
+              <xpath expr='//form[1]' position='attributes'>
+                  <attribute name="edit">false</attribute>
+              </xpath>
+
+              <xpath expr='//form/header[1]' position='attributes'>
+                  <attribute name ="groups">!sales_meet.group_employee_user</attribute>
+              </xpath>
+
+              <xpath expr='//notebook[1]' position='attributes'>
+                  <attribute name ="groups">!sales_meet.group_employee_user</attribute>
+              </xpath>
+
+              <div name="button_box" position='attributes'>
+                  <attribute name ="groups">!sales_meet.group_employee_user</attribute>
+              </div>
+
+              <field name="contract_id" position='attributes' >
+                  <attribute name ="invisible">1</attribute>
+              </field>
+
+              <field name="struct_id" position='attributes' >
+                  <attribute name ="invisible">1</attribute>
+              </field>
+
+              <field name="credit_note" position='attributes' >
+                  <attribute name ="invisible">1</attribute>
+              </field>
+        
+        </field>
+    </record>
+
+
+	</data>
+</openerp>

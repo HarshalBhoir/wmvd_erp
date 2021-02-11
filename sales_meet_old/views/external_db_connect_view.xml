@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+<record id="view_external_db_connect_form" model="ir.ui.view">
+    <field name="name">external.db.connect.form</field>
+    <field name="model">external.db.connect</field>
+    <field name="arch" type="xml">
+        <form>
+            <header>
+                <field name="state" widget="statusbar"/>
+            </header>
+            <sheet>
+                <h2><field name="name" attrs="{'invisible':[('state','=','draft')],'readonly':[('state','!=','draft')]}" /></h2>
+
+                <group col="4">
+                    <group>
+                        <field name="condition" style="width: 300px;" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+                    <group>
+                        <field name="schedular" attrs="{'invisible':[('condition','not in',('schedular',True))]}"/>
+                    </group>
+                    <group>
+                        <button name="get_schedular" string="Scheduler" type="object" class="btn-primary"  
+                                attrs="{'invisible':['|',('schedular','=',False),('state','!=','draft')]}" />
+                    </group>
+                    <group>
+                        <field name="changed_date" attrs="{'invisible':[('condition','!=','date_change')],
+                            'required':[('condition','=','date_change')],
+                            'readonly':[('state','!=','draft')]}"  />
+
+                    </group>
+                </group>
+
+                <group col="4">
+                    <group>
+                        <field name="partner_update" attrs="{'invisible':['|',('schedular','!=',False),('entry_type','!=','payment')],}"/>
+                    </group>
+                    <group>
+                        <field name="c_bpartner_id" attrs="{'invisible':['|',('schedular','!=',False),('partner_update','=',False)],}"/>
+                    </group>
+                </group>
+                
+                <group attrs="{'invisible':[('condition','in',('schedular',False))]}" >
+                    <group>
+                        <field name="config_id" attrs="{'invisible':[('schedular','!=',False)],'required':[('schedular','=',False)],'readonly':[('state','!=','draft')]}" options="{'no_open': True}"/>
+                        <field name="idempiere_id"  
+                            attrs="{'invisible':[('schedular','!=',False)],'required':[('schedular','=',False)],'readonly':[('state','!=','draft')]}"/>
+                        <field name="documentno" attrs="{'invisible':[('schedular','!=',False)],'required':[('schedular','=',False)],'readonly':[('state','!=','draft')]}" />
+                        <field name="docstatus" attrs="{'invisible':[('condition','!=','status_change')],'required':[('condition','=','status_change')],'readonly':[('state','!=','draft')]}" />
+                        <field name="movement_date" attrs="{'invisible':[('condition','!=','date_change')],
+                            'required':[('condition','=','date_change')]}"  />
+                        
+                    </group>
+                    <group>
+                        <field name="entry_type" attrs="{'invisible':[('schedular','!=',False)],'required':[('schedular','=',False)]}" />
+                        
+                        <field name="requester" attrs="{'invisible':[('schedular','!=',False)],'readonly':[('state','!=','draft')]}" />
+                        <field name="date" invisible="1"/>
+                        <field name="employee_id" options="{'no_open': True}" 
+                        attrs="{'invisible':[('schedular','!=',False)],'required':[('schedular','=',False),('requester','=',False)],'readonly':[('state','!=','draft')]}"  />
+                        <field name="completed" attrs="{'invisible':[('state','=','draft')]}"/>
+                        <field name="ad_client_id" invisible="1"/>
+                     
+                    </group>
+                </group>
+
+
+                <group col="4" colspan="2" attrs="{'invisible':['|',('schedular','!=',False),('condition','in',('schedular',False))]}" >
+                    <div class="col-xs-12" style="margin-top:5%;">
+                        <center>
+                            <div class="col-xs-1"/>
+                            <button name="get_data_from_database" string="Sync" type="object" class="btn-primary col-xs-2" 
+                                style="font-size: 16px;" attrs="{'invisible':['|',('state','=','update'),('completed','!=',False)]}" />
+
+                            <div class="col-xs-1"/>
+                            <button name="update_data_from_database" string="Update" type="object"  class="btn-primary col-xs-2"
+                             style="font-size: 16px;" states="select"/>
+
+                            <div class="col-xs-1"/>
+                            <button name="update_line_data_from_database" string="Update Lines" type="object" class="btn-primary col-xs-2"
+                            attrs="{'invisible':['|',('state','!=','update2'),('entry_type','!=','invoice')]}"  style="font-size: 16px;"/>
+
+                            <div class="col-xs-1"/>
+                            <button name="update_null_partner" string="Update Null Partner" type="object" class="btn-primary col-xs-2"
+                            attrs="{'invisible':['|',('state','!=','select2'),('partner_update','=',False)]}"  style="font-size: 16px;"/>
+                        </center>
+                    </div>
+                </group>
+
+                <group string="Line Details" col="4" colspan="4" attrs="{'invisible':[('state','=','draft')]}" >
+                    <field name="connect_lines_one2many" string="Lines" nolabel="1"  >
+                        <tree create="false" edit="false" delete="false">
+                            <field name="name" invisible="1" />
+                            <field name="c_bpartner_id"  />
+                            <field name="connect_id" invisible="1"  />
+                            <field name="documentno"  />
+                            <field name="c_invoice_id"  />
+                            <field name="totallines"  />
+                            <field name="grandtotal"  />
+                            <field name="docstatus"  />
+                            <field name="processed"  />
+                            <field name="posted"  />
+                            <field name="dateacct"  />
+                        </tree>
+                    </field>
+                </group>
+
+                <field name="note" placeholder="Note .."  invisible="1"/>
+
+             </sheet>
+
+             <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+              </div>
+        </form>
+    </field>
+</record>
+
+<record id="view_external_db_connect_tree" model="ir.ui.view">
+    <field name="name">external.db.connect.tree</field>
+    <field name="model">external.db.connect</field>
+    <field name="arch" type="xml">
+        <tree colors="red:state=='draft'">
+            <field name="name" />
+            <field name="requester" />
+            <field name="employee_id" />
+            <field name="date"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+
+<record id="action_external_db_connect" model="ir.actions.act_window">
+    <field name="name">Reactivation</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">external.db.connect</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<record id="view_external_db_config_form" model="ir.ui.view">
+    <field name="name">external.db.configuration.form</field>
+    <field name="model">external.db.configuration</field>
+    <field name="arch" type="xml">
+        <form>
+            <header>
+                <button name="check_connection" string="Check Connection" type="object" class="btn-primary"  />
+                <button name="disconnect" string="Disconnect" type="object" class="btn-primary" states='connected' />
+                <field name="state" widget="statusbar"/>
+            </header>
+            <center>
+                <h1 style="color:darkgreen;" attrs="{'invisible' :[('state', '!=', 'connected')]}" >DB Connected</h1>
+                <h1 style="color:darkred;" attrs="{'invisible' :[('state', '!=', 'rejected')]}" >DB Disconnected</h1>
+            </center>
+            <sheet>
+                <h1><field name="name" placeholder="Name"/></h1>
+                <group>
+                    <group>
+                        <field name="ip_address" required="1"/>
+                        <field name="database_name"  required="1"/>
+                    </group>
+                    <group>
+                        <field name="username"  required="1"/>
+                        <field name="password" password="True"  required="1"/>
+                        <field name="port"  required="1"/>
+                    </group>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="view_external_db_config_tree" model="ir.ui.view">
+    <field name="name">external.db.configuration.tree</field>
+    <field name="model">external.db.configuration</field>
+    <field name="arch" type="xml">
+        <tree >
+            <field name="name" />
+            <field name="ip_address" />
+            <field name="database_name" />
+            <field name="port"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+
+<record id="action_external_db_config" model="ir.actions.act_window">
+    <field name="name">Configuration</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">external.db.configuration</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+
+<record id="view_wp_grn_import_tree" model="ir.ui.view">
+    <field name="name">wp.grn.import.tree</field>
+    <field name="model">wp.grn.import</field>
+    <field name="arch" type="xml">
+        <tree colors="green:state=='import_template';">
+            <field name="name" />
+            <field name="company_id"/>
+            <field name="date_start"/>
+            <field name="state" />
+        </tree>
+    </field>
+</record>
+
+<record id="view_wp_grn_import_form" model="ir.ui.view">
+    <field name="name">wp.grn.import.form</field>
+    <field name="model">wp.grn.import</field>
+    <field name="arch" type="xml">
+        <form>
+            <header>
+                <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+            </header>
+
+            <sheet >
+                <div class="oe_title">
+                    <h1><field name="name" states="done" readonly="1"/></h1>
+                </div>
+
+                <group  col="12">
+                    <field name="date_start" colspan="4"  class="oe_inline" readonly="1"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                    
+                    <label  string = "Sample file"  states='draft'/>
+                    <a href="/sales_meet/static/data/grn_test_entry.csv"  states='draft' >Sample GRN CSV File</a>
+                    <field name="company_id" colspan="4" invisible="0"/>
+                </group>
+
+                <group  >
+                    <field name="grn_data" invisible="1"/> 
+                    <field name="file_name" filename="grn_data" colspan="4" widget="upload" 
+                        attrs="{'readonly':[('state','!=','draft')]}"/>
+                </group>
+
+                <group col="4" colspan="2"  >
+                    <div class="col-xs-12" style="margin-top:3%;">
+                        <center>
+                             <button name="add_lines" string="Add GRN" type="object" icon="fa-check " class="btn-primary col-xs-2" 
+                                style="font-size: 16px;" states='draft'/>
+
+                            <div class="col-xs-1"/>
+                            <button name="update_invoices" type="object" string="Update GRN"  class="btn-primary col-xs-2"  style="font-size: 16px;" 
+                                states='done'/>
+                        </center>
+                    </div>
+                </group>
+
+
+              
+                <group col="4" colspan="4" >
+                    <field name="grn_import_line_one2many" nolabel="1" mode="tree" attrs="{'readonly':[('state','=','import_template')]}"/>
+                </group>
+                
+            </sheet>
+             <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="message_ids" widget="mail_thread"/>
+              </div>
+        </form>
+    </field>
+</record>
+
+
+<record id="view_wp_grn_import_line_tree" model="ir.ui.view">
+    <field name="name">wp.grn.import.line.tree</field>
+    <field name="model">wp.grn.import.line</field>
+    <field name="arch" type="xml">
+        <tree editable="bottom" create="false" >
+            <field name="name"  invisible="1"/>
+                <field name="name"  invisible="1"/>
+                <!-- <button name="approve_invoice" icon="fa fa-check" string="Approve" aria-hidden="true" type="object" style="color:green !important;" /> -->
+
+                
+                <field name="documentno" />
+                <field name="inbound_no" />
+                <field name="grn_no" />
+                <field name="grn_date" />
+                <field name="ssc_date" />
+                <field name="remarks" />
+
+        </tree>
+    </field>
+</record>
+
+<record id="action_wp_grn_import" model="ir.actions.act_window">
+    <field name="name">GRN Import</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">wp.grn.import</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+<menuitem name="ERP Connect" id="menu_db_connect_sub" 
+           groups='sales_meet.group_external_db_connect_manager,sales_meet.group_external_db_connect_user'
+           sequence="1"  web_icon="sales_meet,static/description/edc_icon.png" />
+
+<menuitem name="Reactivation" id="menu_db_connect_main" action="action_external_db_connect"
+           sequence="1"  parent='menu_db_connect_sub' />
+
+<menuitem name="Posting Error" id="menu_posting_error_sub" action="action_posting_error"
+           sequence="2" parent='menu_db_connect_sub' />
+
+<menuitem name="GRN Import" id="menu_wp_grn_import_sub" action="action_wp_grn_import"
+           sequence="3" parent='menu_db_connect_sub' />
+
+
+<menuitem name="Configuration" id="menu_db_config_sub" action="action_external_db_config"
+           sequence="99" parent='menu_db_connect_sub' groups='sales_meet.group_external_db_connect_manager' />
+
+
+
+           
+  </data>
+</openerp>

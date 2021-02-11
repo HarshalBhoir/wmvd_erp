@@ -1,0 +1,2 @@
+id,database_name,ip_address,name,password,state,username
+external_db_configuration_test,testDb,192.168.1.1,Live Server 33,testpassword,draft,postgres

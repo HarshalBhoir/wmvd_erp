@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="sales_meet.RetailerDashboardMain">
+      
+        <div class="container-fluid o_dashboards">
+            <div class="o_retailer_dashboard"></div>
+        </div>
+    </t>
+
+
+    <t t-name="RetailerManagerDashboard">
+            <style type="text/css" t-if="! widget.isFirefox">
+
+                .o_web_client > .o_main .o_main_content .o_control_panel {
+                    display: none;
+                }
+            </style>
+
+
+            <div class="col-md-12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 gift_count">
+                            <div class="dash-box dash-box-color-1">
+                                <div class="dash-box-icon">
+                                    <i class="fa fa-fw fa-calendar-plus-o"/>
+                                    <!-- <i class="fas fa-gifts"></i> -->
+                                </div>
+                                
+                                <div style="padding: 30px 20px;" class="dash-box-body">
+                                  <h3 class="mb-0">
+                                    <p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.gift_count"/></p>
+                                  </h3>
+                                  <h3>
+                                    <span style="color: #fff;" class="dash-box-title">Pending Retailer Gifts</span>
+                                  </h3>
+                                </div>
+
+                                <div style="color: #98f18d;"   class="dash-box-action gift_count">
+                                    <button>More Info</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4 gift_count_submitted">
+                            <div class="dash-box dash-box-color-3">
+                                <div class="dash-box-icon">
+                                    <i class="fa fa-fw fa-calendar"/>
+                                </div>
+                                
+                                <div style="padding: 30px 20px;" class="dash-box-body">
+                                  <h3 class="mb-0">
+                                    <p style="color: #fff;" class="stat-count"><t t-esc="widget.login_user.gift_count_submitted"/></p>
+                                  </h3>
+                                  <h3>
+                                    <span style="color: #fff;" class="dash-box-title">Submitted Gifts</span>
+                                  </h3>
+                                </div>
+
+                                <div class="dash-box-action gift_count_submitted">
+                                    <button>More Info</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        
+                    </div>
+                </div>
+            </div>
+    </t>
+
+</templates>

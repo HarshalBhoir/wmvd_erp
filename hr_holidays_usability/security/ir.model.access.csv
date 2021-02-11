@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_holidays_employee_counter,Full access on hr.holidays.employee.counter,model_hr_holidays_employee_counter,base.group_user,1,1,1,1
+access_hr_holidays_cancel_user,hr.holidays.cancel,model_hr_holidays_cancel,base.group_user,1,1,1,1
+access_hr_policies_user,hr.policies,model_hr_policies,base.group_user,1,0,0,0
+access_hr_policies_manager,hr.policies,model_hr_policies,hr_holidays.group_hr_holidays_manager,1,1,1,1
+access_hr_holidays_public_user,access_hr_holidays_public,model_hr_holidays_public,base.group_user,1,0,0,0
+access_hr_holidays_public_manager,access_hr_holidays_public,model_hr_holidays_public,hr_holidays.group_hr_holidays_manager,1,1,1,1
+access_hr_holidays_public_line_user,access_hr_holidays_public_line,model_hr_holidays_public_line,base.group_user,1,0,0,0
+access_hr_holidays_public_line_manager,access_hr_holidays_public_line,model_hr_holidays_public_line,hr_holidays.group_hr_holidays_manager,1,1,1,1

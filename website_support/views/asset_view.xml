@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		
+ 		<record model="ir.ui.view" id="bt_asset_management_asset_kanban">
+			<field name="name">bt.asset.kanban</field>
+			<field name="model">bt.asset</field>
+			<field name="arch" type="xml">
+				<kanban class="o_kanban_mobile">
+					<field name="image"/>
+					<field name="asset_name"/>
+					<field name="asset_code"/>
+					<field name="purchase_date"/>
+					<field name="purchase_value"/>
+					<field name="model_name"/>
+					<field name="serial_no"/>
+					<templates>
+						<t t-name="kanban-box">
+							<div class="oe_kanban_global_click o_res_partner_kanban">
+								<div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+								   <div class="o_kanban_image">
+										 <t t-if="record.image.raw_value">
+											<img t-att-src="kanban_image('bt.asset', 'image', record.id.value)"/>
+										</t>
+									</div>  
+									<div class="oe_kanban_details">
+										<strong class="oe_partner_heading">
+											<field name="asset_name"/>
+										</strong>
+										<ul>
+											<li t-if="record.asset_code.raw_value">Code: <field name="asset_code"/></li>
+									   		<li t-if="record.model_name.raw_value">Model: <field name="model_name"/></li>
+									   		<li t-if="record.serial_no.raw_value">Serial #: <field name="serial_no"/></li>
+										</ul>	
+									</div>
+							</div>
+						 </t>
+					 </templates>
+				</kanban>
+			 </field>	
+		 </record>	   
+			
+		 <record id="bt_asset_management_asset_tree" model="ir.ui.view">
+			<field name="name">bt.asset.tree</field>
+			<field name="model">bt.asset</field>
+			<field name="arch" type="xml">
+				<tree string="Asset">
+					<field name="name"/>
+					<field name="asset_name"/>
+					<field name="asset_code"/>
+					<field name="purchase_date"/>
+					<field name="purchase_value"/>
+					<field name="current_loc_id"/>
+					<field name="model_name"/>
+					<field name="serial_no"/>
+					<field name="manufacturer"/>
+					<field name="warranty_start"/>
+				  	<field name="warranty_end"/>
+					<field name="state" />
+				</tree>
+			</field>
+		</record>  
+		
+		<record id="bt_asset_management_asset_search" model="ir.ui.view">
+			<field name="name">bt.asset.search</field>
+			<field name="model">bt.asset</field>
+			<field name="arch" type="xml">
+				<search string="Asset">
+					<field name="name"/>
+					<field name="asset_code"/>
+					<field name="purchase_date"/>
+					<field name="purchase_value"/>
+					<field name="current_loc_id"/>
+					<field name="model_name"/>
+					<field name="serial_no"/>
+					<field name="manufacturer"/>
+					<field name="warranty_start"/>
+					<field name="warranty_end"/>
+					<separator/>
+					<filter name="Scrapped" string="Scarpped" domain="[('state','=','scrapped')]"/>
+					<group expand="0" string="Group By">
+						<filter string="Category" domain="[]" context="{'group_by':'category_id'}"/>
+						<filter string="Purchase Date" domain="[]" context="{'group_by':'purchase_date'}"/>
+						<filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<!-- <record id="act_bt_asset_allocation2" model="ir.actions.act_window">
+			<field name="name">Allocation</field>
+			<field name="res_model">bt.asset.allocation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_asset_id': [active_id], 'default_asset_id': active_id}</field>
+		</record> -->
+		
+		<record id="bt_asset_management_asset_form" model="ir.ui.view">
+			<field name="name">bt.asset.form</field>
+			<field name="model">bt.asset</field>
+			<field name="arch" type="xml">
+				<form string="Asset">
+					<header>
+						<button name= "add_inventory" string="Add" type="object" class="btn-primary fa fa-plus"  
+							attrs="{'invisible': ['|',('service_asset','=',True),('state','!=','draft')]}"/>
+						<button name= "action_move_vals" string="Scrap" type="object" class="btn-primary"
+							attrs="{'invisible': ['|',('service_asset','=',True),('state','=','scrapped')]}"/>
+						<field name="state" widget="statusbar"  statusbar_visible="active,scrapped" />
+					</header>
+					<sheet>
+
+						<div class="oe_button_box" name="button_box">
+							<!-- <button name="%(website_support.action_bt_asset_allocation)d"
+								class="oe_stat_button"
+								icon="fa-book"
+								type="action"
+								context="{'search_default_asset_id': [active_id], 'default_asset_id': active_id}"> -->
+								<!-- 'search_default_employee_id': [active_id], 'default_employee_id': active_id -->
+								<!-- groups="hr.group_hr_manager" -->
+								<button name="create_allocation" class="oe_stat_button"
+										type="object" icon="fa-book" invisible="0">
+								<field name="allocations_count" widget="statinfo" string="Allocations"/>
+							</button>
+						</div>
+						<div>
+						 <field name="asset_type" widget="radio" class="oe_edit_only" options="{'horizontal': true}"/>
+					 </div>
+						<field name="image_medium" widget="image" class="oe_avatar"/>
+							<div class="oe_title">
+								<h1  attrs="{'invisible': [('asset_type','=','other')]}">
+									<field name="name" placeholder="Employee Name" attrs="{'required': [('asset_type','=','employee')]}"  
+										options="{'no_create': True, 'no_open': True}" />
+								</h1>
+								<h1  attrs="{'invisible': [('asset_type','=','employee')]}">
+									<field name="asset_name" placeholder="Asset Name" />
+								</h1>
+								<div class="o_row">
+									<field name="category_id" style="height: 40px;"  placeholder="Category" required="1"  
+										options="{'no_create': True, 'no_open': True}"/>
+									<!-- <field name="main_asset" /> -->
+								</div>
+								<label for="service_asset"	 style="padding-left: 26px;" attrs="{'invisible': [('asset_type','!=','other')]}"/>
+								<field name="service_asset" attrs="{'invisible': [('asset_type','!=','other')]}" />
+							</div>
+							<group>
+								<group>
+									<field name="model_name"  attrs="{'invisible': [('service_asset','=',True)],'required': [('service_asset','=',False)]}"/>
+									<field name="serial_no" attrs="{'invisible': [('service_asset','=',True)],'required': [('service_asset','=',False)]}"/>
+									<field name="budget_id"  required="1"  options="{'no_create': True, 'no_open': True}"/>
+									<field name="budget_category_id"  required="1"  options="{'no_create': True, 'no_open': True}"/>
+									<field name="is_created" invisible="1"/>
+									
+									<field name="purchase_value" required="1"/>
+									<field name="tax_value"/>
+								</group>
+								<group>
+									<field name="asset_code" required="1"/>
+									 <!-- attrs="{'readonly': [('is_created','=',True)],'invisible': [('is_created','=',False),('asset_type','!=','otder')]}" -->
+									
+									<field name="current_loc_id" required="1"  attrs="{'readonly': [('is_created','=',True)],'invisible': [('service_asset','=',True)]}" 
+										 options="{'no_create': True, 'no_open': True}"/>
+									<field name="department_id"  required="1"  options="{'no_create': True, 'no_open': True}"/>
+									<field name="company_id"  required="1"  options="{'no_create': True, 'no_open': True}"/>
+									<field name="purchase_date" required="1"/>
+									<field name="total_value"  attrs="{'invisible': [('total_value','=',False)]}"/>
+								</group>
+								 
+							</group>
+							<notebook>
+								<page string="Components" name="components">
+								   <field name="component_ids">
+									  <tree editable="bottom" >
+										  <field name="create_date" readonly="1"/>
+										  <field name="extra_asset_id" invisible="1"/>
+										  <field name="name" widget="selection"/>
+										  <field name="asset_code" invisible="1"/>
+										  <field name="model_name" string="Model/Capacity"/>
+										  <field name="serial_no"/>
+										  <field name="warranty_end"/>
+										  <field name="asset_id" invisible="1"/>
+										  <field name="state"/>
+									  </tree>
+								  </field>
+								</page>
+								<page name='vendor_evaluation' string="Vendor Evaluation">
+								   <group col='12'>
+										<group  colspan='6'>
+											<field name="vendor_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" 
+												   domain="[('supplier','=',True),('it_supplier','=',True)]"/>
+												   <br/><br/><br/><br/>
+											 <h3>RATING SYSTEM </h3>		
+											 <ul style='padding-left: 0px;'>
+											  <li>1 = POOR</li>
+											  <li>2 = SATISFACTORY</li>
+											  <li>3 = GOOD</li>
+											  <li>4  = EXCELLENT</li>
+											</ul>
+											<br/><br/><br/><br/>
+
+											<field name="total_eval" sum='Total'/>
+										</group>
+									   <group  colspan='6'>
+											<field name="quality_factor" string='Quality Of The Product / Workmanship'/>
+											<field name="competetive_factor" string='Price Competetiveness'/>
+											<field name="time_factor" string='Timly Delivery Of Product'/>
+											<field name="service_factor" string='After Sales Service'/>
+										</group>
+										
+									</group>
+
+								</page>
+								<page string="Warranty">
+									<group>
+										<field name="manufacturer"/>
+									</group>
+									<group>	 
+										<field name="warranty_start"/>
+										<field name="warranty_end"/>
+									</group>	
+								</page>
+								<page string="Notes">
+									<field name="note"/>
+								</page>
+
+								<page name="qr_code" string="QR Code">
+									<br/><br/>
+									<button name= "generate_qr_code" string="Generate" type="object" class="btn-primary fa fa-plus"   />
+									<group><field name="asset_qr_code" readonly="1"/></group>
+									
+									<group>
+										<group>
+											<field name="qr_code" widget="image" style="width: 120px; height: 120px;"/>
+
+										</group>
+										<group>
+											<field name="qr_code_name" invisible="1"/>
+											<field name="qr_code_link" filename="qr_code_name" colspan="4"/>
+										</group>
+									</group>
+								</page>
+
+								<page string="Maintenance" name="maintenance">
+								   <field name="maintenance_ids">
+									  <tree editable="bottom" colors="green:state=='done';">
+										  <field name="maintenance_id" readonly="1"/>
+										  <field name="date" invisible="0"/>
+										  <field name="name" invisible="1"/>
+										  <field name="remark" />
+										  <field name="asset_id" invisible="1"/>
+										  <field name="state"/>
+									  </tree>
+								  </field>
+								</page>
+							</notebook>			 
+					 </sheet>
+					 <div class="oe_chatter">
+					 	<!-- <field name="message_follower_ids" widget="mail_followers"/> -->
+						<field name="message_ids" widget="mail_thread"/>
+					</div>  
+				 </form>
+			 </field>
+		</record>
+
+		<record id="bt_asset_management_asset_location_tree" model="ir.ui.view">
+			<field name="name">bt.asset.location.tree</field>
+			<field name="model">bt.asset.location</field>
+			<field name="arch" type="xml">
+				<tree string="Asset Location">
+					<field name="name"/>
+					<field name="default"/>
+					<field name="default_scrap"/>
+					<field name="short_name"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="bt_asset_management_asset_location_search" model="ir.ui.view">
+			<field name="name">bt.asset.location.search</field>
+			<field name="model">bt.asset.location</field>
+			<field name="arch" type="xml">
+				<search string="Asset Location">
+					<field name="name"/>
+					<field name="asset_ids"/>
+				</search>
+			</field>
+		</record>
+		
+		<record id="bt_asset_management_asset_location_form" model="ir.ui.view">
+			<field name="name">bt.asset.location.form</field>
+			<field name="model">bt.asset.location</field>
+			<field name="arch" type="xml">
+				<form string="Asset Location">
+					<sheet>
+						<div class="oe_title">
+							<div class="oe_edit_only">
+								<label for="name" string="Location Name"/>
+							</div>
+							<h1><field name="name"/></h1>
+						</div>
+						<group>
+							<field name="default"/>
+					   		<field name="default_scrap"/>
+							<field name="short_name"/>
+						</group>
+						<group>
+							<notebook>
+								<page string="Assets">
+									<field name="asset_ids" nolabel="1" colspan="4" readonly="1">
+										<tree string="" editable="bottom">
+											<field name="name" invisible="1"/>
+											<field name="asset_name"/>
+											<field name="asset_code"/>	
+										</tree>
+										<form string="Asset Details">
+											<sheet>
+												<group>
+													<field name="name" invisible="1"/>
+													<field name="asset_name"/>
+													<field name="asset_code"/>
+												</group>
+											</sheet>	
+										</form>
+									</field>
+								</page>
+							</notebook>
+						</group>	
+					</sheet>	
+				</form>
+			</field>
+		</record>
+
+		<record id="bt_asset_management_asset_category_tree" model="ir.ui.view">
+			<field name="name">bt.asset.category.tree</field>
+			<field name="model">bt.asset.category</field>
+			<field name="arch" type="xml">
+				<tree string="Asset Category">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record> 
+		
+		<record id="bt_asset_management_asset_category_search" model="ir.ui.view">
+			<field name="name">bt.asset.category.search</field>
+			<field name="model">bt.asset.category</field>
+			<field name="arch" type="xml">
+				<search string="Asset Category">
+					<field name="name"/>
+				</search>
+			</field>
+		</record>		
+		
+		<record id="bt_asset_management_asset_category_form" model="ir.ui.view">
+			<field name="name">bt.asset.category.form</field>
+			<field name="model">bt.asset.category</field>
+			<field name="arch" type="xml">
+				<form string="Asset Category">
+					<sheet>
+						<div class="oe_title">
+							<div class="oe_edit_only">
+								<label for="name" string="Category Name"/>
+							</div>
+							<h1><field name="name"/></h1>
+						</div>
+						<group>
+							<field name="categ_no"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		 </record>	   	
+		
+		
+		<record id="action_bt_asset" model="ir.actions.act_window">
+			<field name="name">Assets</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">bt.asset</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">kanban,tree,form</field>
+			<field name="search_view_id" ref="bt_asset_management_asset_search"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Create Asset for the company
+				</p>
+			</field>
+		</record>
+		
+			
+				
+		<record id="action_bt_asset_location" model="ir.actions.act_window">
+			<field name="name">Asset Location</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">bt.asset.location</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="bt_asset_management_asset_location_search"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Create Asset Location for the Company
+				</p>
+			</field>
+		</record>
+		
+	   
+				
+	   <record id="action_bt_asset_category" model="ir.actions.act_window">
+			<field name="name">Asset Category</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">bt.asset.category</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="bt_asset_management_asset_category_search"/>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Create Asset Category for the Company
+				</p>
+			</field>
+		</record>
+
+
+
+
+	<record id="bt_component_item_form" model="ir.ui.view">
+		<field name="name">bt.component.item.form</field>
+		<field name="model">bt.component.item</field>
+		<field name="arch" type="xml">
+			<form string="Component Item">
+				<sheet>
+					<div class="oe_title">
+						<div class="oe_edit_only"><label for="name" string="Name"/></div>
+						<h1><field name="name"/></h1>
+					</div>
+					<group><field name="capacity"/></group>
+				</sheet>
+			</form>
+		</field>
+	 </record>
+
+
+	<record id="bt_component_item_tree" model="ir.ui.view">
+		<field name="name">bt.component.item.tree</field>
+		<field name="model">bt.component.item</field>
+		<field name="arch" type="xml">
+			<tree string="Component Item">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record> 
+
+
+	<record id="action_bt_component_item" model="ir.actions.act_window">
+		<field name="name">Component Item</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">bt.component.item</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Create Component Item for the Company
+			</p>
+		</field>
+	</record>
+
+				
+	</data>
+</odoo>
+
+	

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- <record id="meeting_action_dashboard" model="ir.actions.act_window">
+            <field name="name">Meetings Dashboard</field>
+            <field name="res_model">calendar.event</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">hr_dashboard_view</field>
+            <field name="context">{
+            'wp_meetings_dashboard_view_view_ref' : 'sales_meet.wp_meetings_dashboard_view'
+            }</field>
+        </record> -->
+        <!-- Default View for Hr Dashboard, which is extended to make Dashboard View -->
+<!--         <record model="ir.ui.view" id="wp_meetings_dashboard_view">
+            <field name="name">Hr Dashboard</field>
+            <field name="model">calendar.event</field>
+            <field name="arch" type="xml">
+                <kanban>
+                </kanban>
+            </field>
+        </record> -->
+
+
+
+
+        <record id="meeting_action_dashboard" model="ir.actions.client">
+            <field name="name">Meetings Dashboard</field>
+            <field name="tag">meetings_dashboard</field>
+        </record>
+
+        <menuitem id="menu_wp_meetings_dashboard"
+                  name="Meetings Dashboard"
+                  action="meeting_action_dashboard"
+                  parent="sales_meet_main_menu"
+                  sequence="-1"/>
+
+
+        <template id="assets_backend" name="sales_meet assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <!--These links will be called when loading your Odoo -->
+        		<link rel="stylesheet" href="/sales_meet/static/src/css/cssfile.css"/>
+
+                <script type="text/javascript" src="/sales_meet/static/src/js/geolocation.js"></script>
+                <!-- <script type="text/javascript" src="/sales_meet/static/src/js/header.js"></script> -->
+                <script type="text/javascript" src="/sales_meet/static/src/js/service_worker_initiate.js"></script>
+
+                <script type="text/javascript" src="/sales_meet/static/src/js/meetings_dashboard.js"/>
+
+                <link rel="apple-touch-icon" sizes="57x57" href="/sales_meet/static/src/img/icon/apple-icon-57x57.png"/>
+                <link rel="apple-touch-icon" sizes="60x60" href="/sales_meet/static/src/img/icon/apple-icon-60x60.png"/>
+                <link rel="apple-touch-icon" sizes="72x72" href="/sales_meet/static/src/img/icon/apple-icon-72x72.png"/>
+                <link rel="apple-touch-icon" sizes="76x76" href="/sales_meet/static/src/img/icon/apple-icon-76x76.png"/>
+                <link rel="apple-touch-icon" sizes="114x114" href="/sales_meet/static/src/img/icon/apple-icon-114x114.png"/>
+                <link rel="apple-touch-icon" sizes="120x120" href="/sales_meet/static/src/img/icon/apple-icon-120x120.png"/>
+                <link rel="apple-touch-icon" sizes="144x144" href="/sales_meet/static/src/img/icon/apple-icon-144x144.png"/>
+                <link rel="apple-touch-icon" sizes="152x152" href="/sales_meet/static/src/img/icon/apple-icon-152x152.png"/>
+                <link rel="apple-touch-icon" sizes="180x180" href="/sales_meet/static/src/img/icon/apple-icon-180x180.png"/>
+                <link rel="icon" type="image/png" sizes="512x512" href="/sales_meet/static/src/img/icon/android-chrome-512x512.png"/>
+                <link rel="icon" type="image/png" sizes="192x192"  href="/sales_meet/static/src/img/icon/android-icon-192x192.png"/>
+                <link rel="icon" type="image/png" sizes="32x32" href="/sales_meet/static/src/img/icon/favicon-32x32.png"/>
+                <link rel="icon" type="image/png" sizes="96x96" href="/sales_meet/static/src/img/icon/favicon-96x96.png"/>
+                <link rel="icon" type="image/png" sizes="16x16" href="/sales_meet/static/src/img/icon/favicon-16x16.png"/>
+                <link rel="manifest" href="/sales_meet/static/src/img/icon/manifest.json"/>
+                <meta name="msapplication-TileColor" content="#ffffff"/>
+                <meta name="msapplication-TileImage" content="/ms-icon-144x144.png"/>
+                <meta name="theme-color" content="#ffffff"/>
+
+
+            </xpath>
+        </template>
+		
+</odoo>
